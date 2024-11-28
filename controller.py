@@ -320,10 +320,10 @@ def human_format(num):
     return "%.1f%s" % (num, ["", "K", "M", "G", "T", "P"][magnitude])
 
 
-def updatePassword(username, sec_ans, sec_que, password):
-    cmd = f"update login set password='{password}' where username='{username}' and sec_ans='{sec_ans}' and sec_que='{sec_que}' limit 1;"
+def updatePassword(username, password):
+    cmd = f"update users set password='{password}' where email='{username}' limit 1;"
     cursor.execute(cmd)
-    cmd = f"select count(username) from login where username='{username}' and password='{password}' and sec_ans='{sec_ans}' and sec_que='{sec_que}';"
+    cmd = f"select count(email) from users where email='{username}' and password='{password}';"
     cursor.execute(cmd)
     return cursor.fetchone()[0] >= 1
 
@@ -342,27 +342,6 @@ def find_g_id(name):
     cursor.execute(cmd)
     out = cursor.fetchone()[0]
     return out
-
-
-def checkin(g_id):
-    cmd = f"select * from reservations where g_id = '{g_id}';"
-    cursor.execute(cmd)
-    reservation = cursor.fetchall()
-    if reservation != []:
-        subcmd = f"update reservations set check_in = curdate() where g_id = '{g_id}' "
-        cursor.execute(subcmd)
-        return "successful"
-    else:
-        return "No reservations for the given Guest"
-
-
-
-def checkout(id):
-    cmd = f"update reservations set check_out=current_timestamp where id={id} limit 1;"
-    cursor.execute(cmd)
-    if cursor.rowcount == 0:
-        return False
-    return True
 
 
 # ============Python Functions==========

@@ -1,7 +1,15 @@
-from tkinter import PhotoImage
+from tkinter import PhotoImage,messagebox
 from PIL import Image, ImageTk
 from config import config
 import mysql.connector
+import random
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from CTkMessagebox import CTkMessagebox
+import re
+import sqlite3
+from sqlite3 import OperationalError
 
 
 
@@ -235,4 +243,119 @@ def get_scheduled_pickups(user_id):
     pickups = cursor.fetchall()
     conn.close()
     return pickups
+
+def send_email(email,subject,body):
+        
+        # Email details
+        sender_email = "localfoodsharing@gmail.com"  # Replace with your email
+        sender_password = "qdis uprp jcfr qslt"     # Replace with your email password
+        recipient_email = email
+
+        # Compose the email
+        msg = MIMEMultipart()
+        msg["From"] = sender_email
+        msg["To"] = recipient_email
+        msg["Subject"] = subject
+
+        msg.attach(MIMEText(body, "plain"))
+
+        # Send the email using SMTP
+        server = smtplib.SMTP("smtp.gmail.com", 587)  # For Gmail
+        server.starttls()
+        server.login(sender_email, sender_password)
+        server.send_message(msg)
+        server.quit()
+
+
+
+def validation(**kwargs):
+    for key,value in kwargs.items():
+        email=kwargs.get('email',None)
+        password=kwargs.get('password',None)
+        address=kwargs.get('address',None)
+        name=kwargs.get('name',None)
+
+    #Email Validation
+    if email is not None:
+        email_valid = re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email)
+        try:
+            if email_valid is None:
+                raise ValueError("Invalid email address!")
+        except ValueError as email_error:
+            return email_error
+    
+    #Password validation
+
+    if password is not None:
+        password_valid = re.match("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$",password)
+        try:
+            if password_valid is None:
+                raise ValueError("(Please choose strong password)")
+        except ValueError as weak_pass:
+            return weak_pass
+
+    #Name Validation
+    if name is not None:
+        name_validation=re.match("^[a-zA-Z]*$",name)
+        try:
+            if name_validation is None :
+                raise ValueError("Please enter only 'Alphabets'") 
+            if name==None or name=="":
+                raise NameError("Enter Value")
+        except NameError as empty_value:
+            return empty_value
+        except ValueError as invalid_name:
+            return invalid_name
+        
+
+def executeScriptsFromFile(filename):
+    try:
+        conn = connect_to_database()
+        cursor = conn.cursor()
+        fd = open(f"sql/{filename}", 'r')
+        sqlFile = fd.read()
+        fd.close()
+
+        # Split SQL commands
+        sqlCommands = sqlFile.split(';')
+
+        # Execute every command
+        for command in sqlCommands:
+            if command.strip():  # Skip empty commands
+                try:
+                    cursor.execute(command)
+                    conn.commit()
+                except OperationalError as msg:
+                    print(f"Command skipped: {msg}")
+    except mysql.connector.Error as err:
+        print(f"Database error: {err}")
+    except FileNotFoundError:
+        print("SQL file not found!")
+    except Exception as e:
+        print(f"Unexpected error: {e}")
+    finally:
+        if 'conn' in locals() and conn.is_connected():
+            conn.close()
+            
+        
+        
+
+
+
+        
+
+
+    
+    
+    
+
+    
+
+    
+    
+
+
+
+
+
 
