@@ -24,7 +24,9 @@ def center(win):
 def main():
     try:
         # Execute database scripts
+        executeScriptsFromFile("drop_tables.sql")
         executeScriptsFromFile("create_tables.sql")  # Initialize the database tables
+        executeScriptsFromFile("insert_sample_data.sql")
     except Exception as e:
         print(f"Error initializing database: {e}")
 
