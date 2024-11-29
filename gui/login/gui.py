@@ -11,7 +11,7 @@ import random
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from utils import send_email,validation,get_user_info
+from utils import send_email,validation,get_user_info,center_window
 import datetime
 
 
@@ -50,6 +50,7 @@ class Login(Toplevel):
         self.title("Login - Local Food Sharing App")
         self.geometry("1012x506")
         self.configure(bg="#5E95FF")
+        center_window(self,1012,506)
 
         # Left Section
         self.left_canvas = Canvas(
@@ -75,7 +76,7 @@ class Login(Toplevel):
             85.0,
             150.0,
             anchor="nw",
-            text="The Local Food Sharing App connects ",
+            text="The Local Food Sharing App connects communities ",
             fill="#FFFFFF",
             font=("Montserrat Regular", 14 * -1),
         )
@@ -83,7 +84,7 @@ class Login(Toplevel):
             85.0,
             179.0,
             anchor="nw",
-            text="communities, enabling the distribution of ",
+            text="enabling the distribution of excess food",
             fill="#FFFFFF",
             font=("Montserrat Regular", 14 * -1),
         )
@@ -91,7 +92,7 @@ class Login(Toplevel):
             85.0,
             208.0,
             anchor="nw",
-            text="excess food to those in need.Manage food ",
+            text="to those in need.Manage food donations,",
             fill="#FFFFFF",
             font=("Montserrat Regular", 14 * -1),
         )
@@ -99,7 +100,7 @@ class Login(Toplevel):
             85.0,
             237.0,
             anchor="nw",
-            text="donations, pickups, and notifications through",
+            text="pickups, and notifications through an",
             fill="#FFFFFF",
             font=("Montserrat Regular", 14 * -1),
         )
@@ -108,7 +109,7 @@ class Login(Toplevel):
             85.0,
             266.0,
             anchor="nw",
-            text=" an easy-to-use platform.",
+            text="easy-to-use platform.",
             fill="#FFFFFF",
             font=("Montserrat Regular", 14 * -1),
         )
@@ -147,20 +148,28 @@ class Login(Toplevel):
         # Title
         login_title = ctk.CTkLabel(
             background_frame,
-            text="Welcome",
-            font=("Montserrat Bold", 26),
-            text_color="#333333",
+            text="Welcome to the Community!",
+            font=("Montserrat Bold", 22),
+            text_color="#5E95FF",
         )
-        login_title.place(relx=0.5, y=50, anchor="center")
+        login_title.place(relx=0.5, y=30, anchor="center")
 
         # Subtitle
         login_subtitle = ctk.CTkLabel(
             background_frame,
-            text="Please log in to continue or Sign up",
-            font=("Montserrat", 14),
+            text="Join us in sharing, giving, and making a difference!",
+            font=("Montserrat", 12),
+            text_color="#333333",
+        )
+        login_subtitle.place(relx=0.5, y=70, anchor="center")
+
+        login_sub_subtitle = ctk.CTkLabel(
+            background_frame,
+            text="Please continue Login or SignUp",
+            font=("Montserrat", 12),
             text_color="#666666",
         )
-        login_subtitle.place(relx=0.5, y=90, anchor="center")
+        login_sub_subtitle.place(relx=0.5, y=95, anchor="center")
 
         # Email entry
         self.email_label = ctk.CTkLabel(
@@ -169,7 +178,7 @@ class Login(Toplevel):
             font=("Montserrat Bold", 14),
             text_color="#5E95FF",
         )
-        self.email_label.place(x=55, y=135)
+        self.email_label.place(x=70, y=115)
 
         self.username = ctk.CTkEntry(
             background_frame,
@@ -178,7 +187,7 @@ class Login(Toplevel):
             corner_radius=10,
             placeholder_text="Enter your email",
         )
-        self.username.place(x=55, y=165)
+        self.username.place(x=70, y=150)
 
         # Password entry
         self.password_label = ctk.CTkLabel(
@@ -187,7 +196,7 @@ class Login(Toplevel):
             font=("Montserrat Bold", 14),
             text_color="#5E95FF",
         )
-        self.password_label.place(x=55, y=200)
+        self.password_label.place(x=70, y=185)
 
         self.password = ctk.CTkEntry(
             background_frame,
@@ -197,7 +206,7 @@ class Login(Toplevel):
             show="•",
             placeholder_text="Enter your password",
         )
-        self.password.place(x=55, y=230)
+        self.password.place(x=70, y=215)
 
         # Preload images using CTkImage
         eye_closed_image = ctk.CTkImage(light_image=Image.open(relative_to_assets("eye_closed.png")),
@@ -211,7 +220,7 @@ class Login(Toplevel):
             image=eye_closed_image,  # Use preloaded CTkImage for the closed eye
             text="",  # No text for the label
         )
-        eye_icon.place(x=365, y=230)  # Place beside the password entry
+        eye_icon.place(x=380, y=215)  # Place beside the password entry
 
         # Bind toggle function to the eye icon
         eye_icon.bind("<Button-1>", lambda e: toggle_password_visibility(self.password, eye_icon))
@@ -224,7 +233,7 @@ class Login(Toplevel):
             text_color="#007BFF",
             cursor="hand2",
         )
-        forgot_password_link.place(x=55, y=260)
+        forgot_password_link.place(x=70, y=245)
         forgot_password_link.bind("<Button-1>", lambda e: self.display_forgot_password())
 
         # Login button
@@ -239,7 +248,7 @@ class Login(Toplevel):
             hover_color="#417BFF",
             font=("Montserrat Bold", 14),
         )
-        login_button.place(x=55, y=300)
+        login_button.place(x=70, y=290)
 
         # Signup link
         signup_link = ctk.CTkLabel(
@@ -249,7 +258,7 @@ class Login(Toplevel):
             text_color="#007BFF",
             cursor="hand2",
         )
-        signup_link.place(x=120, y=350)
+        signup_link.place(x=125, y=345)
         signup_link.bind("<Button-1>", lambda e: self.display_signup())
 
         # Contact Support
@@ -260,8 +269,16 @@ class Login(Toplevel):
             text_color="#007BFF",
             cursor="hand2",
         )
-        contactus_link.place(x=120, y=390)
+        contactus_link.place(x=125, y=375)
         contactus_link.bind("<Button-1>", lambda e: self.contactus())
+
+        copyright_label=ctk.CTkLabel(
+            background_frame,
+            text="Copyright 2024 Local Food Sharing Inc - All Rights Recieved",
+            font=("Montserrat", 10),  
+            text_color="grey",
+        )
+        copyright_label.place(x=75, y=425)
 
     def send_otp_func(self):
         """Generate and send OTP to the provided email."""        
@@ -301,10 +318,13 @@ class Login(Toplevel):
             send_email(email,subject,body) 
 
             # Notify the user
-            self.forgot_email.configure(border_color="green",text_color="black")
+            self.forgot_email.configure(border_color="green",text_color="black",state="disabled",fg_color="lightgrey")
             self.email_label.configure(text=f"Email",text_color="green",font=("Montserrat", 14))
             self.send_otp_button.configure(text="OTP Sent!",fg_color="green",state="disabled")
+            self.confirm_otp_button.configure(state="enable")
+            self.otp_entry.configure(fg_color="white",state="normal",placeholder_text="Enter OTP")
 
+            
         except Exception as e:
             print(f"Error sending OTP: {e}")
             messagebox.showerror("Error", "Failed to send OTP. Please try again later.")
@@ -314,21 +334,31 @@ class Login(Toplevel):
         if not otp:
             self.otp_entry.configure(border_color="red",text_color="red")
             self.otp_label.configure(text_color="red",font=("Montserrat", 12))
+            self.send_otp_button.configure(text="Resend OTP",state="enable",fg_color="#5E95FF")
+            self.forgot_email.configure(state="normal",fg_color="white",placeholder_text="Enter Confirm Password",border_color='grey')
             return
         if otp != getattr(self, "generated_otp", None):
             self.otp_entry.configure(border_color="red",text_color="red")
             self.otp_label.configure(text_color="red",font=("Montserrat", 12))
+            self.send_otp_button.configure(text="Resend OTP",state="enable")
+            self.forgot_email.configure(state="normal",fg_color="white",placeholder_text="Enter Confirm Password")
             return
-        self.otp_entry.configure(border_color="green",text_color="black")
+        self.otp_entry.configure(border_color="green",text_color="black",state="disabled",fg_color="lightgrey")
         self.otp_label.configure(text="OTP Verifed!.",text_color="green",font=("Montserrat", 12))
         self.confirm_otp_button.configure(text="Verified!",fg_color="green",state="disabled")
-        
+        self.reset_password_button.configure(state="enable")
+        self.confirm_password.configure(state="normal",fg_color="white",placeholder_text="Enter Confirm Password")
+        self.new_password.configure(state="normal",fg_color="white",placeholder_text="Enter New Password")
 
     def reset_password_func(self):
         email=self.forgot_email.get()
         new_password = self.new_password.get().strip()
         confirm_password = self.confirm_password.get().strip()
         validated_password=validation(password=new_password)
+        if email=="":
+            self.forgot_email.configure(border_color="red",text_color="red")
+            self.email_label.configure(text=f"Email (Required)*",text_color="red",font=("Montserrat", 12))
+            return
         if validated_password is not None or validated_password=="":
             self.new_password.configure(border_color="red",text_color="red")
             self.new_password_label.configure(text=f"New Password {validated_password}",text_color="red",font=("Montserrat", 12))
@@ -428,6 +458,8 @@ class Login(Toplevel):
             font=("Montserrat", 14),
             corner_radius=10,
             placeholder_text="Enter OTP",
+            state="disabled",
+            fg_color="lightgrey"
         )
         self.otp_entry.place(x=50, y=170)
 
@@ -441,6 +473,7 @@ class Login(Toplevel):
             fg_color="#5E95FF",
             hover_color="#417BFF",
             font=("Montserrat Bold", 12),
+            state="disabled"
         )
         self.confirm_otp_button.place(x=260, y=165)
 
@@ -460,6 +493,8 @@ class Login(Toplevel):
             corner_radius=10,
             show="•",
             placeholder_text="Enter new password",
+            state="disabled",
+            fg_color="lightgrey"
         )
         self.new_password.place(x=50, y=250)
 
@@ -495,6 +530,8 @@ class Login(Toplevel):
             corner_radius=10,
             show="•",
             placeholder_text="Re-enter new password",
+            state="disabled",
+            fg_color="lightgrey"
         )
         self.confirm_password.place(x=50, y=320)
 
@@ -509,7 +546,7 @@ class Login(Toplevel):
         # Bind toggle function to the eye icon
         eye_icon_confirm.bind("<Button-1>", lambda e: toggle_password_visibility(self.confirm_password, eye_icon_confirm))
 
-        reset_password_button = ctk.CTkButton(
+        self.reset_password_button = ctk.CTkButton(
             background_frame,
             text="Reset Password",
             command=self.reset_password_func,
@@ -519,8 +556,17 @@ class Login(Toplevel):
             fg_color="#5E95FF",
             hover_color="#417BFF",
             font=("Montserrat Bold", 14),
+            state="disabled"
         )
-        reset_password_button.place(x=50, y=370)
+        self.reset_password_button.place(x=50, y=370)
+        
+        copyright_label=ctk.CTkLabel(
+            background_frame,
+            text="Copyright 2024 Local Food Sharing Inc - All Rights Recieved",
+            font=("Montserrat", 10),  
+            text_color="grey",
+        )
+        copyright_label.place(x=75, y=425)
 
     def display_signup(self):
         """Render the Sign Up view."""
@@ -566,7 +612,7 @@ class Login(Toplevel):
             font=("Montserrat Bold", 14),
             text_color="#5E95FF",
         )
-        self.first_name_label.place(x=50, y=80)
+        self.first_name_label.place(x=70, y=80)
 
         self.first_name = ctk.CTkEntry(
             background_frame,
@@ -575,7 +621,7 @@ class Login(Toplevel):
             corner_radius=10,
             placeholder_text="Enter your first name",
         )
-        self.first_name.place(x=50, y=110)
+        self.first_name.place(x=70, y=110)
 
         # Last Name
         self.last_name_label = ctk.CTkLabel(
@@ -584,7 +630,7 @@ class Login(Toplevel):
             font=("Montserrat Bold", 14),
             text_color="#5E95FF",
         )
-        self.last_name_label.place(x=220, y=80)
+        self.last_name_label.place(x=240, y=80)
 
         self.last_name = ctk.CTkEntry(
             background_frame,
@@ -593,7 +639,7 @@ class Login(Toplevel):
             corner_radius=10,
             placeholder_text="Enter your last name",
         )
-        self.last_name.place(x=220, y=110)
+        self.last_name.place(x=240, y=110)
 
         # Email
         self.email_label = ctk.CTkLabel(
@@ -602,7 +648,7 @@ class Login(Toplevel):
             font=("Montserrat Bold", 14),
             text_color="#5E95FF",
         )
-        self.email_label.place(x=50, y=150)
+        self.email_label.place(x=70, y=150)
 
         self.username = ctk.CTkEntry(
             background_frame,
@@ -611,7 +657,7 @@ class Login(Toplevel):
             corner_radius=10,
             placeholder_text="Enter your email",
         )
-        self.username.place(x=50, y=180)
+        self.username.place(x=70, y=180)
 
         # Password
         self.password_label = ctk.CTkLabel(
@@ -620,7 +666,7 @@ class Login(Toplevel):
             font=("Montserrat Bold", 14),
             text_color="#5E95FF",
         )
-        self.password_label.place(x=50, y=230)
+        self.password_label.place(x=70, y=220)
 
         self.password = ctk.CTkEntry(
             background_frame,
@@ -630,7 +676,7 @@ class Login(Toplevel):
             show="•",
             placeholder_text="Enter your password",
         )
-        self.password.place(x=50, y=260)
+        self.password.place(x=70, y=250)
 
         # Preload images using CTkImage
         eye_closed_image = ctk.CTkImage(light_image=Image.open(relative_to_assets("eye_closed.png")),
@@ -644,10 +690,39 @@ class Login(Toplevel):
             image=eye_closed_image,  # Use preloaded CTkImage for the closed eye
             text="",  # No text for the label
         )
-        eye_icon.place(x=360, y=260)  # Place beside the password entry
+        eye_icon.place(x=375, y=250)  # Place beside the password entry
 
         # Bind toggle function to the eye icon
         eye_icon.bind("<Button-1>", lambda e: toggle_password_visibility(self.password, eye_icon))
+
+        
+        self.terms_checkbox=ctk.CTkCheckBox(
+            background_frame,
+            text='',
+            checkmark_color="white",
+            border_color="grey" ,
+            state="disable"
+        )
+        self.terms_checkbox.place(x=70, y=300)
+
+        
+        self.terms_label = ctk.CTkLabel(
+            background_frame,
+            text="Yes, I agree to the",
+            font=("Montserrat Bold", 12),
+            text_color="black",
+        )
+        self.terms_label.place(x=110, y=300)
+
+        terms_link= ctk.CTkLabel(
+            background_frame,
+            text="Terms of service.",
+            font=("Montserrat", 12),
+            text_color="#007BFF",
+            cursor="hand2",
+        )
+        terms_link.place(x=220, y=300)
+        terms_link.bind("<Button-1>", lambda e: self.termsfunc())
 
         # Signup button
         signup_button = ctk.CTkButton(
@@ -661,7 +736,7 @@ class Login(Toplevel):
             hover_color="#417BFF",
             font=("Montserrat Bold", 14),
         )
-        signup_button.place(x=50, y=340)
+        signup_button.place(x=70, y=340)
         # Back to login link
         login_link = ctk.CTkLabel(
             background_frame,
@@ -670,8 +745,16 @@ class Login(Toplevel):
             text_color="#007BFF",
             cursor="hand2",
         )
-        login_link.place(x=110, y=390)
+        login_link.place(x=120, y=390)
         login_link.bind("<Button-1>", lambda e: self.display_login())
+
+        copyright_label=ctk.CTkLabel(
+            background_frame,
+            text="Copyright 2024 Local Food Sharing Inc - All Rights Recieved",
+            font=("Montserrat", 10),  
+            text_color="grey",
+        )
+        copyright_label.place(x=75, y=425)
 
     def hash_password(self, password):
         """
@@ -679,6 +762,119 @@ class Login(Toplevel):
         """
         hashed_password = hashlib.sha256(password.encode()).hexdigest()
         return hashed_password
+    
+    def termsfunc(self):
+
+        self.terms_window=ctk.CTkToplevel(self, width=706, height=450, fg_color= 'white'
+
+        )
+        self.terms_window.title("Terms and Conditions")
+        self.terms_window.geometry("506X350")
+        
+        center_window(self.terms_window, 706, 450)
+            # Add text for Terms and Conditions
+        terms_text = ctk.CTkTextbox(
+        self.terms_window,
+        wrap="word",  # Enable text wrapping
+        height=350,
+        fg_color="white",
+        width=606,
+        font=("Montserrat", 12),
+        )
+        terms_text.pack(pady=20, padx=20)
+
+            # Terms and Conditions Content
+        terms_content = """
+                                                                TERMS AND CONDITIONS
+
+Last Updated: November 28, 2024
+
+Welcome to Local Food Sharing!
+
+These terms and conditions outline the rules and regulations for the use of Local Food Sharing's services, available through the application operated by LFG. By accessing or using our services, you accept these terms and conditions in full. Do not continue to use Local Food Sharing if you do not agree to all the terms and conditions stated here.
+
+1. DEFINITIONS
+- "Application" refers to Local Food Sharing, including all its content, features, and services.
+- "User" refers to any individual or entity accessing or using the application.
+- "We", "Us", and "Our" refer to LFG.
+
+2. USER RESPONSIBILITIES
+- Eligibility: You must be at least 18 years of age or have the permission of a legal guardian to use our application.
+- Account Information: You are responsible for maintaining the confidentiality of your account credentials. Any activity under your account is your responsibility.
+- Prohibited Activities: Users are prohibited from:
+    - Uploading harmful, malicious, or illegal content.
+    - Attempting to hack, disrupt, or interfere with the application's functionality.
+    - Violating the rights of others, including intellectual property and privacy rights.
+
+3. PRIVACY POLICY
+By using our application, you agree to our Privacy Policy, which outlines how we collect, use, and protect your personal information. You can contact us for more information.
+
+4. INTELLECTUAL PROPERTY
+All content and features available on the application, including text, graphics, logos, icons, and software, are the property of LFG or its licensors and are protected by applicable copyright, trademark, and other intellectual property laws. Unauthorized use of this content is strictly prohibited.
+
+5. LIMITATION OF LIABILITY
+To the maximum extent permitted by law:
+- LFG shall not be held responsible for any damages, losses, or liabilities arising from the use of the application.
+- The application is provided "as is," without any warranties, express or implied, including fitness for a particular purpose or non-infringement.
+
+6. TERMINATION OF USE
+We reserve the right to terminate or suspend your access to the application at any time, without prior notice, for conduct that we believe violates these Terms and Conditions or is otherwise harmful to other users or the application.
+
+7. CHANGES TO TERMS
+We may revise these Terms and Conditions at any time. Users will be notified of updates, and continued use of the application constitutes acceptance of the revised terms.
+
+8. GOVERNING LAW
+These terms shall be governed by and interpreted in accordance with the laws of the USA, Michigan. Any disputes arising from these terms shall be resolved exclusively in the courts of Michigan.
+
+9. CONTACT US
+If you have any questions about these Terms and Conditions, you can contact us at:
+
+- Email: localfoodsharing@gmail.com
+
+AGREEMENT
+
+By clicking "Accept" or using the application, you confirm that you have read, understood, and agree to these Terms and Conditions.
+        """
+
+        # Insert content into the textbox
+        terms_text.insert("1.0", terms_content)
+        terms_text.configure(state="disabled")  # Make the text read-only
+
+        accept_button = ctk.CTkButton(
+            self.terms_window,
+            text="Accept",
+            command=self.terms_accepted,
+            width=100,
+            height=40,
+            corner_radius=20,
+            fg_color="#5E95FF",
+            hover_color="#417BFF",
+            font=("Montserrat Bold", 14),
+        )
+        accept_button.place(x=570, y=380)
+
+        decline_button = ctk.CTkButton(
+            self.terms_window,
+            text="Decline",
+            command=self.terms_declined,
+            width=100,
+            height=40,
+            corner_radius=20,
+            fg_color="#5E95FF",
+            hover_color="#417BFF",
+            font=("Montserrat Bold", 14),
+        )
+        decline_button.place(x=50, y=380)
+
+    def terms_accepted(self):
+        self.terms_checkbox.select()
+        self.terms_window.withdraw()
+        
+    def terms_declined(self):
+
+        self.terms_window.withdraw()
+        self.terms_checkbox.deselect()
+        self.terms_checkbox.configure(border_color='red')
 
     def loginFunc(self):
         """Handles the user login logic."""
@@ -738,6 +934,7 @@ class Login(Toplevel):
         last_name = self.last_name.get().strip()
         email = self.username.get().strip()
         password = self.password.get().strip()
+        terms=self.terms_checkbox.get()
 
         # Validate input fields
         name_validate=validation(name=first_name)
@@ -783,11 +980,14 @@ class Login(Toplevel):
            self.password.configure(border_color="grey",text_color="black")
            self.password_label.configure(text="Password*",text_color="#5E95FF",font=("Montserrat", 14))
 
-       
+        if not terms:
+            self.terms_checkbox.configure(border_color='red')
+            return
 
         # Hash the password before storing it in the database
         self.hashed_password = hashlib.sha256(password.encode()).hexdigest()
         self.user_verification(email,first_name,last_name,self.hashed_password)
+        
 
     def resetPasswordFunc(self):
         """Handle the reset password functionality."""
@@ -886,7 +1086,7 @@ class Login(Toplevel):
         #Subject
         self.subject = ctk.CTkLabel(
             background_frame,
-            text="Subject (Minimum 5 Words)",
+            text="Subject (Minimum 5 Words)*",
             font=("Montserrat Bold", 14),
             text_color="#5E95FF",
         )
@@ -905,7 +1105,7 @@ class Login(Toplevel):
         # Query
         self.query_label = ctk.CTkLabel(
             background_frame,
-            text="What you want to tell us?* (Minumum 20 words)",
+            text="What you want to tell us? (Minumum 15 words)*",
             font=("Montserrat Bold", 14),
             text_color="#5E95FF"
          )
@@ -935,7 +1135,15 @@ class Login(Toplevel):
             hover_color="#417BFF",
             font=("Montserrat Bold", 14),
         )
-        submit.place(x=70, y=390)
+        submit.place(x=70, y=385)
+        
+        copyright_label=ctk.CTkLabel(
+            background_frame,
+            text="Copyright 2024 Local Food Sharing Inc - All Rights Recieved",
+            font=("Montserrat", 8),  
+            text_color="grey",
+        )
+        copyright_label.place(x=100, y=425)
 
     def submit_request(self):
         first_name=self.first_name.get().strip()

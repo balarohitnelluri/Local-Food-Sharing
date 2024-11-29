@@ -24,6 +24,36 @@ def connect_to_database():
     return conn
 
 
+def center_test(win):
+    """
+    Center a window on the screen.
+
+    :param win: The window (Tk or Toplevel) to center.
+    """
+    win.update_idletasks()
+    width = win.winfo_width()
+    height = win.winfo_height()
+    screen_width = win.winfo_screenwidth()
+    screen_height = win.winfo_screenheight()
+    position_x = (screen_width // 2) - (width // 2)
+    position_y = (screen_height // 2) - (height // 2)
+    win.geometry(f"{width}x{height}+{position_x}+{position_y}")
+
+
+def center_window(root, width, height):
+ 
+    # Get screen width and height
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+
+    # Calculate the position for the window to be centered
+    position_x = (screen_width // 2) - (width // 2)
+    position_y = (screen_height // 2) - (height // 2)
+
+    # Set the geometry of the window
+    root.geometry(f"{width}x{height}+{position_x}+{position_y}")
+
+
 # Style class to maintain consistent styling
 class Style:
     page_heading = ('San Francisco', 25, 'bold')
