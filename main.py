@@ -1,17 +1,18 @@
 import tkinter as tk
-from gui.login.gui import loginWindow
-from gui.main_window.main import mainWindow
+from user_gui.login.gui import loginWindow
+from user_gui.main_window.main import mainWindow
 from utils import executeScriptsFromFile
+
 
 # Main function to integrate UI and database
 def main():
-    try:
+    
         # Execute database scripts
-        executeScriptsFromFile("drop_tables.sql")
-        executeScriptsFromFile("create_tables.sql")  # Initialize the database tables
-        executeScriptsFromFile("insert_sample_data.sql")
-    except Exception as e:
-        print(f"Error initializing database: {e}")
+        # executeScriptsFromFile("drop_tables.sql")
+        # executeScriptsFromFile("create_tables.sql")  # Initialize the database tables
+        # executeScriptsFromFile("insert_sample_data.sql")
+    # except Exception as e:
+    #     print(f"Error initializing database: {e}")
 
     # Initialize the Tkinter root window
     root = tk.Tk()

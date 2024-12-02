@@ -1,9 +1,4 @@
-import tkinter
+import matplotlib.pyplot as plt
 
-root = tkinter.Tk()
-root.eval('tk::PlaceWindow . center')
-
-second_win = tkinter.Toplevel(root)
-root.eval(f'tk::PlaceWindow {str(second_win)} center')
-
-root.mainloop()
+plt.plot([1, 2, 3], [4, 5, 6])
+plt.savefig("test_plot.png")

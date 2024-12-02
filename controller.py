@@ -1,6 +1,7 @@
 import mysql.connector
 import os
 import matplotlib.pyplot as pt
+from PIL import Image 
 
 # Configurations
 from config import config
@@ -128,6 +129,47 @@ def request_pickup(user_id, listing_id, pickup_date, pickup_time):
         print(f"Error saving pickup request: {e}")
         return False
 
+import mysql.connector
+
+def add_food_items_bulk(food_items, user_id):
+    """
+    Adds multiple food items to the database in a single transaction.
+
+    Args:
+        food_items (list): List of dictionaries containing food item details.
+        user_id (int): The ID of the user adding the items.
+
+    Returns:
+        bool: True if items were added successfully, False otherwise.
+    """
+    try:
+
+        # SQL query to insert food items
+        query = """
+            INSERT INTO food_listings (food_type, quantity, expiration_date, location, pincode, user_id)
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """
+
+        # Prepare the values for bulk insertion
+        values = [
+            (
+                item["food_type"],  # Food Type
+                item["quantity"],  # Quantity
+                item["expiry_date"],  # Expiry Date
+                item["location"],  # Location
+                item["zipcode"],  # Zipcode
+                user_id,  # User ID
+            )
+            for item in food_items
+        ]
+
+        # Execute the query in bulk
+        cursor.executemany(query, values)
+
+        return True  # Items added successfully
+    except mysql.connector.Error as err:
+        print(f"Database Error: {err}")
+        return False
 
 def get_listing_details(user_id):
     """
@@ -152,6 +194,7 @@ def get_listing_details(user_id):
         # Populate the dictionary with food type as key and (listing_id, location) as value
         listings = {row[0]: (row[1], row[2]) for row in results}
         return listings
+    
     except Exception as e:
         print(f"Error fetching listing details: {e}")
 
@@ -320,10 +363,10 @@ def human_format(num):
     return "%.1f%s" % (num, ["", "K", "M", "G", "T", "P"][magnitude])
 
 
-def updatePassword(username, password):
-    cmd = f"update users set password='{password}' where email='{username}' limit 1;"
+def updatePassword(username, sec_ans, sec_que, password):
+    cmd = f"update login set password='{password}' where username='{username}' and sec_ans='{sec_ans}' and sec_que='{sec_que}' limit 1;"
     cursor.execute(cmd)
-    cmd = f"select count(email) from users where email='{username}' and password='{password}';"
+    cmd = f"select count(username) from login where username='{username}' and password='{password}' and sec_ans='{sec_ans}' and sec_que='{sec_que}';"
     cursor.execute(cmd)
     return cursor.fetchone()[0] >= 1
 
@@ -342,6 +385,27 @@ def find_g_id(name):
     cursor.execute(cmd)
     out = cursor.fetchone()[0]
     return out
+
+
+def checkin(g_id):
+    cmd = f"select * from reservations where g_id = '{g_id}';"
+    cursor.execute(cmd)
+    reservation = cursor.fetchall()
+    if reservation != []:
+        subcmd = f"update reservations set check_in = curdate() where g_id = '{g_id}' "
+        cursor.execute(subcmd)
+        return "successful"
+    else:
+        return "No reservations for the given Guest"
+
+
+
+def checkout(id):
+    cmd = f"update reservations set check_out=current_timestamp where id={id} limit 1;"
+    cursor.execute(cmd)
+    if cursor.rowcount == 0:
+        return False
+    return True
 
 
 # ============Python Functions==========

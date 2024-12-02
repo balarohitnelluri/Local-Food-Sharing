@@ -10,6 +10,8 @@ from CTkMessagebox import CTkMessagebox
 import re
 import sqlite3
 from sqlite3 import OperationalError
+from cryptography.fernet import Fernet
+import os
 
 
 
@@ -22,6 +24,56 @@ def connect_to_database():
         database=config.get("DB_NAME")
     )
     return conn
+
+# Generate or load encryption key
+KEY_FILE = "key.key"
+PREFERENCES_FILE = "preferences.txt"
+
+def generate_key():
+    if not os.path.exists(KEY_FILE):
+        key = Fernet.generate_key()
+        with open(KEY_FILE, "wb") as key_file:
+            key_file.write(key)
+
+def load_key():
+    with open(KEY_FILE, "rb") as key_file:
+        return key_file.read()
+
+# Ensure encryption key exists
+generate_key()
+encryption_key = load_key()
+cipher_suite = Fernet(encryption_key)
+
+def save_preferences(self, username, password):
+    """Save the username and encrypted password to a file."""
+    encrypted_password = cipher_suite.encrypt(password.encode()).decode()  # Encrypt password
+    with open(PREFERENCES_FILE, "w") as file:
+        file.write(f"{username}\n")
+        file.write(f"{encrypted_password}\n")
+        file.write(f"{self.remember_var.get()}")  # Save the checkbox state
+
+def load_preferences(self):
+        try:
+            with open(PREFERENCES_FILE, "r") as file:
+                lines = file.readlines()
+                username = lines[0].strip()
+                encrypted_password = lines[1].strip()
+                remember_me = int(lines[2].strip())
+
+                # Populate the fields with decrypted data
+                self.username_entry.insert(0, username)
+                decrypted_password = cipher_suite.decrypt(encrypted_password.encode()).decode()
+                self.password_entry.insert(0, decrypted_password)
+                self.remember_var.set(remember_me)
+        except (FileNotFoundError, IndexError):
+            # If no preferences file exists or it's corrupted, do nothing
+            pass
+
+def clear_preferences(self):
+    with open(PREFERENCES_FILE, "w") as file:
+        file.truncate()  # Empty the file
+
+
 
 
 def center_test(win):
@@ -38,6 +90,8 @@ def center_test(win):
     position_x = (screen_width // 2) - (width // 2)
     position_y = (screen_height // 2) - (height // 2)
     win.geometry(f"{width}x{height}+{position_x}+{position_y}")
+
+
 
 
 def center_window(root, width, height):
