@@ -1,6 +1,5 @@
 import tkinter as tk
-from user_gui.login.gui import loginWindow
-from user_gui.main_window.main import mainWindow
+from user_gui.loading_window.gui import loadingwindow
 from utils import executeScriptsFromFile
 
 
@@ -16,15 +15,10 @@ def main():
 
     # Initialize the Tkinter root window
     root = tk.Tk()
-    
-
     root.withdraw()  # Hide the root window initially
 
-    # Launch the login window
-    user_id = loginWindow()  # Get the logged-in user ID
-    if user_id:
-        # If login is successful, launch the main application window with the user ID
-        mainWindow(user_id)
+    # Instantiate the loading screen
+    loadingwindow()
     
     root.mainloop()
 
