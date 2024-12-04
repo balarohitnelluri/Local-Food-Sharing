@@ -363,10 +363,10 @@ def human_format(num):
     return "%.1f%s" % (num, ["", "K", "M", "G", "T", "P"][magnitude])
 
 
-def updatePassword(username, sec_ans, sec_que, password):
-    cmd = f"update login set password='{password}' where username='{username}' and sec_ans='{sec_ans}' and sec_que='{sec_que}' limit 1;"
+def updatePassword(email, password):
+    cmd = f"update users set password='{password}' where email='{email}' limit 1;"
     cursor.execute(cmd)
-    cmd = f"select count(username) from login where username='{username}' and password='{password}' and sec_ans='{sec_ans}' and sec_que='{sec_que}';"
+    cmd = f"select count(email) from users where email='{email}' and password='{password}';"
     cursor.execute(cmd)
     return cursor.fetchone()[0] >= 1
 

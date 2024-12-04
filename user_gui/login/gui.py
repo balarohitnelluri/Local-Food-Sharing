@@ -132,18 +132,15 @@ class Login(Toplevel):
     def typing_effect(self):
         # Typing effect for the main title
         if self.text_index < len(self.full_text):
-            # Add the next character to the displayed text
             self.displayed_text += self.full_text[self.text_index]
             self.text_index += 1
-
             # Update the text on the canvas
             self.left_canvas.itemconfig(self.canvatext1, text=self.displayed_text)
 
-            # Schedule the next character to appear
             self.after(10, self.typing_effect)  # Adjust delay for typing speed
         else:
-            # Once typing effect for the title is done, start typing static text lines
-            self.current_line = 0  # Initialize the current line index
+            
+            self.current_line = 0  
             self.static_typing_text = ""  # Initialize empty string for typing static lines
             self.char_index = 0  # Initialize character index for static lines
             self.after(500, self.show_static_text_line_by_line)  # Small delay before static text
@@ -467,6 +464,7 @@ class Login(Toplevel):
         self.new_password.configure(state="normal",fg_color="white",placeholder_text="Enter New Password")
         
     def reset_password_func(self):
+        self.reset_password_button.configure(state="enable")
         email=self.forgot_email.get()
         new_password = self.new_password.get().strip()
         confirm_password = self.confirm_password.get().strip()
@@ -669,8 +667,8 @@ class Login(Toplevel):
             width=300,
             height=40,
             corner_radius=20,
-            fg_color="#5E95FF",
-            hover_color="#417BFF",
+            fg_color="#6C9FFF",
+            hover_color="#5E95FF",
             font=("Montserrat Bold", 14),
             state="disabled"
         )
@@ -1332,7 +1330,7 @@ By clicking "Accept" or using the application, you confirm that you have read, u
         body_words = body.split()
         subject_words=subject.split()
         
-        if len(subject_words)<=5 or subject=='':
+        if len(subject_words)<=2 or subject=='':
             self.subject_entry.configure(border_color="red",text_color="red")
             self.subject.configure(text_color="red",font=("Montserrat", 12)) 
             return
@@ -1414,11 +1412,11 @@ By clicking "Accept" or using the application, you confirm that you have read, u
         back_icon.place(x=25, y=15)
         back_icon.bind("<Button-1>", lambda e: self.display_signup()) # Bind Back function to the Back icon
 
-        self.intro_image=Image.open("gui/login/assets/email.png")
+        self.intro_image=Image.open(relative_to_assets("email.png"))
         self.intro_image=self.intro_image.resize((120,120),Image.Resampling.LANCZOS)
         self.reference_intro_image=ImageTk.PhotoImage(self.intro_image)
         intro_label=Label(background_frame,image=self.reference_intro_image,justify='center',bg='white')
-        intro_label.place(x=160, y=40)
+        intro_label.place(x=160, y=20)
 
         otp_heading_label1 = ctk.CTkLabel(
             background_frame,
@@ -1426,7 +1424,7 @@ By clicking "Accept" or using the application, you confirm that you have read, u
             font=("Montserrat Bold", 26),
             text_color="#333333",
         )
-        otp_heading_label1.place(relx=0.5, y=170, anchor="center")
+        otp_heading_label1.place(relx=0.5, y=150, anchor="center")
 
         otp_heading_label1 = ctk.CTkLabel(
             background_frame,
@@ -1434,7 +1432,16 @@ By clicking "Accept" or using the application, you confirm that you have read, u
             font=("Montserrat Bold", 26),
             text_color="#333333",
         )
-        otp_heading_label1.place(relx=0.5, y=200, anchor="center")
+        otp_heading_label1.place(relx=0.5, y=180, anchor="center")
+
+              # OTP Label
+        email_label = ctk.CTkLabel(
+            background_frame,
+            text=f"OTP sent to {email}",
+            font=("Montserrat Bold", 14),
+            text_color="green",
+        )
+        email_label.place(x=90, y=200)
     
         # OTP Label
         otp_label1 = ctk.CTkLabel(
@@ -1446,11 +1453,11 @@ By clicking "Accept" or using the application, you confirm that you have read, u
         otp_label1.place(x=90, y=235)
         otp_label2 = ctk.CTkLabel(
             background_frame,
-            text=f"to this {email} email address",
+            text=f"to your email address",
             font=("Montserrat Bold", 13),
             text_color="#5E95FF",
         )
-        otp_label2.place(x=100, y=255)
+        otp_label2.place(x=150, y=255)
 
         # OTP Entry
         self.otp_entry = ctk.CTkEntry(
@@ -1527,9 +1534,8 @@ By clicking "Accept" or using the application, you confirm that you have read, u
         if otp != getattr(self, "generated_otp", None):
             self.otp_entry.configure(border_color="red",text_color="red")
             return
-        messagebox.showinfo("OTP Verified", "OTP verified successfully!")
         if create_user(self.first_name, self.last_name, self.email, self.password):
-            messagebox.showinfo("Sign Up", "Account Created Successfully!")
+            messagebox.showinfo("Sign Up", "OTP Verified!Account Created Successfully.")
             self.display_login()
         else:
             messagebox.showerror("Error", "Failed to create account. Please try again!")

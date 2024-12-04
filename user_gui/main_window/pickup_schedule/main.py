@@ -1,5 +1,4 @@
 from pathlib import Path
-
 from tkinter import Frame, Canvas, Entry, Text, Button, PhotoImage, messagebox
 from controller import *
 import controller as db_controller

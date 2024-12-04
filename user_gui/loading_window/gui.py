@@ -35,7 +35,7 @@ class LoadingWindow(Toplevel):
         self.title("Login - Local Food Sharing App")
         self.geometry("508x625")
         self.configure(bg="#5E95FF")
-        center_window(self,508,625)
+        center_window(self,508,608)
 
        # Left Section with Canvas
         self.window_canvas = Canvas(
@@ -62,7 +62,7 @@ class LoadingWindow(Toplevel):
             font=("Montserrat Bold", 13,"bold"),  
             text_color="white",
         )
-        copyright_label.place(x=55, y=590)
+        copyright_label.place(x=55, y=580)
 
         self.status_label=ctk.CTkLabel(
             self,

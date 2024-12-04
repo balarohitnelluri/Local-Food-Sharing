@@ -75,21 +75,15 @@ def clear_preferences(self):
 
 
 
-
 def center_test(win):
-    """
-    Center a window on the screen.
-
-    :param win: The window (Tk or Toplevel) to center.
-    """
     win.update_idletasks()
-    width = win.winfo_width()
-    height = win.winfo_height()
+    screen_width = win.winfo_width()
+    screen_height = win.winfo_height()
     screen_width = win.winfo_screenwidth()
     screen_height = win.winfo_screenheight()
-    position_x = (screen_width // 2) - (width // 2)
-    position_y = (screen_height // 2) - (height // 2)
-    win.geometry(f"{width}x{height}+{position_x}+{position_y}")
+    position_x = (screen_width // 2) - (screen_width // 2)
+    position_y = (screen_height // 2) - (screen_height // 2)
+    win.geometry(f"{screen_width}x{screen_height}+{position_x}+{position_y}")
 
 
 
