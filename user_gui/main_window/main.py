@@ -14,6 +14,8 @@ from user_gui.main_window.pickup_schedule.main import Pickup_schedule
 from user_gui.main_window.notifications.main import Notification
 from user_gui.main_window.add_listing.main import AddFoodItem
 from user_gui.main_window.view_listing.main import SearchFood
+from user_gui.main_window.settings.settings_gui import Settings_Gui
+
 from .. import login
 from utils import center_window
 from PIL import Image,ImageTk
@@ -311,7 +313,7 @@ class MainWindow(Toplevel):
         self.hide_dropdown()
 
     def support(self):
-        print("Support clicked")
+        Settings_Gui(user_id)
         self.hide_dropdown()
 
     def expand_sidebar(self, event):

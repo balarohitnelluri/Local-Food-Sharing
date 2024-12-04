@@ -2,10 +2,7 @@ PILLOW==11.0.0
 mysql.connector==2.2.9
 matplotlib==3.2.0
 python_dotenv==1.0.1
-
-
-mysql-connector-python
-numpy
-matplotlib==3.2.0
-python_dotenv
-controller
+customtkinter==5.2.2
+tkcalender==1.6.1
+CTKMessagebox==2.7
+cryptography==44.0.0

@@ -1,6 +1,7 @@
 from pathlib import Path
 from tkinter import Frame, Canvas, Entry, Text, Button, PhotoImage, messagebox
 from controller import *
+import controller as db_controller
 import customtkinter as ctk
 
 OUTPUT_PATH = Path(__file__).parent
@@ -10,13 +11,11 @@ ASSETS_PATH = OUTPUT_PATH / Path("./assets")
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
-def start_settings_gui():
-        Settings_Gui()
-        ()
 
-class Settings_Gui(Frame):
-    def __init__(self, user_id, *args, **kwargs):
-        super().__init__( *args, **kwargs)
+class settings(Frame):
+    def __init__(self, parent, user_id, *args, **kwargs):
+        super().__init__(parent, *args, **kwargs)
+        self.parent = parent
         self.user_id = user_id
 
         # Outer tkinter Frame for wrapping
@@ -49,8 +48,6 @@ class Settings_Gui(Frame):
             text_color="#B3B3B3",
         )
         settings_label.place(x=91, y=38)
-
-        self.mainloop()
 
         
 

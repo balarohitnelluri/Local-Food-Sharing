@@ -2,6 +2,7 @@ import tkinter as tk
 from user_gui.loading_window.gui import loadingwindow
 from utils import executeScriptsFromFile
 
+#Hello Guru
 
 # Main function to integrate UI and database
 def main():
