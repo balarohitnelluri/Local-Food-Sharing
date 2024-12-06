@@ -38,9 +38,7 @@ class Profile_Completion(Frame):
         self.user_details=user_details
         self.main_window = main_window
         self.configure(bg="white")  # Debug background for visibility
-        print("profile",self.user_details)
 
-        print(f"Profile Parent type: {type(self.parent)}, {type(self)}")
         # Create a container frame in MainWindow
         self.sub_container = Frame(self, bg="white", width=937, height=506)
         self.sub_container.place(x=0, y=0)  # Positioned next to the sidebar
@@ -219,10 +217,10 @@ class Profile_Completion(Frame):
         #Phone_number_entry
         self.phone_number_entry = ctk.CTkEntry(
             self.data_frame,
-            width=110,
+            width=125,
             height=18,
             font=("Montserrat", 11),
-            placeholder_text="Enter your Phone Number",
+            placeholder_text="Enter your Phone No",
             border_color="#D2D2D2",
             border_width=1,
             corner_radius=5,
@@ -306,8 +304,6 @@ class Profile_Completion(Frame):
         self.dob=self.selected_date
         self.phone_number=self.phone_number_entry.get().strip()
         self.gender=self.gender_dropdown.get()
-        print(self.dob,self.phone_number,self.gender)
-
         gender_validation=validation(gender=self.gender)
 
         if gender_validation is not None:
@@ -396,7 +392,7 @@ class Profile_Completion(Frame):
             text_color="#CACACA",
    
         )
-        address1_label.place(x=275, y=95)
+        address1_label.place(x=255, y=95)
 
         #address1_entry
         self.address1_entry = ctk.CTkEntry(
@@ -472,7 +468,7 @@ class Profile_Completion(Frame):
             text_color="#CACACA",
    
         )
-        state_label.place(x=490, y=152)
+        state_label.place(x=515, y=152)
         
 
         #state_entry
@@ -488,7 +484,30 @@ class Profile_Completion(Frame):
             placeholder_text_color="black"
         )
         self.state_entry.place(x=490, y=182)
-    
+
+        #zipcode_label
+        zipcode_label = ctk.CTkLabel(
+            self.data_frame,
+            text="ZIPCode*",
+            font=("Montserrat Bold", 14, "bold"),
+            text_color="#CACACA",
+   
+        )
+        zipcode_label.place(x=270, y=215)    
+
+        #zipcode_entry
+        self.zipcode_entry = ctk.CTkEntry(
+            self.data_frame,
+            width=110,
+            height=18,
+            font=("Montserrat", 10),
+            placeholder_text="Enter ZIPCode",
+            border_color="#D2D2D2",
+            border_width=1,
+            corner_radius=5,
+            placeholder_text_color="black"
+        )
+        self.zipcode_entry.place(x=250, y=245)
 
         #country_label
         country_label = ctk.CTkLabel(
@@ -498,7 +517,7 @@ class Profile_Completion(Frame):
             text_color="#CACACA",
    
         )
-        country_label.place(x=490, y=215)
+        country_label.place(x=510, y=215)
         
 
         #country_entry
@@ -515,29 +534,6 @@ class Profile_Completion(Frame):
         )
         self.country_entry.place(x=490, y=245)
 
-        #zipcode_label
-        zipcode_label = ctk.CTkLabel(
-            self.data_frame,
-            text="ZIPCode*",
-            font=("Montserrat Bold", 14, "bold"),
-            text_color="#CACACA",
-   
-        )
-        zipcode_label.place(x=280, y=215)    
-
-        #zipcode_entry
-        self.zipcode_entry = ctk.CTkEntry(
-            self.data_frame,
-            width=110,
-            height=18,
-            font=("Montserrat", 10),
-            placeholder_text="Enter ZIPCode",
-            border_color="#D2D2D2",
-            border_width=1,
-            corner_radius=5,
-            placeholder_text_color="black"
-        )
-        self.zipcode_entry.place(x=250, y=245)
 
         next_button = ctk.CTkButton(
             self.data_frame,
@@ -655,16 +651,16 @@ class Profile_Completion(Frame):
 
         )
         self.profile_completion_window.title("Profile Completion")
-        self.profile_completion_window.geometry("600X100")
-        center_window(self.profile_completion_window, 600, 100)
+        self.profile_completion_window.geometry("300X100")
+        center_window(self.profile_completion_window, 300, 100)
 
         completion_label = ctk.CTkLabel(
             self.profile_completion_window,
-            text="Sucessfully updated your profile! Let's Go!",
-            font=("Montserrat Bold", 12,"bold"),
+            text="Sucessfully updated!",
+            font=("Montserrat Bold", 14,"bold"),
             text_color="#848484",
         )
-        completion_label.place(x=100, y=25)
+        completion_label.place(x=80, y=15)
         
         lets_go_button = ctk.CTkButton(
         self.profile_completion_window,
@@ -680,7 +676,7 @@ class Profile_Completion(Frame):
         command=self.return_to_dashboard,
         font=("Montserrat Bold", 11,"bold"),
         )
-        lets_go_button.place(x=250, y=60)
+        lets_go_button.place(x=115, y=60)
         
     def return_to_dashboard(self):
         # Use the main_window reference to go back to the Dashboard

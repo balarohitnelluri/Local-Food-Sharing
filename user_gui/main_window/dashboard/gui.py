@@ -23,7 +23,6 @@ class Dashboard(Frame):
         self.parent = parent
         self.configure(bg="white")
         self.place(x=75,y=0)
-        print(f" Dashboard Parent type: {type(self.parent)}, {type(self)}")
         
       
         canvas = Canvas(

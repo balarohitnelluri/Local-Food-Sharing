@@ -41,7 +41,7 @@ class MainWindow(Toplevel):
 
         # User-specific information
         self.user_id = user_id
-        self.user_details=get_user_info_id(self.user_id)
+        self.user_details=self.update_data()
         self.profile_completion=bool(self.user_details[14])
         # Configure main window
         self.title("Local Food Sharing App")
@@ -197,21 +197,7 @@ class MainWindow(Toplevel):
         # Add the toggle circle
         self.toggle_circle = self.toggle_canvas.create_oval(32, 16, 55, 40, fill="white", outline="lightgrey")
 
-        #profile
-        # Create a canvas to design the round button
-        self.profile = Canvas(self, width=35, height=35, bg="white", highlightthickness=0,)
-        self.profile.place(x=940, y=10)
 
-        # Create the round button
-        self.round_button = self.profile.create_oval(0, 0, 35, 35, fill="#0078D7", outline="")
-        self.profile.create_text(17.5, 17.5, text="B", fill="white", font=("Arial", 12, "bold"))
-
-         # Bind hover events
-        self.profile.bind("<Enter>", self.show_dropdown)
-        self.profile.bind("<Leave>", self.start_hide_dropdown_timer)
-
-        # Dropdown menu container
-        self.dropdown_menu = None
 
         # Bind the toggle functionality
         self.toggle_canvas.tag_bind(self.bg_item, "<Button-1>", self.toggle)
@@ -233,6 +219,7 @@ class MainWindow(Toplevel):
 
         # Main window setup
         self.resizable(False, False)
+        self.show_profile_icon()
         self.hide_dropdown()
         self.mainloop()
 
@@ -279,6 +266,24 @@ class MainWindow(Toplevel):
             # Bind hover events to the dropdown menu
             self.dropdown_menu.bind("<Enter>", self.cancel_hide_dropdown_timer)
             self.dropdown_menu.bind("<Leave>", self.start_hide_dropdown_timer)
+
+    def show_profile_icon(self):
+        #profile
+        # Create a canvas to design the round button
+        self.user_firstname=self.user_details[1]
+        self.profile = Canvas(self, width=35, height=35, bg="white", highlightthickness=0,)
+        self.profile.place(x=940, y=10)
+
+        # Create the round button
+        self.round_button = self.profile.create_oval(0, 0, 35, 35, fill="#0078D7", outline="")
+        self.profile.create_text(17.5, 17.5, text=f"{self.user_firstname[0]}", fill="white", font=("Arial", 12, "bold"))
+
+         # Bind hover events
+        self.profile.bind("<Enter>", self.show_dropdown)
+        self.profile.bind("<Leave>", self.start_hide_dropdown_timer)
+
+        # Dropdown menu container
+        self.dropdown_menu = None
 
     def start_hide_dropdown_timer(self, event=None):
         """Start a timer to hide the dropdown after a delay."""
@@ -339,7 +344,8 @@ class MainWindow(Toplevel):
             elif name == "spu":
                 self.windows["spu"] = SearchFood(self.container, self.user_id)
             elif name == "set":
-                self.windows["set"] = Settings_GUI(self.container, self.user_id)
+                self.windows["set"] = Settings_GUI(self.container, self.user_id,self)
+                self.sidebar_indicator.place_forget()
             else:
                 print(f"Unknown window name: {name}")
                 return
@@ -350,6 +356,12 @@ class MainWindow(Toplevel):
             self.current_window.place(x=0, y=0, width=937, height=506.0)
         else:
             print(f"Failed to load window: {name}")
+   
+    def update_data(self):
+        self.user_details=get_user_info_id(self.user_id)
+        self.show_profile_icon()
+        return self.user_details
+
 
     def update_profile_completion(self):
         if self.profile_completion is False:

@@ -12,7 +12,7 @@ import sqlite3
 from sqlite3 import OperationalError
 from cryptography.fernet import Fernet
 import os
-from datetime import datetime
+from datetime import datetime,date
 
 
 
@@ -381,7 +381,7 @@ def validation(**kwargs):
         password=kwargs.get('password',None)
         name=kwargs.get('name',None)
         phone=kwargs.get('phone', None)
-        date=kwargs.get('date',None)
+        date_input=kwargs.get('date',None)
         gender=kwargs.get('gender',None)
         address1=kwargs.get('address1',None)
         city=kwargs.get('city',None)
@@ -411,12 +411,12 @@ def validation(**kwargs):
 
     #Name Validation
     if name is not None:
-        name_validation=re.match("^[a-zA-Z]*$",name)
+        name_validation=re.match("^[a-zA-Z\s]+$", name.strip())
         try:
             if name_validation is None :
                 raise ValueError("Please enter only 'Alphabets'") 
             if name==None or name=="":
-                raise NameError("Enter Value")
+                raise NameError("Shouldn't be empty, please enter your Name")
         except NameError as empty_value:
             return empty_value
         except ValueError as invalid_name:
@@ -435,14 +435,19 @@ def validation(**kwargs):
         except ValueError as invalid_name:
             return  invalid_name
     
-    #Date Validation    
-    if date is not None:
-        date_format="%m-%d-%Y"
+    if date_input is not None:
+        date_format = "%m-%d-%Y"
         try:
-            if datetime.strptime(date,date_format) is False:
-                raise ValueError("Please select date")
-        except ValueError as date_notselected:
-            return date_notselected
+            # Ensure the input is a string; if it's a `date`, format it
+            if isinstance(date_input, date):  # `date` is correctly referenced
+                date_input = date_input.strftime(date_format)
+
+            # Attempt to parse the date
+            datetime.strptime(date_input, date_format)
+            return None  # Date is valid
+        except ValueError:
+            return "Please select a valid date"
+
         
 
     #gender Validation    
