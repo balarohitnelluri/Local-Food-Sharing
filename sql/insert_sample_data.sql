@@ -1,7 +1,7 @@
 INSERT INTO users (first_name, last_name, email, password)
                 VALUES 
                 ('John', 'Doe', 'john.doe@example.com', SHA2('password123', 256)),
-                ('Jane', 'Smith', 'jane.smith@example.com', SHA2('mypassword', 256));
+                ('Jane', 'Smith', 'jane.smith@example.com', SHA2('password123', 256));
 
 INSERT INTO food_listings (food_type, quantity, expiration_date, location, pincode, user_id)
                 VALUES 
@@ -11,7 +11,7 @@ INSERT INTO food_listings (food_type, quantity, expiration_date, location, pinco
 INSERT INTO pickups (user_id, listing_id, pickup_time, status)
                 VALUES 
                 (1, 1, '2024-11-25 10:00', 'pending'),
-                (2, 2, '2024-11-26 14:00', 'approved')
+                (2, 2, '2024-11-26 14:00', 'approved');
 
 INSERT INTO reports (report_name, generated_by)
                 VALUES 

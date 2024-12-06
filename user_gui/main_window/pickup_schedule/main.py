@@ -23,7 +23,7 @@ class Pickup_schedule(Frame):
         self.parent = parent
         self.selected_rid = None
         self.reservation_data = db_controller.get_listing_details(user_id = user_id)
-
+        
         self.configure(bg="#FFFFFF")
 
         # Loop through windows and place them

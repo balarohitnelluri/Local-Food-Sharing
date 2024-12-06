@@ -1,10 +1,18 @@
-
 CREATE TABLE IF NOT EXISTS users (
         user_id INT NOT NULL AUTO_INCREMENT,
         first_name VARCHAR(100) NOT NULL,
         last_name VARCHAR(100) NOT NULL,
         email VARCHAR(100) NOT NULL UNIQUE,
+        gender varchar(10) NOT NULL DEFAULT "unknown",
+        age int NOT NULL DEFAULT 0,
+        phone int NOT NULL DEFAULT 0,
+        address_1 varchar(200) NOT NULL DEFAULT "unknown",
+        address_2 varchar(200) NULL,
+        city varchar(100) NOT NULL DEFAULT "unknown",
+        country varchar(100) NOT NULL DEFAULT "unknown",
+        zipcode  INT NOT NULL DEFAULT 0,
         password VARCHAR(255) NOT NULL,
+        profile_completion boolean default FALSE,
         date_registered TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         PRIMARY KEY (user_id)
     );

@@ -1,8 +1,9 @@
+customtkinter==5.2.2
 PILLOW==11.0.0
 mysql.connector==2.2.9
-matplotlib==3.2.0
+matplotlib
 python_dotenv==1.0.1
-customtkinter==5.2.2
-tkcalender==1.6.1
-CTKMessagebox==2.7
+tkcalendar
+ctkmessagebox==2.7
 cryptography==44.0.0
+requests

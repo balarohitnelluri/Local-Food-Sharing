@@ -21,9 +21,11 @@ class Dashboard(Frame):
     def __init__(self, parent, controller=None, *args, **kwargs):
         Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
-
-        self.configure(bg="#FFFFFF")
-
+        self.configure(bg="white")
+        self.place(x=75,y=0)
+        print(f" Dashboard Parent type: {type(self.parent)}, {type(self)}")
+        
+      
         canvas = Canvas(
             self,
             bg="#FFFFFF",
@@ -34,7 +36,8 @@ class Dashboard(Frame):
             relief="ridge",
         )
 
-        canvas.place(x=0, y=0)
+        canvas.place(x=0,y=0)
+
         canvas.entry_image_1 = PhotoImage(file=relative_to_assets("entry_1.png"))
         entry_bg_1 = canvas.create_image(115.0, 81.0, image=canvas.entry_image_1)
         entry_1 = Entry(

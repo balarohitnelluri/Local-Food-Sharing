@@ -12,6 +12,7 @@ import sqlite3
 from sqlite3 import OperationalError
 from cryptography.fernet import Fernet
 import os
+from datetime import datetime
 
 
 
@@ -254,6 +255,34 @@ def get_user_info(email):
     conn.close()
     return user_info
 
+# Retrieve user information by email
+def get_user_info_id(id):
+    
+    # Connect to the database
+    conn = connect_to_database()
+    cursor = conn.cursor()
+
+    query = "SELECT * FROM users WHERE user_id = %s"
+    cursor.execute(query, (id,))
+    user_info = cursor.fetchone()
+    conn.close()
+    return user_info
+
+def update_users_table(query_from, values):
+    conn = connect_to_database()  # Get the connection
+    cursor = conn.cursor()  # Create the cursor object
+
+    query = query_from
+    
+    try:
+        cursor.execute(query, values)  # Execute the query
+        conn.commit()  # Commit the transaction using the connection object
+    except Exception as e:
+        print(f"Error occurred: {e}")
+    finally:
+        cursor.close()  # Always close the cursor
+        conn.close()  # Always close the connection
+
 
 # Fetch all available food listings
 def get_food_listings():
@@ -350,8 +379,16 @@ def validation(**kwargs):
     for key,value in kwargs.items():
         email=kwargs.get('email',None)
         password=kwargs.get('password',None)
-        address=kwargs.get('address',None)
         name=kwargs.get('name',None)
+        phone=kwargs.get('phone', None)
+        date=kwargs.get('date',None)
+        gender=kwargs.get('gender',None)
+        address1=kwargs.get('address1',None)
+        city=kwargs.get('city',None)
+        state=kwargs.get('state',None)
+        zipcode=kwargs.get('zipcode',None)
+        country=kwargs.get('country',None)
+        
 
     #Email Validation
     if email is not None:
@@ -383,7 +420,66 @@ def validation(**kwargs):
         except NameError as empty_value:
             return empty_value
         except ValueError as invalid_name:
-            return invalid_name
+            return  invalid_name
+    
+    #Phone number validation
+    if phone is not None:
+        pattern = re.compile(r"^\d{10}$")  # E.164 format: +123456789 or 123456789
+        try:
+            if pattern.fullmatch(phone) is None:
+                raise ValueError("Please enter valid phone number")
+            elif phone==None or phone=="":
+                 raise NameError("Please enter a phone number") 
+        except NameError as empty_value:
+            return empty_value
+        except ValueError as invalid_name:
+            return  invalid_name
+    
+    #Date Validation    
+    if date is not None:
+        date_format="%m-%d-%Y"
+        try:
+            if datetime.strptime(date,date_format) is False:
+                raise ValueError("Please select date")
+        except ValueError as date_notselected:
+            return date_notselected
+        
+
+    #gender Validation    
+    if gender is not None:
+        gender_list=["Male","Female","Other"]
+        try:
+            if gender not in gender_list:
+                raise ValueError("Please select gender")
+        except ValueError as gender_notselected:
+            return gender_notselected
+        
+    #Address1 Validation
+    if address1 is not None:
+        if not address1 or len(address1) < 3:
+            return "Invalid Address #1. Must be at least 3 characters."
+    
+    #city Validation
+    if city is not None:
+        if not re.match(r"^[A-Za-z\s]+$", city):
+            return "Invalid city. Use only letters and spaces."
+        
+    #state Validation
+    if state is not None:
+        if not re.match(r"^[A-Za-z\s]{2,}$", state):
+            return "Invalid state. Use only letters (2+ characters)." 
+    
+    #country Validation
+    if country is not None:
+        if not re.match(r"^[A-Za-z\s]+$", country):
+            return "Invalid country. Use only letters and spaces."
+        
+    #Zipcode Validation
+    if zipcode is not None:
+        if not re.match(r"^\d{5}(-\d{4})?$", zipcode):
+            return "Invalid zip code. Use format: 12345 or 12345-6789."
+    
+
         
 
 def executeScriptsFromFile(filename):

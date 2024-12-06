@@ -48,6 +48,10 @@ class settings(Frame):
             text_color="#B3B3B3",
         )
         settings_label.place(x=91, y=38)
+        
+
+ 
+        
 
         
 

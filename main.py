@@ -2,8 +2,6 @@ import tkinter as tk
 from user_gui.loading_window.gui import loadingwindow
 from utils import executeScriptsFromFile
 
-#Hello Guru, How are you?
-
 # Main function to integrate UI and database
 def main():
     
@@ -15,13 +13,13 @@ def main():
     #     print(f"Error initializing database: {e}")
 
     # Initialize the Tkinter root window
-    root = tk.Tk()
-    root.withdraw()  # Hide the root window initially
+        root = tk.Tk()
+        root.withdraw()  # Hide the root window initially
 
     # Instantiate the loading screen
-    loadingwindow()
+        loadingwindow()
     
-    root.mainloop()
+        root.mainloop()
 
 # Entry point
 if __name__ == "__main__":

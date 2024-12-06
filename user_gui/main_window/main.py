@@ -14,10 +14,13 @@ from user_gui.main_window.pickup_schedule.main import Pickup_schedule
 from user_gui.main_window.notifications.main import Notification
 from user_gui.main_window.add_listing.main import AddFoodItem
 from user_gui.main_window.view_listing.main import SearchFood
-from user_gui.main_window.settings.settings_gui import Settings_Gui
+from user_gui.main_window.settings.settings_gui import Settings_GUI
+from user_gui.main_window.profile_completion.gui import Profile_Completion
+import customtkinter as ctk  
+
 
 from .. import login
-from utils import center_window
+from utils import center_window,get_user_info_id
 from PIL import Image,ImageTk
 
 OUTPUT_PATH = Path(__file__).parent
@@ -38,9 +41,8 @@ class MainWindow(Toplevel):
 
         # User-specific information
         self.user_id = user_id
-        # self.navbar_expanded = True  # Tracks sidebar state
-        
-
+        self.user_details=get_user_info_id(self.user_id)
+        self.profile_completion=bool(self.user_details[14])
         # Configure main window
         self.title("Local Food Sharing App")
         self.geometry("1012x506")
@@ -72,23 +74,27 @@ class MainWindow(Toplevel):
         self.sidebar_indicator = Frame(self, background="#FFFFFF")
         self.sidebar_indicator.place(x=0, y=133, height=47, width=7)
 
-        #Images for the dropdown box
+        # Create a container frame in MainWindow
+        self.container = Frame(self, bg="white", width=937, height=506)
+        self.container.place(x=75, y=0)  # Positioned next to the sidebar
+
         self.account_settings_icon= PhotoImage(file=relative_to_assets("Settings_button.png"))
         self.support_icon=PhotoImage(file=relative_to_assets("support.png"))
         self.logout_icon=PhotoImage(file=relative_to_assets("logout.png"))
         self.collaped_logo=PhotoImage(file=relative_to_assets("logo_collapsed.png"))
         self.logo_with_label=PhotoImage(file=relative_to_assets("logo_with_label.png"))
+        
         self.logo_btn = Button(
             self.canvas,
-            image=self.logo_with_label,
+            image=self.collaped_logo,
             borderwidth=0,
             highlightthickness=0,
-            background="#5E95FF",
+            #background="#5E95FF",
             command=lambda: self.handle_btn_press(self.dashboard_btn, "dash"),
-            cursor='hand2', activebackground="#5E95FF",
+            cursor='hand2', #activebackground="#5E95FF",
             relief="flat",
         )
-        self.logo_btn.place(x=2,y=13,width=212,height=60)
+        self.logo_btn.place(x=2,y=13,width=75,height=75)
         self.logo_btn.bind("<Enter>", self.expand_sidebar)
         self.logo_btn.bind("<Leave>", self.collapse_sidebar)
 
@@ -135,7 +141,7 @@ class MainWindow(Toplevel):
             relief="flat",
         )
 
-        self.schedule_pickup_btn.place(x=29, y=250, width=167, height=56.0)
+        self.schedule_pickup_btn.place(x=24, y=245, width=167, height=56.0)
         self.schedule_pickup_btn.bind("<Enter>", self.expand_sidebar)
         self.schedule_pickup_btn.bind("<Leave>", self.collapse_sidebar)
 
@@ -171,20 +177,21 @@ class MainWindow(Toplevel):
 
         # Loop through windows and pass user_id
         self.windows = {
-            "dash": Dashboard(self),
-            "adi": AddFoodItem(self, self.user_id),
-            "gue": Pickup_schedule(self, self.user_id),
-            "not": Notification(self, self.user_id),
-            "spu": SearchFood(self, self.user_id),
+            "dash": Dashboard(self.container),
+            "adi": AddFoodItem(self.container, self.user_id),
+            "gue": Pickup_schedule(self.container, self.user_id),
+            "not": Notification(self.container, self.user_id),
+            "spu": SearchFood(self.container, self.user_id),
+
         }
 
         # Load the background image
-        self.bg_image_user = ImageTk.PhotoImage(Image.open("/Users/nellu/Desktop/BIS698/Capestone Project/Food_sharing_new_ui/user_gui/main_window/assets/user_toggle.png"))  # Path to "User" rectangle image
-        self.bg_image_admin = ImageTk.PhotoImage(Image.open("/Users/nellu/Desktop/BIS698/Capestone Project/Food_sharing_new_ui/user_gui/main_window/assets/admin_toggle.png"))  # Path to "Admin" rectangle image
+        self.bg_image_user = ImageTk.PhotoImage(Image.open(relative_to_assets("user_toggle.png")))  # Path to "User" rectangle image
+        self.bg_image_admin = ImageTk.PhotoImage(Image.open(relative_to_assets("admin_toggle.png")))  # Path to "Admin" rectangle image
 
         # Create a canvas to display the toggle
         self.toggle_canvas = Canvas(self, width=100,height=46, highlightthickness=0,background="white")
-        self.toggle_canvas.place(x=821, y=0)
+        #self.toggle_canvas.place(x=821, y=0)
         # Add the initial background image
         self.bg_item = self.toggle_canvas.create_image(65, 28, image=self.bg_image_user)
         # Add the toggle circle
@@ -197,7 +204,7 @@ class MainWindow(Toplevel):
 
         # Create the round button
         self.round_button = self.profile.create_oval(0, 0, 35, 35, fill="#0078D7", outline="")
-        self.profile.create_text(17.5, 17.5, text="R", fill="white", font=("Arial", 12, "bold"))
+        self.profile.create_text(17.5, 17.5, text="B", fill="white", font=("Arial", 12, "bold"))
 
          # Bind hover events
         self.profile.bind("<Enter>", self.show_dropdown)
@@ -209,31 +216,39 @@ class MainWindow(Toplevel):
         # Bind the toggle functionality
         self.toggle_canvas.tag_bind(self.bg_item, "<Button-1>", self.toggle)
         self.toggle_canvas.tag_bind(self.toggle_circle, "<Button-1>", self.toggle)
-        self.handle_btn_press(self.dashboard_btn, "dash")
+
+        if self.profile_completion is False:
+            if "pr" not in self.windows:
+                print(f"Parent type: {type(self.container)},")
+                self.windows["pr"] = Profile_Completion(self.container, self.user_details,self)
+                self.sidebar_indicator.place_forget()
+                self.windows["pr"].place(x=0, y=0, width=937, height=506.0)
+        else:
+            self.handle_btn_press(self.dashboard_btn, "dash")
+
         #self.collapse_sidebar("leave")
 
         #Initial Navbar position
         self.sidebar_indicator.place(x=0, y=116)
 
         # Main window setup
-        self.current_window.place(x=215, y=72, width=1013.0, height=506.0)
         self.resizable(False, False)
         self.hide_dropdown()
         self.mainloop()
 
+    
+
     def show_dropdown(self, event=None):
-        """Show the dropdown menu."""
         if not self.dropdown_menu:
             self.dropdown_menu = Frame(self, bg="white", relief="flat", bd=2)
             self.dropdown_menu.place(x=850, y=50, width=150)
-
 
             self.account_settings_button = Button(
             self.dropdown_menu,
             image=self.account_settings_icon,
             borderwidth=0,
             highlightthickness=0,
-            #command=lambda: self.handle_btn_press(self.account_settings, "not"),
+            command=lambda: self.handle_btn_press(self.account_settings_button, "set"),
             cursor='hand2', activebackground="white",
             relief="flat",
         )
@@ -298,22 +313,56 @@ class MainWindow(Toplevel):
         pass  # Do nothing to keep the dropdown open
 
     def handle_btn_press(self, caller, name):
-        # Place the sidebar on respective button
-        self.sidebar_indicator.place(x=0, y=caller.winfo_y())
-        # Hide all screens
-        for window in self.windows.values():
-            window.place_forget()
-        # Set current Window
-        self.current_window = self.windows.get(name)
-        # Show the screen of the button pressed
-        self.windows[name].place(x=215, y=72, width=1013.0, height=506.0)
+    # Check if caller is valid
+        if caller and hasattr(caller, "winfo_y"):
+            self.sidebar_indicator.place(x=0, y=caller.winfo_y())
+        else:
+            # Handle cases where caller is None
+            print(f"Caller is invalid: {caller}")
+            self.sidebar_indicator.place_forget()
 
-    def account_settings(self):
-        print("Account Settings clicked")
-        self.hide_dropdown()
+        # Hide all current windows
+        for window in self.windows.values():
+            if window and window.winfo_exists():
+                window.place_forget()
+
+        # Lazy-load screens if not already loaded
+        if name not in self.windows:
+            if name == "dash":
+                self.windows["dash"] = Dashboard(self.container)
+            elif name == "adi":
+                self.windows["adi"] = AddFoodItem(self.container, self.user_id)
+            elif name == "gue":
+                self.windows["gue"] = Pickup_schedule(self.container, self.user_id)
+            elif name == "not":
+                self.windows["not"] = Notification(self.container, self.user_id)
+            elif name == "spu":
+                self.windows["spu"] = SearchFood(self.container, self.user_id)
+            elif name == "set":
+                self.windows["set"] = Settings_GUI(self.container, self.user_id)
+            else:
+                print(f"Unknown window name: {name}")
+                return
+
+        # Set and display the current window
+        self.current_window = self.windows.get(name)
+        if self.current_window:
+            self.current_window.place(x=0, y=0, width=937, height=506.0)
+        else:
+            print(f"Failed to load window: {name}")
+
+    def update_profile_completion(self):
+        if self.profile_completion is False:
+            if "pr" not in self.windows:
+                print(f"Parent type: {type(self.container)},")
+                self.windows["pr"] = Profile_Completion(self.container, self.user_details,self)
+                self.sidebar_indicator.place_forget()
+                self.windows["pr"].place(x=0, y=0, width=937, height=506.0)
+        else:
+            self.handle_btn_press(self.dashboard_btn, "dash")
 
     def support(self):
-        Settings_Gui(user_id)
+        
         self.hide_dropdown()
 
     def expand_sidebar(self, event):
@@ -321,21 +370,22 @@ class MainWindow(Toplevel):
             self.canvas.configure(width=215)
             self.logo_btn.place_configure(x=2,y=13,width=212,height=60,)
             self.logo_btn.config(image=self.logo_with_label)
+            self.container.lower()
 
             #Buttons
             self.dashboard_btn.place_configure(x=29, y=116, width=167, height=36)
             self.dashboard_btn.config(image=self.dashboard_icon_extended)
 
-            self.add_listing_btn.place_configure(x=29, y=182, width=167, height=36)
+            self.add_listing_btn.place_configure(x=25, y=182, width=167, height=36)
             self.add_listing_btn.config(image=self.donate_extended)
 
-            self.schedule_pickup_btn.place_configure(x=29, y=250, width=167, height=56.0)
+            self.schedule_pickup_btn.place_configure(x=23, y=250, width=167, height=56.0)
             self.schedule_pickup_btn.config(image=self.pickup_extended)
 
             self.community_btn.place_configure(x=31, y=335, width=167, height=32)
             self.community_btn.config(image=self.community_icon_extended)
 
-            self.notifications_btn.place_configure(x=32, y=417, width=167, height=26)
+            self.notifications_btn.place_configure(x=32, y=415, width=167, height=26)
             self.notifications_btn.config(image=self.notifications_icon_extended)  
 
     def collapse_sidebar(self, event):
