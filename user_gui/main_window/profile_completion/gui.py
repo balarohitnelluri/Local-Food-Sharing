@@ -645,7 +645,9 @@ class Profile_Completion(Frame):
                 self.user_details[0] 
             )
 
-            update_users_table(query,values)
+        update_users_table(query,values)
+        
+        self.main_window.update_data()
         
         self.profile_completion_window=ctk.CTkToplevel(self.data_frame, width=600, height=100, fg_color= 'white'
 
@@ -661,6 +663,8 @@ class Profile_Completion(Frame):
             text_color="#848484",
         )
         completion_label.place(x=80, y=15)
+        
+        
         
         lets_go_button = ctk.CTkButton(
         self.profile_completion_window,
@@ -678,10 +682,12 @@ class Profile_Completion(Frame):
         )
         lets_go_button.place(x=115, y=60)
         
+
+        
     def return_to_dashboard(self):
         # Use the main_window reference to go back to the Dashboard
         self.destroy()
-        self.main_window.handle_btn_press(self.main_window.dashboard_btn, "dash")
+        self.main_window.update_profile_completion()
         
         
 

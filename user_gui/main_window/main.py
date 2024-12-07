@@ -16,6 +16,7 @@ from user_gui.main_window.add_listing.main import AddFoodItem
 from user_gui.main_window.view_listing.main import SearchFood
 from user_gui.main_window.settings.settings_gui import Settings_GUI
 from user_gui.main_window.profile_completion.gui import Profile_Completion
+from user_gui.main_window.support.gui import Support_Gui
 import customtkinter as ctk  
 
 
@@ -246,7 +247,7 @@ class MainWindow(Toplevel):
             image=self.support_icon,
             borderwidth=0,
             highlightthickness=0,
-            #command=lambda: self.handle_btn_press(self.supp, "not"),
+            command=lambda: self.handle_btn_press(self.support_button, "sup"), 
             cursor='hand2', activebackground="white",
             relief="flat",
         )
@@ -325,6 +326,39 @@ class MainWindow(Toplevel):
             # Handle cases where caller is None
             print(f"Caller is invalid: {caller}")
             self.sidebar_indicator.place_forget()
+         
+        if self.profile_completion is False:
+            self.sidebar_indicator.place_forget()
+            self.profile_completion_window=ctk.CTkToplevel(self, width=600, height=100, fg_color= 'white'
+            )
+            self.profile_completion_window.title("Profile Completion")
+            self.profile_completion_window.geometry("600X100")
+            center_window(self.profile_completion_window, 600, 100)
+
+            completion_label = ctk.CTkLabel(
+                self.profile_completion_window,
+                text="We know you’re in a hurry, but even superheroes fill out their profiles first.",
+                font=("Montserrat Bold", 12,"bold"),
+                text_color="#848484",
+            )
+            completion_label.place(x=70, y=25)
+            
+            lets_go_button = ctk.CTkButton(
+            self.profile_completion_window,
+            text="Let’s do it!",
+            width=70,
+            height=30,
+            corner_radius=5,
+            fg_color="#6C9FFF",
+            text_color="white",
+            hover_color="#5E95FF",
+            border_color="#6C9FFF",
+            border_width=1,
+            command=self.profile_completion_window.destroy,
+            font=("Montserrat Bold", 11,"bold"),
+            )
+            lets_go_button.place(x=250, y=60)
+            return
 
         # Hide all current windows
         for window in self.windows.values():
@@ -346,6 +380,9 @@ class MainWindow(Toplevel):
             elif name == "set":
                 self.windows["set"] = Settings_GUI(self.container, self.user_id,self)
                 self.sidebar_indicator.place_forget()
+            elif name == "sup":
+                self.windows['sup'] = Support_Gui(self.container,self.user_id,self)
+                self.sidebar_indicator.place_forget()
             else:
                 print(f"Unknown window name: {name}")
                 return
@@ -364,14 +401,8 @@ class MainWindow(Toplevel):
 
 
     def update_profile_completion(self):
-        if self.profile_completion is False:
-            if "pr" not in self.windows:
-                print(f"Parent type: {type(self.container)},")
-                self.windows["pr"] = Profile_Completion(self.container, self.user_details,self)
-                self.sidebar_indicator.place_forget()
-                self.windows["pr"].place(x=0, y=0, width=937, height=506.0)
-        else:
-            self.handle_btn_press(self.dashboard_btn, "dash")
+        self.profile_completion=self.user_details[14]
+        self.handle_btn_press(self.dashboard_btn, "dash")
 
     def support(self):
         

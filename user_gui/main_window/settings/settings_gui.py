@@ -1,8 +1,9 @@
 from tkcalendar import Calendar
-from utils import center_window,validation,get_user_info_id,update_users_table
+from utils import center_window,validation,get_user_info_id,update_users_table,send_email
 from datetime import date,datetime
 from dateutil.relativedelta import relativedelta
 from tkinter import Frame
+from controller import *
 import customtkinter as ctk
 from pathlib import Path
 from tkinter import (
@@ -13,8 +14,13 @@ from tkinter import (
     StringVar,
     ttk,
     Frame,
+    messagebox
     
 )
+from tkinter import PhotoImage, Label
+from PIL import ImageTk, Image
+import hashlib
+import random
 
 
 
@@ -84,7 +90,7 @@ class Settings_GUI(Frame):
         self.account_btn = ctk.CTkButton(
             self.side_frame,
             text="Account",
-            command=self.account_gui,
+            command=self.account_ui,
             width=168,
             height=50,
             corner_radius=0,
@@ -928,8 +934,6 @@ class Settings_GUI(Frame):
             self.zipcode_entry.configure(font=("Montserrat", 11),border_color="#D2D2D2",text_color="black")
             self.error2_label.configure(text=zipcode_validation,text_color="white")
 
-        print(self.address_2_data)
-
         if self.address_2_data is None or self.address_2_data == "":
 
             query = """UPDATE users 
@@ -967,22 +971,531 @@ class Settings_GUI(Frame):
         self.user_details=get_user_info_id(self.user_id)
         return self.user_details
     
-
-
-
-
-
-
-        
-
-        
-
     
-    def account_gui(self):
+    def account_ui(self):
         self.first_profile_frame.place_forget()
         self.second_profile_frame.place_forget()
         self.third_profile_frame.place_forget()
         # self.profile_btn.configure(state="enable",fg_color="#FFFFFF", text_color="#B3B3B3",hover_color="#F2F2F2")
+        #Second Profile information frame
+        self.account_center_frame = ctk.CTkFrame(
+            self.center_frame,
+            width=736,
+            height=365,
+            fg_color="white",
+            bg_color="white",
+        )
+        self.account_center_frame.place(x=18, y=10)
+
+        self.email_label = ctk.CTkLabel(
+            self.account_center_frame,
+            text="Email:",
+            font=("Montserrat Bold", 16, "bold"),
+            text_color="#848484",
+   
+        )
+        self.email_label.place(x=212, y=39)
+
+
+        self.email_data=self.user_details[3]
+        self.email_label_data = ctk.CTkLabel(
+            self.account_center_frame,
+            text=self.email_data,
+            font=("Montserrat Bold", 16, "bold"),
+            text_color="black",
+   
+        )
+        self.email_label_data.place(x=270, y=39)
+
+        self.email_label_data_width=self.email_label_data.winfo_width()
+
+        width__label=self.email_label_data.winfo_width()
+        print("width",width__label)
+
+        self.error_label=ctk.CTkLabel(
+            self.account_center_frame,
+            font=("Montserrat Bold", 12, "bold"),
+            text_color="white",
+   
+        )
+        self.error_label.place(x=230, y=300)
+
+        self.change_link = ctk.CTkLabel(
+            self.account_center_frame,
+            text="Change",
+            font=("Montserrat Bold", 14, "bold"),
+            text_color="#5E95FF",
+   
+        )
+        self.change_link.place(x=330, y=66)
+        self.change_link.bind("<Button-1>", lambda e: self.change_email_ui(self.email_data))
+
+        self.change_password_label = ctk.CTkLabel(
+            self.account_center_frame,
+            text="Change Password:",
+            font=("Montserrat Bold", 16, "bold"),
+            text_color="#848484",
+   
+        )
+        self.change_password_label.place(x=300, y=100)
+
+        
+
+       
+        self.old_password_label = ctk.CTkLabel(
+            self.account_center_frame,
+            text="Old Password",
+            font=("Montserrat Bold", 16, "bold"),
+            text_color="#B3B3B3",
+   
+        )
+        self.old_password_label.place(x=134, y=141)
+    
+        self.old_password_entry = ctk.CTkEntry(
+            self.account_center_frame,
+            width=234,
+            height=35,
+            font=("Montserrat", 12),
+            border_color="#B3B3B3",
+            border_width=1,
+            corner_radius=10,
+            placeholder_text_color="black",
+            show="*"
+
+            
+        )
+        self.old_password_entry.place(x=78, y=179)
+
+
+        # Preload images using CTkImage
+        self.eye_closed_image = ctk.CTkImage(light_image=Image.open(relative_to_assets("eye_closed.png")),
+                                        dark_image=Image.open(relative_to_assets("eye_closed.png")), size=(20, 20))
+        self.eye_open_image = ctk.CTkImage(light_image=Image.open(relative_to_assets("eye_open.png")),
+                                    dark_image=Image.open(relative_to_assets("eye_open.png")), size=(20, 20))
+        
+                # Eye icon for toggling password visibility
+        eye_icon1 = ctk.CTkLabel(
+             self.account_center_frame,
+            image=self.eye_closed_image,  # Use preloaded CTkImage for the closed eye
+            text="",  # No text for the label
+        )
+        eye_icon1.place(x=326, y=180)  # Place beside the password entry
+        # Bind toggle function to the eye icon
+        eye_icon1.bind("<Button-1>", lambda e: self.toggle_password_visibility(self.old_password_entry, eye_icon1, e))
+
+
+        self.new_password_label = ctk.CTkLabel(
+            self.account_center_frame,
+            text="New Password*",
+            font=("Montserrat Bold", 16, "bold"),
+            text_color="#B3B3B3",
+   
+        )
+        self.new_password_label.place(x=450, y=141)
+    
+        self.new_password_entry = ctk.CTkEntry(
+            self.account_center_frame,
+            width=234,
+            height=35,
+            font=("Montserrat", 12),
+            border_color="#B3B3B3",
+            border_width=1,
+            corner_radius=10,
+            placeholder_text_color="black",
+            show="*"
+            
+        )
+        self.new_password_entry.place(x=400, y=180)
+
+                # Eye icon for toggling password visibility
+        eye_icon2 = ctk.CTkLabel(
+             self.account_center_frame,
+            image=self.eye_closed_image,  # Use preloaded CTkImage for the closed eye
+            text="",  # No text for the label
+        )
+        eye_icon2.place(x=650, y=183)  # Place beside the password entry
+
+        eye_icon2.bind("<Button-1>", lambda e: self.toggle_password_visibility(self.new_password_entry, eye_icon2, e))
+
+
+        # change button
+        change = ctk.CTkButton(
+            self.account_center_frame,
+            text="Change",
+            command=self.change_password,
+            width=300,
+            height=40,
+            corner_radius=20,
+            fg_color="#5E95FF",
+            hover_color="#417BFF",
+            font=("Montserrat Bold", 14),
+        )
+        change.place(x=220, y=258)
+
+    def change_password(self):
+        self.oldpassword=self.old_password_entry.get().strip()
+        self.newpassword=self.new_password_entry.get().strip()
+        self.hashed_password = hashlib.sha256(self.oldpassword.encode()).hexdigest()
+
+        if self.user_details[13] != self.hashed_password:
+            self.old_password_entry.configure(border_color="red",text_color="red")
+            self.error_label.configure(text="Old password you've entered, didn't Match! Try again",text_color="red",font=("Montserrat", 12))
+            return
+        else:
+            self.old_password_entry.configure(border_color="#B3B3B3",text_color="black")
+            self.error_label.configure(text="Old password you've entered, didn't Match! Try again",text_color="white",font=("Montserrat", 12))
+
+
+        validated_password=validation(password=self.newpassword)
+        if validated_password is not None or validated_password=="":
+            self.new_password_entry.configure(border_color="red",text_color="red")
+            self.error_label.configure(text=f"New Password {validated_password}",text_color="red",font=("Montserrat", 12))
+            return
+
+        self.hashed_password = hashlib.sha256(self.newpassword.encode()).hexdigest()
+        
+        updatePassword(self.user_details[3],self.hashed_password)
+        self.error_label.configure(text="Passowrd, Sucessfully changed!",text_color="green",font=("Montserrat", 12))
+
+    def change_email_ui(self,email):
+        self.email=email
+        self.send_otp(self.email)
+
+        self.change_email_window=ctk.CTkToplevel(self.account_center_frame, width=450, height=450, fg_color= 'white'
+
+        )
+        self.change_email_window.title("Update Email")
+        self.change_email_window.geometry("450x450")
+        self.change_email_window.resizable(False, False)
+        center_window(self.change_email_window, 450, 450)
+
+        self.otp_frame=ctk.CTkFrame(
+            self.change_email_window,
+            width=450,
+            height=450,
+            fg_color="white",
+            bg_color="white",
+        )
+        self.otp_frame.place(x=0, y=0)
+
+        self.intro_image=Image.open(relative_to_assets("email.png"))
+        self.intro_image=self.intro_image.resize((120,120),Image.Resampling.LANCZOS)
+        self.reference_intro_image=ImageTk.PhotoImage(self.intro_image)
+        intro_label=Label(self.otp_frame,image=self.reference_intro_image,justify='center',bg='white')
+        intro_label.place(x=160, y=20)
+
+        otp_heading_label1 = ctk.CTkLabel(
+            self.otp_frame,
+            text="Enter your",
+            font=("Montserrat Bold", 26),
+            text_color="#333333",
+        )
+        otp_heading_label1.place(relx=0.5, y=150, anchor="center")
+
+        otp_heading_label1 = ctk.CTkLabel(
+            self.otp_frame,
+            text="Verification code",
+            font=("Montserrat Bold", 26),
+            text_color="#333333",
+        )
+        otp_heading_label1.place(relx=0.5, y=180, anchor="center")
+
+        self.email=self.user_details[3]
+
+              # OTP Label
+        email_label = ctk.CTkLabel(
+            self.otp_frame,
+            text=f" OTP sent to {self.email} ",
+            font=("Montserrat Bold", 14),
+            text_color="green",
+        )
+        email_label.place(x=90, y=200)
+    
+        # OTP Label
+        otp_label1 = ctk.CTkLabel(
+            self.otp_frame,
+            text=f"Email change OTP request is sent",
+            font=("Montserrat Bold", 14),
+            text_color="#5E95FF",
+        )
+        otp_label1.place(x=100, y=235)
+        otp_label2 = ctk.CTkLabel(
+            self.otp_frame,
+            text=f"to your email address",
+            font=("Montserrat Bold", 13),
+            text_color="#5E95FF",
+        )
+        otp_label2.place(x=150, y=255)
+
+        # OTP Entry
+        self.otp_entry = ctk.CTkEntry(
+            self.otp_frame,
+            width=200,
+            font=("Montserrat", 14),
+            corner_radius=10,
+            placeholder_text="Enter OTP",
+        )
+        self.otp_entry.place(x=130, y=300)
+
+        # Send OTP Button
+        self.verify_otp_button = ctk.CTkButton(
+            self.otp_frame,
+            text="Verify OTP",
+            command=self.confirm_otp_func, 
+            width=120,
+            height=40,
+            corner_radius=10,
+            fg_color="#5E95FF",
+            hover_color="#417BFF",
+            font=("Montserrat Bold", 12),
+        )
+        self.verify_otp_button.place(x=160, y=340)
+
+        # Resend OTP Button
+        reset_otp_button = ctk.CTkButton(
+            self.otp_frame,
+            text="Resend OTP",
+            command=lambda: self.send_otp(self.email),  # Resend OTP using the same email
+            width=120,
+            height=40,
+            corner_radius=10,
+            fg_color="#FF0000",  # Red color
+            hover_color="#CC0000",
+            font=("Montserrat Bold", 12),
+        )
+        reset_otp_button.place(x=160, y=390)
+
+    
+    def send_otp(self,email):
+        self.otp_email=email
+        try:
+            # Generate a 6-digit OTP
+            otp = str(random.randint(100000, 999999))
+
+            # Store OTP in memory for later validation
+            self.generated_otp = otp
+            subject = f"Your OTP for Email change"
+
+            body = f"""
+            Hi,
+
+            Your One-Time Password (OTP) for email change is: {otp}
+
+            If you did not request this, please ignore this email.
+
+            Regards,
+            Local Food Sharing App
+            """
+            
+            # Send the email using the stored email
+            sending_email = send_email(self.otp_email, subject, body)
+
+        except Exception as e:
+            print(f"Error sending OTP: {e}")
+            messagebox.showerror("Error", "Failed to send OTP. Please try again later.")
+        
+    def confirm_otp_func(self):
+        otp = self.otp_entry.get().strip()
+        if not otp:
+            self.otp_entry.configure(border_color="red",text_color="red")
+            return
+        if otp != getattr(self, "generated_otp", None):
+            self.otp_entry.configure(border_color="red",text_color="red")
+            return
+       
+        self.verify_otp_button.configure(text="OTP Verified!",fg_color="green",state="disabled")
+        self.change_email_window.destroy()
+        self.old_email_verification()
+            
+            
+   
+    def old_email_verification(self):
+        
+        self.email_label_data.place_forget()
+        self.change_link.place_forget()
+        self.new_email_entry = ctk.CTkEntry(
+            self.account_center_frame,
+            width=234,
+            height=35,
+            font=("Montserrat", 13),
+            border_color="#B3B3B3",
+            border_width=1,
+            corner_radius=10,
+            placeholder_text_color="black",
+            placeholder_text="Enter your new email"
+            
+        )
+        self.new_email_entry.place(x=270, y=39)
+        
+        change_email_button = ctk.CTkButton(
+            self.account_center_frame,
+            text="Update Email",
+            command=self.email_validation,
+            width=70,
+            height=35,
+            corner_radius=20,
+            fg_color="#5E95FF",
+            hover_color="#417BFF",
+            font=("Montserrat Bold", 12),
+        )
+        change_email_button.place(x=520, y=39)
+
+    def update_email(self):
+        self.new_email=self.new_email_entry.get().strip()
+        self.send_otp(self.new_email)
+
+
+        self.change_email_window=ctk.CTkToplevel(self.account_center_frame, width=450, height=450, fg_color= 'white'
+
+        )
+        self.change_email_window.title("Update Email")
+        self.change_email_window.geometry("450x450")
+        self.change_email_window.resizable(False, False)
+        center_window(self.change_email_window, 450, 450)
+
+        self.otp_frame=ctk.CTkFrame(
+            self.change_email_window,
+            width=450,
+            height=450,
+            fg_color="white",
+            bg_color="white",
+        )
+        self.otp_frame.place(x=0, y=0)
+
+        self.intro_image=Image.open(relative_to_assets("email.png"))
+        self.intro_image=self.intro_image.resize((120,120),Image.Resampling.LANCZOS)
+        self.reference_intro_image=ImageTk.PhotoImage(self.intro_image)
+        intro_label=Label(self.otp_frame,image=self.reference_intro_image,justify='center',bg='white')
+        intro_label.place(x=160, y=20)
+
+        otp_heading_label1 = ctk.CTkLabel(
+            self.otp_frame,
+            text="Enter your",
+            font=("Montserrat Bold", 26),
+            text_color="#333333",
+        )
+        otp_heading_label1.place(relx=0.5, y=150, anchor="center")
+
+        otp_heading_label1 = ctk.CTkLabel(
+            self.otp_frame,
+            text="Verification code",
+            font=("Montserrat Bold", 26),
+            text_color="#333333",
+        )
+        otp_heading_label1.place(relx=0.5, y=180, anchor="center")
+
+        self.email=self.user_details[3]
+
+              # OTP Label
+        email_label = ctk.CTkLabel(
+            self.otp_frame,
+            text=f" OTP sent to new {self.new_email} ",
+            font=("Montserrat Bold", 14),
+            text_color="green",
+        )
+        email_label.place(x=90, y=200)
+    
+        # OTP Label
+        otp_label1 = ctk.CTkLabel(
+            self.otp_frame,
+            text=f"Email change OTP request is sent",
+            font=("Montserrat Bold", 14),
+            text_color="#5E95FF",
+        )
+        otp_label1.place(x=100, y=235)
+        otp_label2 = ctk.CTkLabel(
+            self.otp_frame,
+            text=f"to your email address",
+            font=("Montserrat Bold", 13),
+            text_color="#5E95FF",
+        )
+        otp_label2.place(x=150, y=255)
+
+        # OTP Entry
+        self.otp_entry = ctk.CTkEntry(
+            self.otp_frame,
+            width=200,
+            font=("Montserrat", 14),
+            corner_radius=10,
+            placeholder_text="Enter OTP",
+        )
+        self.otp_entry.place(x=130, y=300)
+
+        # Send OTP Button
+        self.verify_otp_button = ctk.CTkButton(
+            self.otp_frame,
+            text="Verify OTP",
+            command=self.new_confirm_otp_func, 
+            width=120,
+            height=40,
+            corner_radius=10,
+            fg_color="#5E95FF",
+            hover_color="#417BFF",
+            font=("Montserrat Bold", 12),
+        )
+        self.verify_otp_button.place(x=160, y=340)
+
+        # Resend OTP Button
+        reset_otp_button = ctk.CTkButton(
+            self.otp_frame,
+            text="Resend OTP",
+            command=lambda: self.send_otp(self.email),  
+            width=120,
+            height=40,
+            corner_radius=10,
+            fg_color="#FF0000",  # Red color
+            hover_color="#CC0000",
+            font=("Montserrat Bold", 12),
+        )
+        reset_otp_button.place(x=160, y=390)
+
+    def email_validation(self):
+        #Email Validation
+        email_validation=validation(email=self.new_email)
+        if email_validation is not None:
+            self.new_email_entry.configure(border_color="red",text_color="red")
+            self.error_label.configure(text=f"Email ({email_validation})",text_color="red",font=("Montserrat", 12))
+            return
+        else:
+            self.new_email_entry.configure(border_color="grey",text_color="black")
+            self.error_label.configure(text_color="white",font=("Montserrat", 14))
+            self.update_email()
+
+
+    def new_confirm_otp_func(self):
+        otp = self.otp_entry.get().strip()
+        if not otp:
+            self.otp_entry.configure(border_color="red",text_color="red")
+            return
+        if otp != getattr(self, "generated_otp", None):
+            self.otp_entry.configure(border_color="red",text_color="red")
+            return
+        
+        updateemail(self.email_data,self.new_email) 
+        self.change_email_window.destroy()
+        self.error_label.configure(text=" Email updated!",text_color="green",font=("Montserrat", 12))
+        self.update_data()
+        self.account_ui()
+
+
+
+    def toggle_password_visibility(self, entry, eye_icon, event=None):
+        """
+        Toggles the visibility of the password field.
+        :param entry: The password entry widget
+        :param eye_icon: The icon widget for toggling
+        :param event: The Tkinter event object (optional, provided automatically by the bind method)
+        """
+        if entry.cget("show") == "*":
+            entry.configure(show="")  # Show the password
+            eye_icon.configure(image=self.eye_open_image)  # Update icon to "eye open"
+        else:
+            entry.configure(show="*")  # Hide the password
+            eye_icon.configure(image=self.eye_closed_image)  # Update icon to "eye closed"
+
+
+
+        
 
 
     

@@ -25,6 +25,13 @@ cursor = connection.cursor(buffered=True)
 
 # SQL functions
 
+def updateemail(old_username , new_username):
+    cursor = connection.cursor()
+    cmd = "UPDATE users SET email = %s WHERE email = %s LIMIT 1;"
+    cursor.execute(cmd, (new_username, old_username))
+    connection.commit()
+    return 
+
 
 def checkUser(username, password=None):
     """
@@ -372,7 +379,7 @@ def updatePassword(email, password):
 
 
 def updateUsername(oldusername, password, newusername):
-    cmd = f"update login set username='{newusername}' where username='{oldusername}' and password='{password}' limit 1;"
+    cmd = f"update login set email='{newusername}' where username='{oldusername}' and password='{password}' limit 1;"
     cursor.execute(cmd)
     cmd = f"select count(username) from login where username='{newusername}' and password='{password}''"
     cursor.execute(cmd)
