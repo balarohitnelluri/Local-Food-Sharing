@@ -44,8 +44,9 @@ class MainWindow(Toplevel):
         self.user_id = user_id
         self.user_details=self.update_data()
         self.profile_completion=bool(self.user_details[14])
+        
         # Configure main window
-        self.title("Local Food Sharing App")
+        self.title("Local Food Sharing")
         self.geometry("1012x506")
         self.configure(bg="#FFFFFF")
         center_window(self,1012,506)
@@ -206,7 +207,6 @@ class MainWindow(Toplevel):
 
         if self.profile_completion is False:
             if "pr" not in self.windows:
-                print(f"Parent type: {type(self.container)},")
                 self.windows["pr"] = Profile_Completion(self.container, self.user_details,self)
                 self.sidebar_indicator.place_forget()
                 self.windows["pr"].place(x=0, y=0, width=937, height=506.0)

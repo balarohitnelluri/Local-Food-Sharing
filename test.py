@@ -1,27 +1,32 @@
-import tkinter as tk
+import customtkinter as ctk
 
-def adjust_button_position():
-    # Update geometry and fetch email label's width
-    root.update_idletasks()
-    email_label_width = email_label.winfo_width()
-    # Position the button dynamically based on label width
-    change_button.place(x=email_label.winfo_x() + email_label_width + 10, y=50)
+class App(ctk.CTk):
+    def __init__(self):
+        super().__init__()
 
-# Create main window
-root = tk.Tk()
-root.geometry("500x200")
+        self.geometry("400x300")
 
-# Email label
-email_text = "nelluri.venugopal8172@gmail.com"
-email_label = tk.Label(root, text=email_text, font=("Arial", 12, "bold"))
-email_label.place(x=50, y=50)
+        # Create multiple buttons
+        self.button1 = ctk.CTkButton(
+            self, text="Button 1", command=lambda: self.widget_callback(self.button1)
+        )
+        self.button1.pack(pady=20)
 
-# "Change" button
-change_button = tk.Button(root, text="Change", font=("Arial", 12), fg="blue", cursor="hand2")
-change_button.place(x=200, y=50)  # Initial position
+        self.button2 = ctk.CTkButton(
+            self, text="Button 2", command=lambda: self.widget_callback(self.button2)
+        )
+        self.button2.pack(pady=20)
 
-# Adjust button position dynamically
-adjust_button_position()
+        self.button3 = ctk.CTkButton(
+            self, text="Button 3", command=lambda: self.widget_callback(self.button3)
+        )
+        self.button3.pack(pady=20)
 
-# Run the application
-root.mainloop()
+    def widget_callback(self, widget):
+        print(f"Function called from: {widget}")
+        print(f"Widget text: {widget.cget('text')}")  # Get text of the button
+
+
+if __name__ == "__main__":
+    app = App()
+    app.mainloop()

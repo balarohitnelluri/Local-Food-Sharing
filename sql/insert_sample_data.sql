@@ -1,7 +1,7 @@
 INSERT INTO users (first_name, last_name, email, password)
                 VALUES 
-                ('John', 'Doe', 'john.doe@example.com', SHA2('password123', 256)),
-                ('Jane', 'Smith', 'jane.smith@example.com', SHA2('password123', 256));
+                ('John', 'Doe', 'nbrohit@gmail.com', SHA2('AbcD$545', 256)),
+                ('Jane', 'Smith', 'jane.smith@example.com', SHA2('mypassword', 256));
 
 INSERT INTO food_listings (food_type, quantity, expiration_date, location, pincode, user_id)
                 VALUES 
@@ -17,4 +17,3 @@ INSERT INTO reports (report_name, generated_by)
                 VALUES 
                 ('Monthly Report - November', 1),
                 ('Yearly Summary - 2024', 2);
-

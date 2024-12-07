@@ -411,12 +411,12 @@ def validation(**kwargs):
 
     #Name Validation
     if name is not None:
-        name_validation=re.match("^[a-zA-Z\s]+$", name.strip())
+        name_validation=re.match("^[a-zA-Z\s]+$", name)
         try:
+            if name==None or name=="":
+                raise NameError("Shouldn't be empty, please enter your Value")
             if name_validation is None :
                 raise ValueError("Please enter only 'Alphabets'") 
-            if name==None or name=="":
-                raise NameError("Shouldn't be empty, please enter your Name")
         except NameError as empty_value:
             return empty_value
         except ValueError as invalid_name:
@@ -437,6 +437,7 @@ def validation(**kwargs):
     
     if date_input is not None:
         date_format = "%m-%d-%Y"
+        print("utils",date_input)
         try:
             # Ensure the input is a string; if it's a `date`, format it
             if isinstance(date_input, date):  # `date` is correctly referenced

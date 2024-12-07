@@ -484,7 +484,8 @@ class Login(Toplevel):
             self.confirm_password.configure(border_color="red",text_color="red")
             self.confirm_password_label.configure(text="Confirm Pasword  (Didn't Match! Try again)",text_color="red",font=("Montserrat", 12))
             return
-        self.hashed_password = hashlib.sha256(new_password.encode()).hexdigest()
+        self.hashed_password = self.hash_password(new_password)
+        print(self.hashed_password)
         updatePassword(email,self.hashed_password)
         # Simulate password reset logic (replace with actual backend logic)
         messagebox.showinfo("Password Reset", "Your password has been reset successfully!")
@@ -1021,7 +1022,6 @@ By clicking "Accept" or using the application, you confirm that you have read, u
                 return
             # Hash the entered password for comparison
             hashed_password = self.hash_password(raw_password)
-
             # Check the user in the database
             self.user_id = checkUser(email.lower(), hashed_password)
             if self.user_id:
@@ -1128,7 +1128,7 @@ By clicking "Accept" or using the application, you confirm that you have read, u
             return
 
         # Hash the password before storing it in the database
-        self.hashed_password = hashlib.sha256(password.encode()).hexdigest()
+        self.hashed_password = self.hash_password(password)
         self.user_verification(email,first_name,last_name,self.hashed_password)
         
     def resetPasswordFunc(self):
@@ -1385,8 +1385,9 @@ By clicking "Accept" or using the application, you confirm that you have read, u
         self.email = email  # Store the email for reuse
         self.first_name=first_name
         self.last_name=last_name
-        self.password=self.hash_password(password)
+        self.hashed_password=password
         self.send_otp(otp_type,self.email)
+
         for widget in self.right_frame.winfo_children():
             widget.destroy()
 
@@ -1534,7 +1535,8 @@ By clicking "Accept" or using the application, you confirm that you have read, u
         if otp != getattr(self, "generated_otp", None):
             self.otp_entry.configure(border_color="red",text_color="red")
             return
-        if create_user(self.first_name, self.last_name, self.email, self.password):
+       
+        if create_user(self.first_name, self.last_name, self.email, self.hashed_password):
             messagebox.showinfo("Sign Up", "OTP Verified!Account Created Successfully.")
             self.display_login()
         else:

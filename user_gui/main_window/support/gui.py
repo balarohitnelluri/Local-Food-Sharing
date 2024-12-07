@@ -1,5 +1,5 @@
 from tkcalendar import Calendar
-from utils import center_window,validation,get_user_info_id,update_users_table,send_email
+from utils import get_user_info_id,send_email
 from datetime import date,datetime
 import datetime
 from dateutil.relativedelta import relativedelta
@@ -8,7 +8,7 @@ from controller import *
 import customtkinter as ctk
 from pathlib import Path
 from tkinter import (
-    Toplevel,
+  
     Frame,
     Canvas,
     PhotoImage,
@@ -247,7 +247,10 @@ class Support_Gui(Frame):
             tech_email=send_email("localfoodsharing@gmail.com",tech_subject,tech_body)
         
         except:
+            print("Error while  sending support request")
+        
 
+        else: 
             # Notify the user
             self.error_label.configure(text="Request Submited! Typically recieve email within 24hrs",text_color="green",font=("Montserrat", 12))  
             self.save_button.configure(

@@ -77,9 +77,11 @@ class Settings_GUI(Frame):
             width=168,
             height=50,
             corner_radius=0,
-            fg_color="#FFFFFF",
+            fg_color="#F2F2F2",
             text_color="#B3B3B3",
             hover_color="#F2F2F2",
+            border_color="#D2D2D2",
+            border_width=1,
             font=("Montserrat Bold", 16,"bold"),
             command=self.profile_gui
         )
@@ -97,12 +99,18 @@ class Settings_GUI(Frame):
             fg_color="#FFFFFF",
             text_color="#B3B3B3",
             hover_color="#F2F2F2",
+            border_color="#D2D2D2",
+            border_width=1,
             font=("Montserrat Bold", 16,"bold"),
         )
         self.account_btn.place(x=0, y=162)
         self.profile_gui()
 
     def profile_gui(self):
+        self.account_btn.configure(fg_color="#FFFFFF")
+        self.profile_btn.configure(fg_color="#F2F2F2")
+
+        
 
         #Center frame
         self.center_frame= ctk.CTkFrame(
@@ -316,7 +324,7 @@ class Settings_GUI(Frame):
         )
         self.age_label.place(x=198, y=87)
 
-        self.dob_data=self.user_details[5]
+        self.dob_data=self.user_details[5].strftime("%m-%d-%Y")
         #age_Data
         self.age = ctk.CTkLabel(
             self.second_profile_frame,
@@ -396,8 +404,10 @@ class Settings_GUI(Frame):
         )
         self.gender_dropdown.set(self.gender_data)  # Default value
         self.gender_dropdown.place(x=20, y=115)
+
+        self.dob_data=self.user_details[5]
        
-        self.selected_date=(self.dob_data)  
+        self.selected_date=self.dob_data
         # Create the button to open the calendar
         self.calender_button = ctk.CTkButton(
             self.second_profile_frame,
@@ -774,7 +784,7 @@ class Settings_GUI(Frame):
                 top,
                 selectmode="day",
                 maxdate=max_date,
-                date_pattern="mm-dd-yyyy",
+                date_pattern="yyyy-mm-dd",
             )
             self.calendar.place(x=50, y=25)
 
@@ -839,16 +849,6 @@ class Settings_GUI(Frame):
               self.gender_dropdown.configure(text_color="black")
               self.error1_label.configure(text_color="white")
 
-
-        dob_validation=validation(date=self.dob_data)
-        if dob_validation is not None:
-             self.calender_button.configure(font=("Montserrat", 11),border_color="red",text_color="red")
-             self.error1_label.configure(text="Error: Please select date",text_color="red")
-             return
-        else:
-              self.calender_button.configure(font=("Montserrat", 11),border_color="black",text_color="black")
-              self.error1_label.configure(text_color="white")
-        
         phone_validation=validation(phone=self.phone_number_data)
 
         if phone_validation is not None:
@@ -860,14 +860,14 @@ class Settings_GUI(Frame):
               self.error1_label.configure(text_color="white")
 
         # Format to SQL-compatible YYYY-MM-DD format
-        sql_date = self.dob_data.strftime("%Y-%m-%d")
+        #sql_date = self.dob_data.strftime("%Y-%m-%d")
 
         query = """UPDATE users SET first_name = %s, last_name = %s, gender = %s,dob = %s,phone = %s WHERE user_id = %s;"""
         values = (
                 self.first_name_data,
                 self.last_name_data,
                 self.gender_data,
-                sql_date,
+                self.dob_data,
                 self.phone_number_data,
 
                 self.user_details[0] 
@@ -951,7 +951,7 @@ class Settings_GUI(Frame):
             )
 
         else:
-            query = """UPDATE users SET address_1 = %s,address_2 = %s,city = %s,state=%s,country = %s,zipcode = %s WHERE user_id = %s;"""
+            query = """UPDATE users SET address_1 = %s,address_2 = %s,city = %s,state=%s,country = %s,pincode = %s WHERE user_id = %s;"""
             values = (
 
                 self.address_1_data,
@@ -973,6 +973,8 @@ class Settings_GUI(Frame):
     
     
     def account_ui(self):
+        self.account_btn.configure(fg_color="#F2F2F2")
+        self.profile_btn.configure(fg_color="#FFFFFF")
         self.first_profile_frame.place_forget()
         self.second_profile_frame.place_forget()
         self.third_profile_frame.place_forget()
@@ -1009,8 +1011,6 @@ class Settings_GUI(Frame):
 
         self.email_label_data_width=self.email_label_data.winfo_width()
 
-        width__label=self.email_label_data.winfo_width()
-        print("width",width__label)
 
         self.error_label=ctk.CTkLabel(
             self.account_center_frame,
@@ -1341,7 +1341,6 @@ class Settings_GUI(Frame):
         change_email_button.place(x=520, y=39)
 
     def update_email(self):
-        self.new_email=self.new_email_entry.get().strip()
         self.send_otp(self.new_email)
 
 
@@ -1451,6 +1450,7 @@ class Settings_GUI(Frame):
 
     def email_validation(self):
         #Email Validation
+        self.new_email=self.new_email_entry.get().strip()
         email_validation=validation(email=self.new_email)
         if email_validation is not None:
             self.new_email_entry.configure(border_color="red",text_color="red")

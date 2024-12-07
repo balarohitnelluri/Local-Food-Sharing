@@ -386,6 +386,34 @@ def updateUsername(oldusername, password, newusername):
     return cursor.fetchone()[0] >= 1
 
 
+def insert_food_listing(values):
+
+
+    # Prepare the query
+    query = """
+    INSERT INTO food_listings 
+        (food_name, category, quantity, serving_size, expiration_date, prepared_date, pincode, description, special_notes) 
+    VALUES 
+        (%s, %s, %s, %s, %s, %s, %s, %s, %s);
+    """
+
+    try:
+
+        # Execute the query
+        cursor.execute(query, values)
+        connection.commit()
+        print("Food listing inserted successfully!")
+    except mysql.connector.Error as e:
+        print(f"Error inserting food listing: {e}")
+        if connection:
+            connection.rollback()
+    finally:
+        if cursor:
+            cursor.close()
+        if connection:
+            connection.close()
+
+
 
 
 

@@ -275,7 +275,7 @@ class Profile_Completion(Frame):
                 top,
                 selectmode="day",
                 maxdate=max_date,
-                date_pattern="mm-dd-yyyy",
+                date_pattern="yyyy-mm-dd",
             )
             self.calendar.place(x=50, y=25)
 
@@ -313,10 +313,11 @@ class Profile_Completion(Frame):
         else:
               self.gender_dropdown.configure(text_color="black")
               self.error_label.configure(text_color="white")
+            
 
-        dob_validation=validation(date=self.dob)
 
-        if dob_validation is not None:
+
+        if self.dob is "Select a date":
              self.calender_button.configure(font=("Montserrat", 11),border_color="red",text_color="red")
              self.error_label.configure(text="Please select date",text_color="red")
              return
@@ -552,12 +553,6 @@ class Profile_Completion(Frame):
         next_button.place(x=372, y=280)
 
 
-        # Convert to datetime object
-        date_obj = datetime.strptime(self.dob, '%m-%d-%Y')
-
-        # Format as YYYY-MM-DD
-        self.dob = date_obj.strftime('%Y-%m-%d')
-
     def step2_verification(self):
         self.address1=self.address1_entry.get().strip()
         self.address2=self.address2_entry.get().strip()
@@ -615,7 +610,7 @@ class Profile_Completion(Frame):
 
         if self.address2 is None or self.address2=="":
 
-            query = """UPDATE users SET gender = %s,dob = %s,phone = %s,address_1 = %s,city = %s,state=%s,country = %s,zipcode = %s, profile_completion = %s WHERE user_id = %s;"""
+            query = """UPDATE users SET gender = %s,dob = %s,phone = %s,address_1 = %s,city = %s,state=%s,country = %s,pincode = %s, profile_completion = %s WHERE user_id = %s;"""
             
             values = (
                 self.gender,
@@ -630,7 +625,7 @@ class Profile_Completion(Frame):
                 self.user_details[0] 
             )
         else:
-            query = """UPDATE users SET gender = %s,dob = %s,phone = %s,address_1 = %s,address_2 = %s,city = %s,state=%s,country = %s,zipcode = %s, profile_completion = %s WHERE user_id = %s;"""
+            query = """UPDATE users SET gender = %s,dob = %s,phone = %s,address_1 = %s,address_2 = %s,city = %s,state=%s,country = %s,pincode = %s, profile_completion = %s WHERE user_id = %s;"""
             values = (
                 self.gender,
                 self.dob,
@@ -641,7 +636,7 @@ class Profile_Completion(Frame):
                 self.state,
                 self.country,
                 self.zipcode,
-                1,
+                True,
                 self.user_details[0] 
             )
 

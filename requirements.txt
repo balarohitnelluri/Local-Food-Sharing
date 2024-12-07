@@ -2,6 +2,7 @@ customtkinter==5.2.2
 PILLOW==11.0.0
 mysql.connector==2.2.9
 matplotlib
+pandas==2.2.3
 python_dotenv==1.0.1
 tkcalendar
 ctkmessagebox==2.7
