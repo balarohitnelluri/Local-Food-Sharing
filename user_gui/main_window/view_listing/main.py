@@ -1,7 +1,7 @@
 from pathlib import Path
 from tkinter import Frame
 import controller as db_controller
-from .add_guests.gui import FindFood
+from .view_food.gui import FindFood
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path("./assets")

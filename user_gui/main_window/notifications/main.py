@@ -1,14 +1,10 @@
 from pathlib import Path
-
 from tkinter import Frame, Canvas, Entry, Text, Button, PhotoImage, messagebox
 import controller as db_controller
-
-
-from .add_room.gui import ViewRequests
+from .add_notifications.gui import ViewRequests
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path("./assets")
-
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
@@ -24,7 +20,7 @@ class Notification(Frame):
         self.parent = parent
         self.user_id = user_id
         self.selected_rid = None
-        self.room_data = db_controller.get_request_details(user_id)
+        self.user_data = db_controller.get_request_details(user_id)
 
         self.configure(bg="#FFFFFF")
 

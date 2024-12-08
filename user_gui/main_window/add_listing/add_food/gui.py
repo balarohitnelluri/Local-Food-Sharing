@@ -42,18 +42,6 @@ class AddFoodForm(Frame):
 
         self.configure(bg="white")
 
-
-
-        self.scrollable_frame = ctk.CTkScrollableFrame(
-            self,
-            width=733,
-            height=370,
-            fg_color="white",
-            border_color="#D2D2D2",
-            border_width=1,
-        )
-        self.scrollable_frame.place(x=169, y=113)
-
             # Sidebar in the settings page (if needed)
         self.side_frame = ctk.CTkFrame(
             self,
@@ -94,7 +82,7 @@ class AddFoodForm(Frame):
         self.my_listings_btn = ctk.CTkButton(
             self.side_frame,
             text="My Listing",
-            #command=self.account_ui,
+            command=self.load_my_listings,
             width=169,
             height=50,
             corner_radius=0,
@@ -114,12 +102,13 @@ class AddFoodForm(Frame):
             width=169,
             height=50,
             corner_radius=0,
-            fg_color="#FFFFFF",
+            fg_color="#D2D2D2",
             text_color="#B3B3B3",
             border_color="#D2D2D2",
             border_width=1,
             hover_color="#F2F2F2",
             font=("Montserrat Bold", 16,"bold"),
+            state="disabled"
         )
         self.requests_btn.place(x=0, y=100)
 
@@ -138,6 +127,22 @@ class AddFoodForm(Frame):
         self.scrollable_frame.update_idletasks()
 
     def donate_ui(self):
+
+        self.donate_btn.configure(fg_color="#F2F2F2",state="disabled")
+        self.my_listings_btn.configure(fg_color="#FFFFFF")
+        self.requests_btn.configure(fg_color="#FFFFFF")
+
+
+        self.scrollable_frame = ctk.CTkScrollableFrame(
+            self,
+            width=733,
+            height=370,
+            fg_color="white",
+            border_color="#D2D2D2",
+            border_width=1,
+        )
+        self.scrollable_frame.place(x=169, y=113)
+
         # Configure columns for the scrollable frame
         self.scrollable_frame.grid_columnconfigure(0, weight=1)  # Left spacer
         self.scrollable_frame.grid_columnconfigure(1, weight=0)  # Labels
@@ -153,36 +158,16 @@ class AddFoodForm(Frame):
         )
         title_label.grid(row=0, column=0, columnspan=4, pady=15, sticky="ew")  # Span across all columns
 
-        # Food Name (Label and Entry in the same row)
-        food_name_label = ctk.CTkLabel(
-            self.scrollable_frame,
-            text="Food Name:*",
-            font=("Montserrat Bold", 16, "bold"),
-            text_color="#B3B3B3",
-        )
-        food_name_label.grid(row=1, column=0, padx=10, pady=10, sticky="e")
-
-        self.food_name_entry = ctk.CTkEntry(
-            self.scrollable_frame,
-            placeholder_text="Enter food name",
-            font=("Montserrat Bold", 12),
-            width=200,
-            height=25,
-            border_color="#B3B3B3",
-            border_width=1,
-            corner_radius=5,
-        )
-        self.food_name_entry.grid(row=1, column=1, columnspan=2, padx=10, pady=10, sticky="w")
 
         # Similarly update other fields (e.g., Category, Quantity)
         # Example for Category:
         category_label = ctk.CTkLabel(
             self.scrollable_frame,
-            text="Category:*",
+            text="Food Type:*",
             font=("Montserrat Bold", 16, "bold"),
             text_color="#B3B3B3",
         )
-        category_label.grid(row=2, column=0, padx=10, pady=10, sticky="e")
+        category_label.grid(row=1, column=0, padx=10, pady=10, sticky="e")
 
 
         self.category_list=["Fruits", "Vegetables", "Grains", "Dairy", "Protein", "Snacks", "Beverages", "Sweets/Desserts", "Prepared Meals", "Others"]
@@ -198,7 +183,7 @@ class AddFoodForm(Frame):
             button_color="#6C9FFF"
         )
         self.category_entry.set("Select a category")
-        self.category_entry.grid(row=2, column=1, padx=10, pady=10, sticky="w")
+        self.category_entry.grid(row=1, column=1, padx=10, pady=10, sticky="w")
 
         # Quantity
         quantity_label = ctk.CTkLabel(
@@ -207,7 +192,7 @@ class AddFoodForm(Frame):
             font=("Montserrat Bold", 16, "bold"),
             text_color="#B3B3B3",
         )
-        quantity_label.grid(row=3, column=0, padx=10, pady=10, sticky="e")
+        quantity_label.grid(row=2, column=0, padx=10, pady=10, sticky="e")
 
         self.quantity_var = ctk.StringVar(value="Select Quantity")  
         self.quantity_list = [str(i) for i in range(1, 10)] + ["10+"]  
@@ -224,61 +209,7 @@ class AddFoodForm(Frame):
             text_color="black",
             button_color="#6C9FFF"
         )
-        self.quantity_entry.grid(row=3, column=1, padx=10, pady=10, sticky="w")
-
-        # Serving Size
-        serving_size_label = ctk.CTkLabel(
-            self.scrollable_frame,
-            text="Serving Size:(Optional)",
-            font=("Montserrat Bold", 16, "bold"),
-            text_color="#B3B3B3",
-        )
-        serving_size_label.grid(row=4, column=0, padx=10, pady=10, sticky="e")
-
-        self.serving_var=ctk.StringVar(value="Select Serving") 
-        self.serving_list = [str(i) for i in range(1, 10)] + ["10+ (Party is on!)"]  
-
-        self.serving_size_entry = ctk.CTkOptionMenu(
-            self.scrollable_frame,
-            values=self.serving_list,
-            variable=self.serving_var,
-            width=110,
-            height=18,
-            fg_color="white",
-            font=("Montserrat", 12),
-            corner_radius=5,
-            text_color="black",
-            button_color="#6C9FFF"
-        )
-        self.serving_size_entry.grid(row=4, column=1,padx=10, pady=10, sticky="w")
-
-
-        # Prepared Date
-        
-        prepared_date_label = ctk.CTkLabel(
-            self.scrollable_frame,
-            text="Prepared Date:(Optional)",
-            font=("Montserrat Bold", 16, "bold"),
-            text_color="#B3B3B3",
-        )
-        prepared_date_label.grid(row=5, column=0, padx=10, pady=10, sticky="e")
-
-        self.prepered_date_data="Prepared Date"
-        self.prepared_date_picker = ctk.CTkButton(
-            self.scrollable_frame,
-            text=self.prepered_date_data,
-            width=110,
-            height=18,
-            fg_color="white",
-            text_color="black",
-            hover_color="#D2D2D2",
-            border_color="#B3B3B3",
-            border_width=1,
-            corner_radius=5,
-            command=lambda: self.widget_callback(self.prepared_date_picker),
-            font=("Montserrat Bold", 12),
-        )
-        self.prepared_date_picker.grid(row=5, column=1, padx=10, pady=10, sticky="w")
+        self.quantity_entry.grid(row=2, column=1, padx=10, pady=10, sticky="w")
 
         # Expiration Date
         expiration_date_label = ctk.CTkLabel(
@@ -287,7 +218,7 @@ class AddFoodForm(Frame):
             font=("Montserrat Bold", 16, "bold"),
             text_color="#B3B3B3",
         )
-        expiration_date_label.grid(row=6, column=0, padx=10, pady=10, sticky="e")
+        expiration_date_label.grid(row=3, column=0, padx=10, pady=10, sticky="e")
 
 
         self.expiration_selected_date="Select Expiration"
@@ -302,10 +233,31 @@ class AddFoodForm(Frame):
             border_color="#B3B3B3",
             border_width=1,
             corner_radius=5,
-            command=lambda: self.widget_callback(self.expiration_date_picker),
+            command=self.open_calendar,
             font=("Montserrat Bold", 12,),
         )
-        self.expiration_date_picker.grid(row=6, column=1, padx=10, pady=10, sticky="w")
+        self.expiration_date_picker.grid(row=3, column=1, padx=10, pady=10, sticky="w")
+
+        # Pincode
+        location_label = ctk.CTkLabel(
+            self.scrollable_frame,
+            text="Location:*",
+            font=("Montserrat Bold", 16, "bold"),
+            text_color="#B3B3B3",
+        )
+        location_label.grid(row=4, column=0, padx=10, pady=10, sticky="e")
+
+        self.location_entry = ctk.CTkEntry(
+            self.scrollable_frame,
+            placeholder_text="Enter Location",
+            font=("Montserrat Bold", 12),
+            width=225,
+            height=25,
+            border_color="#B3B3B3",
+            border_width=1,
+            corner_radius=5
+        )
+        self.location_entry.grid(row=4, column=1, padx=10, pady=10,sticky="w")
 
         # Pincode
         pincode_label = ctk.CTkLabel(
@@ -314,7 +266,7 @@ class AddFoodForm(Frame):
             font=("Montserrat Bold", 16, "bold"),
             text_color="#B3B3B3",
         )
-        pincode_label.grid(row=7, column=0, padx=10, pady=10, sticky="e")
+        pincode_label.grid(row=5, column=0, padx=10, pady=10, sticky="e")
 
         self.pincode_entry = ctk.CTkEntry(
             self.scrollable_frame,
@@ -326,49 +278,7 @@ class AddFoodForm(Frame):
             border_width=1,
             corner_radius=5
         )
-        self.pincode_entry.grid(row=7, column=1, padx=10, pady=10,sticky="w")
-
-        # Description
-        description_label = ctk.CTkLabel(
-            self.scrollable_frame,
-            text="Description:*",
-            font=("Montserrat Bold", 16, "bold"),
-            text_color="#B3B3B3",
-        )
-        description_label.grid(row=8, column=0, padx=10, pady=10, sticky="e")
-
-        self.description_entry = ctk.CTkTextbox(
-            self.scrollable_frame,
-            height=134,
-            width=340,
-            font=("Montserrat", 12),
-            corner_radius=10,
-            border_color="#B3B3B3",
-            border_width=1,
-
-        )
-        self.description_entry.grid(row=8, column=1, padx=10, pady=10,sticky="w")
-
-        # Special Notes
-        special_notes_label = ctk.CTkLabel(
-            self.scrollable_frame,
-            text="Special Notes:(Optional)",
-            font=("Montserrat Bold", 16, "bold"),
-            text_color="#B3B3B3",
-        )
-        special_notes_label.grid(row=9, column=0, padx=10, pady=10, sticky="e")
-
-        self.special_notes_entry = ctk.CTkTextbox(
-            self.scrollable_frame,
-            height=134,
-            width=340,
-            font=("Montserrat", 12),
-            corner_radius=10,
-            border_color="#B3B3B3",
-            border_width=1,
-
-        )
-        self.special_notes_entry.grid(row=9, column=1, padx=10, pady=10,sticky="w")
+        self.pincode_entry.grid(row=5, column=1, padx=10, pady=10,sticky="w")
 
         # Submit Button
         submit_button = ctk.CTkButton(
@@ -383,16 +293,10 @@ class AddFoodForm(Frame):
             height=39,
             corner_radius=10,
         )
-        submit_button.grid(row=10, column=1, pady=15, padx=10, sticky="") 
+        submit_button.grid(row=6, column=1, pady=15, padx=10, sticky="") 
 
         # Update the scrollable frame
         self.scrollable_frame.update_idletasks()
-
-    def widget_callback(self, widget):
-        print(f"Function called from: {widget}")
-        print(f"Widget text: {widget.cget('text')}")  # Get text of the button
-        self.call_from=widget.cget('text')
-        self.open_calendar()
 
     def open_calendar(self):
         # Create a Toplevel winqdow
@@ -433,13 +337,8 @@ class AddFoodForm(Frame):
         self.calendar.place(x=50, y=25)
 
         def select_date():
-            if self.call_from==self.expiration_selected_date:
-                self.expiration_selected_date = self.calendar.get_date()  
-                self.expiration_date_picker.configure(text=self.expiration_selected_date,font=("Montserrat", 12))  
-            elif self.call_from==self.prepered_date_data:
-                self.prepered_date_data=self.calendar.get_date()
-                self.prepared_date_picker.configure(text=self.prepered_date_data,font=("Montserrat", 12))
-
+            self.expiration_selected_date = self.calendar.get_date()  
+            self.expiration_date_picker.configure(text=self.expiration_selected_date,font=("Montserrat", 12))  
             top.destroy()  
 
         select_button = ctk.CTkButton(
@@ -456,30 +355,18 @@ class AddFoodForm(Frame):
         border_width=1,
         font=("Montserrat Bold", 10,"bold"),
         )
-        select_button.place(x=130, y=165)
+        select_button.place(x=125, y=170)
 
     def submit_listing(self):
         # Extract data from entries
-        self.food_name=self.food_name_entry.get().strip()
+
         self.category= self.category_entry.get()
         self.quantity=self.quantity_entry.get()
-        self.serving_size= self.serving_size_entry.get()
-        self.expiration_date=self.expiration_selected_date,
-        self.preperation_date= self.prepered_date_data,
-        self.zipcode= self.pincode_entry.get().strip()
-        self.description=self.description_entry.get("1.0", "end-1c").strip()
-        self.special_notes= self.special_notes_entry.get("1.0", "end-1c").strip()
-
-        #Food name validation
-        food_name_validation=validation(name=self.food_name)
-        if food_name_validation is not None:
-            self.food_name_entry.configure(font=("Montserrat", 11),text_color="red",border_color="red")
-            self.error_label.configure(text=f"*Error: {food_name_validation}.",text_color="red")
-            return
-        else:
-            self.food_name_entry.configure(font=("Montserrat", 11),text_color="Black",border_color="#D2D2D2")
-            self.error_label.configure(text_color="white")
-
+        self.expiration_date=self.expiration_selected_date
+        self.location=self.location_entry.get().strip()
+        self.pincode= self.pincode_entry.get().strip()
+  
+ 
         #Category validation
         if self.category not in self.category_list:
             self.category_entry.configure(text_color="red")
@@ -507,8 +394,19 @@ class AddFoodForm(Frame):
             self.expiration_date_picker.configure(font=("Montserrat", 11),text_color="Black",border_color="#D2D2D2")
             self.error_label.configure(text_color="white")
 
+        #location validation
+        location=self.location.split()
+        if len(location)<3  or self.location=="":
+            self.location_entry.configure(font=("Montserrat", 11),text_color="red",border_color="red")
+            self.error_label.configure(text=f"*Error: Location should be min 3 words",text_color="red")
+            return
+        else:
+            self.location_entry.configure(font=("Montserrat", 11),text_color="Black",border_color="#D2D2D2")
+            self.error_label.configure(text=f"*Error: .",text_color="white")
+
+
         #Zipcode validation
-        zipcode_validation=validation(zipcode=self.zipcode)
+        zipcode_validation=validation(zipcode=self.pincode)
         if  zipcode_validation is not None:
             self.pincode_entry.configure(font=("Montserrat", 11),text_color="red",border_color="red")
             self.error_label.configure(text=f"*Error: {zipcode_validation}.",text_color="red")
@@ -517,213 +415,234 @@ class AddFoodForm(Frame):
             self.pincode_entry.configure(font=("Montserrat", 11),text_color="Black",border_color="#D2D2D2")
             self.error_label.configure(text_color="white")
 
-        #Description Validation
-        description_validation=self.description.split()
-        if len(description_validation)<5 or description_validation=='':
-            self.description_entry.configure(font=("Montserrat", 11),text_color="red",border_color="red")
-            self.error_label.configure(text=f"*Error: Description should be minumum of 6 words!.",text_color="red")
-            return
-        else:
-            self.description_entry.configure(font=("Montserrat", 11),text_color="Black",border_color="#D2D2D2")
-            self.error_label.configure(text_color="white")
 
-        self.serving_size = None if self.serving_size == "Select Serving" else self.serving_size
-        self.prepared_date = None if self.preperation_date == "Prepared Date" else self.preperation_date
-        
+
         self.load_data()
+        self.error_label.configure(text=f"Sucessfully added!",text_color="green")
         
     def load_data(self):
 # Create the INSERT query
         query = """
-        INSERT INTO food_listings 
-            (user_id,food_name, category, quantity, serving_size, prepared_date,expiration_date, zipcode, description, special_notes) 
-        VALUES 
-            (%s, %s, %s, %s, %s, %s, %s, %s, %s);
+        INSERT INTO food_listings (food_type, quantity, expiration_date, location, pincode, user_id)
+        VALUES (%s, %s, %s, %s, %s, %s)
         """
-
-        # Collect data
-        values = (
-            self.user_id,
-            self.food_name, 
-            self.category if self.category else None,  # Optional, will insert NULL if empty
-            self.quantity if self.quantity else None,  # Optional, will insert NULL if empty
-            self.serving_size,  # Optional, will insert NULL if empty
-            self.prepared_date,
-            self.expiration_date if self.expiration_date else None,  # Optional, will insert NULL if empty
-            self.zipcode,  # Required
-            self.description if self.description else None,  # Optional, will insert NULL if empty
-            self.special_notes if self.special_notes else None,  # Optional, will insert NULL if empty
-        )
+        # Ensure the instance variables are correctly mapped
+        values = (self.category,  # food_type
+                self.quantity,  # quantity
+                self.expiration_date,  # expiration_date
+                self.location,  # location
+                self.pincode,  # pincode
+                self.user_id)  # user_id
 
         try:
-            insert_food_listing(values)
+            execute_queries(query,values)
         except:
             print("Ops Issue occured to load data")
         else:
             print("Sucessfully! Loaded the data")
+            self.donation_window=ctk.CTkToplevel(self.scrollable_frame, width=600, height=100, fg_color= 'white'
+
+            )
+            self.donation_window.title("Add Listing")
+            self.donation_window.geometry("300X100")
+            center_window(self.donation_window, 300, 100)
+
+            completion_label = ctk.CTkLabel(
+                self.donation_window,
+                text="Sucessfully updated!",
+                font=("Montserrat Bold", 14,"bold"),
+                text_color="#848484",
+            )
+            completion_label.place(x=80, y=15)
+            
+            
+            
+            lets_go_button = ctk.CTkButton(
+            self.donation_window,
+            text="Let’s do it!",
+            width=70,
+            height=30,
+            corner_radius=5,
+            fg_color="#6C9FFF",
+            text_color="white",
+            hover_color="#5E95FF",
+            border_color="#6C9FFF",
+            border_width=1,
+            command=self.clear_of_entries,
+            font=("Montserrat Bold", 11,"bold"),
+            )
+            lets_go_button.place(x=115, y=60)
+
+    def destroy_window(self):
+        self.donation_window.destroy()
+        self.clear_of_entries()
 
 
+    
+
+    def clear_of_entries(self):
+        self.category_entry.set("Select Category")  # Reset dropdown (if using OptionMenu)
+        self.quantity_entry.set("Select Quantity")  # Reset the dropdown to its default state # Clear text in Entry widget
+        self.expiration_date_picker.configure(text="Select Expiration")  # Reset date picker
+        self.pincode_entry.delete(0, "end")  # Clear text in Entry widget
+        self.error_label.configure(text="")  # Clear any error messages
+        self.location_entry.delete(0, "end")
 
 
+  
 
+    def load_my_listings(self):
+        self.error_label.configure(text=f"Sucessfully added!",text_color="white")
+        self.donate_btn.configure(fg_color="#FFFFFF",state="enable")
+        self.my_listings_btn.configure(fg_color="#F2F2F2")
 
-
-
-
-        
-        
-
-        
-        
-     
-
-
-
-
-    """ # Food Type Frame
-        food_type_frame = ctk.CTkFrame(central_frame, fg_color="#FFFFFF", corner_radius=10)
-        food_type_frame.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
-
-        food_type_label = ctk.CTkLabel(
-            food_type_frame,
-            text="Food Type",
-            font=("Montserrat Bold", 14),
-            text_color="#5E95FF",
+        self.listings_scrollable_frame = ctk.CTkScrollableFrame(
+            self,
+            width=733,
+            height=370,
+            fg_color="white",
+            border_color="#D2D2D2",
+            border_width=1,
         )
-        food_type_label.grid(row=0, column=0, padx=(10, 10), pady=(10, 10), sticky="w")
+        self.listings_scrollable_frame.place(x=169, y=113)
 
-        food_type_dropdown = ctk.CTkOptionMenu(
-            food_type_frame,
-            variable=self.data["food_type"],
-            values=["Fruits", "Dairy", "Vegetables", "Fast Food", "Soft Drinks", "Grains", "Snacks", "Other"],
-            font=("Montserrat", 14),
+        # Clear the scrollable frame
+        for widget in self.scrollable_frame.winfo_children():
+            widget.destroy()
+
+        # Fetch listings
+        listings = fetch_listings_query(self.user_id)
+        print(listings)
+        
+
+        if not listings:
+            # No listings found
+            no_listings_label = ctk.CTkLabel(
+                self.listings_scrollable_frame,
+                text="No Listings Found!",
+                font=("Montserrat Bold", 16, "bold"),
+                text_color="#B3B3B3",
+            )
+            no_listings_label.grid(row=0, column=0, columnspan=4, pady=15, sticky="ew")
+            return
+
+        # Display listings
+        
+        for idx, listing in enumerate(listings):
+            listing_id, food_type, quantity, expiration_date, location, pincode = listing
+
+            # Display each listing as a row
+            ctk.CTkLabel(
+                self.listings_scrollable_frame,
+                text=f"Food Type: {food_type}",
+                font=("Montserrat", 14),
+                text_color="black",
+            ).grid(row=idx * 2, column=0, columnspan=2, padx=10, pady=5, sticky="w")
+
+            ctk.CTkLabel(
+                self.listings_scrollable_frame,
+                text=f"Category: {pincode}, Quantity: {quantity}, Expiry: {expiration_date}",
+                font=("Montserrat", 12),
+                text_color="#848484",
+            ).grid(row=idx * 2 + 1, column=0, columnspan=2, padx=10, pady=5, sticky="w")
+
+            delete_button = ctk.CTkButton(
+                self.listings_scrollable_frame,
+                text="Delete",
+                command=lambda l=listing: self.delete_listing(listing_id),
+                font=("Montserrat Bold", 12),
+                fg_color="#FF5555",
+                hover_color="#FF7777",
+                width=80,
+                height=30,
+                corner_radius=5,
+            )
+            delete_button.grid(row=idx * 2, column=3, padx=10, pady=5, sticky="e")
+
+            edit_button = ctk.CTkButton(
+                self.listings_scrollable_frame,
+                text="Edit",
+                command=lambda: self.edit_listing(listing_id, food_type, quantity, expiration_date, location, pincode),
+                font=("Montserrat Bold", 12),
+                fg_color="green",
+                hover_color="#FF7777",
+                width=80,
+                height=30,
+                corner_radius=5,
+            )
+            edit_button.grid(row=idx * 2, column=4, padx=10, pady=5, sticky="e")
+    
+    def delete_listing(self, listing_id):
+        """Delete a listing by its ID."""
+        query = "DELETE FROM food_listings WHERE listing_id = %s"
+        value = (listing_id,)
+        
+        try:
+            # Call execute_queries function
+            execute_queries(query, value)
+            print(f"Listing with ID {listing_id} has been deleted.")
+            self.load_my_listings()
+        except Exception as e:
+            print(f"Error deleting listing: {e}")
+
+
+    def edit_listing(self, listing_id, food_type, quantity, expiration_date, location, pincode):
+        """Load the listing into the donation form for editing."""
+        # Switch to the donation UI
+        self.donate_ui()
+
+        # Populate fields with the existing data
+        self.category_entry.set(food_type)  # Set the food type
+        self.quantity_entry.set(quantity)  # Set the quantity
+        self.expiration_selected_date = expiration_date
+        self.expiration_date_picker.configure(text=expiration_date)  # Set the expiration date
+        self.location_entry.delete(0, "end")
+        self.location_entry.insert(0, location)  # Set the location
+        self.pincode_entry.delete(0, "end")
+        self.pincode_entry.insert(0, pincode)  # Set the pincode
+
+        # Change the submit button to an update button
+        update_button = ctk.CTkButton(
+            self.scrollable_frame,
+            text="Update Listing",
+            command=lambda: self.update_listing(listing_id),
+            font=("Montserrat Bold", 16, "bold"),
+            fg_color="#2CD437",
+            text_color="white",
+            hover_color="#7FE186",
             width=150,
-        )
-        food_type_dropdown.grid(row=1, column=0, padx=(10, 10), pady=(0, 10))
-        food_type_dropdown.set("Fruits")
-
-        # Quantity Frame
-        quantity_frame = ctk.CTkFrame(central_frame, fg_color="#FFFFFF", corner_radius=10)
-        quantity_frame.grid(row=0, column=1, padx=10, pady=10, sticky="ew")
-
-        quantity_label = ctk.CTkLabel(
-            quantity_frame,
-            text="Quantity",
-            font=("Montserrat Bold", 14),
-            text_color="#5E95FF",
-        )
-        quantity_label.grid(row=0, column=0, padx=(10, 10), pady=(10, 10), sticky="w")
-
-        quantity_entry = ctk.CTkEntry(
-            quantity_frame,
-            textvariable=self.data["quantity"],
-            width=150,
-            font=("Montserrat", 14),
+            height=39,
             corner_radius=10,
-            placeholder_text="Enter quantity",
         )
-        quantity_entry.grid(row=1, column=0, padx=(10, 10), pady=(0, 10))
+        update_button.grid(row=6, column=1, pady=15, padx=10, sticky="")  # Replace the existing button
 
-        # Expiry Date Frame
-        expiry_date_frame = ctk.CTkFrame(central_frame, fg_color="#FFFFFF", corner_radius=10)
-        expiry_date_frame.grid(row=0, column=2, padx=10, pady=10, sticky="ew")
 
-        expiry_date_label = ctk.CTkLabel(
-            expiry_date_frame,
-            text="Expiry Date",
-            font=("Montserrat Bold", 14),
-            text_color="#5E95FF",
-        )
-        expiry_date_label.grid(row=0, column=0, padx=(10, 10), pady=(10, 10), sticky="w")
+    def update_listing(self, listing_id):
+        """Update an existing listing in the database."""
+        # Extract updated data from entries
+        food_type = self.category_entry.get()
+        quantity = self.quantity_entry.get()
+        expiration_date = self.expiration_selected_date
+        location = self.location_entry.get().strip()
+        pincode = self.pincode_entry.get().strip()
 
-        expiry_date_picker = DateEntry(
-            expiry_date_frame,
-            textvariable=self.data["expiry_date"],
-            date_pattern="yyyy-mm-dd",
-            font=("Montserrat", 14),
-            background="#5E95FF",
-            foreground="white",
-            borderwidth=2,
-        )
-        expiry_date_picker.grid(row=1, column=0, padx=(10, 10), pady=(0, 10))
+        # Validate the fields (reuse existing validation logic)
+        # ...
 
-        # Address Frame
-        address_frame = ctk.CTkFrame(central_frame, fg_color="#FFFFFF", corner_radius=10)
-        address_frame.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
+        # Create the update query
+        query = """
+        UPDATE food_listings
+        SET food_type = %s, quantity = %s, expiration_date = %s, location = %s, pincode = %s
+        WHERE listing_id = %s
+        """
+        values = (food_type, quantity, expiration_date, location, pincode, listing_id)
 
-        address_label = ctk.CTkLabel(
-            address_frame,
-            text="Address",
-            font=("Montserrat Bold", 14),
-            text_color="#5E95FF",
-        )
-        address_label.grid(row=0, column=0, padx=(10, 10), pady=(10, 10), sticky="w")
-
-        address_entry = ctk.CTkEntry(
-            address_frame,
-            textvariable=self.data["location"],
-            width=300,
-            font=("Montserrat", 14),
-            corner_radius=10,
-            placeholder_text="Enter address",
-        )
-        address_entry.grid(row=1, column=0, padx=(10, 10), pady=(0, 10))
-
-        # Zipcode Frame
-        zipcode_frame = ctk.CTkFrame(central_frame, fg_color="#FFFFFF", corner_radius=10)
-        zipcode_frame.grid(row=1, column=2, padx=10, pady=10, sticky="ew")
-
-        zipcode_label = ctk.CTkLabel(
-            zipcode_frame,
-            text="Zipcode",
-            font=("Montserrat Bold", 14),
-            text_color="#5E95FF",
-        )
-        zipcode_label.grid(row=0, column=0, padx=(10, 10), pady=(10, 10), sticky="w")
-
-        zipcode_entry = ctk.CTkEntry(
-            zipcode_frame,
-            textvariable=self.data["zipcode"],
-            width=150,
-            font=("Montserrat", 14),
-            corner_radius=10,
-            placeholder_text="Enter zipcode",
-        )
-        zipcode_entry.grid(row=1, column=0, padx=(10, 10), pady=(0, 10))
-
-        # Add Button
-        add_button = ctk.CTkButton(
-            central_frame,
-            text="Add",
-            command=self.save,
-            width=200,
-            height=40,
-            font=("Montserrat Bold", 14),
-            corner_radius=10,
-            fg_color="#5E95FF",
-            hover_color="#417BFF",
-        )
-        add_button.grid(row=2, column=0, columnspan=3, pady=(20, 10))
-
-    def save(self):
-        for field, val in self.data.items():
-            if val.get().strip() == "":
-                messagebox.showerror("Error", f"Please fill in the {field.replace('_', ' ').capitalize()} field")
-                return
-
-        result = db_controller.add_food_item(
-            food_type=self.data["food_type"].get().strip(),
-            quantity=self.data["quantity"].get().strip(),
-            location=self.data["location"].get().strip(),
-            zipcode=self.data["zipcode"].get().strip(),
-            expiry_date=self.data["expiry_date"].get().strip(),
-            user_id=self.user_id,
-        )
-
-        if result:
-            messagebox.showinfo("Success", "Food item added successfully!")
-            for key in self.data:
-                self.data[key].set("")  # Clear all fields after saving
-        else:
-            messagebox.showerror("Error", "Failed to add food item. Please try again!")
-"""
+        try:
+            execute_queries(query, values)
+            print(f"Listing with ID {listing_id} has been updated.")
+            self.error_label.configure(text="Listing updated successfully!", text_color="green")
+            self.clear_of_entries()
+            self.load_my_listings()  
+        except Exception as e:
+            print(f"Error updating listing: {e}")
+            self.error_label.configure(text=f"Error: {e}", text_color="red")

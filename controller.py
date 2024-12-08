@@ -391,10 +391,10 @@ def insert_food_listing(values):
 
     # Prepare the query
     query = """
-    INSERT INTO food_listings 
-        (food_name, category, quantity, serving_size, expiration_date, prepared_date, pincode, description, special_notes) 
+    INSERT INTO food_listings_2 
+        (user_id,food_name, category, quantity, serving_size, prepared_date ,  expiration_date,   zipcode, description,  special_notes) 
     VALUES 
-        (%s, %s, %s, %s, %s, %s, %s, %s, %s);
+        (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
     """
 
     try:
@@ -407,11 +407,55 @@ def insert_food_listing(values):
         print(f"Error inserting food listing: {e}")
         if connection:
             connection.rollback()
+ 
+
+from mysql.connector import Error
+
+def fetch_listings_query(user_id):
+    try:
+
+        # SQL Query
+        query = """
+        SELECT 
+            listing_id, food_type, quantity, expiration_date, 
+            location, pincode
+        FROM 
+            food_listings
+        WHERE 
+            user_id = %s
+        """
+        values = (user_id,)  # Correctly formatted tuple
+
+        # Execute the query
+        cursor.execute(query, values)
+
+        # Fetch the results
+        results = cursor.fetchall()
+        return results
+    except Error as e:
+        print(f"Error fetching listings: {e}")
+        raise
     finally:
-        if cursor:
+        # Close cursor and connection if initialized
+        if 'cursor' in locals() and cursor:
             cursor.close()
-        if connection:
+        if 'connection' in locals() and connection:
             connection.close()
+
+def execute_queries(query,values):
+        try:
+
+            # Execute the query
+            cursor.execute(query, values)
+
+            # Commit for non-SELECT queries
+            connection.commit()
+
+        except mysql.connector.Error as e:
+            print(f"Error executing query: {e}")
+            if connection:
+                connection.rollback()
+            raise
 
 
 

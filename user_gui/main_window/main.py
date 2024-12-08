@@ -179,11 +179,13 @@ class MainWindow(Toplevel):
 
         # Loop through windows and pass user_id
         self.windows = {
-            "dash": Dashboard(self.container),
+            "dash": Dashboard(self.container,self.user_id),
             "adi": AddFoodItem(self.container, self.user_id),
             "gue": Pickup_schedule(self.container, self.user_id),
             "not": Notification(self.container, self.user_id),
             "spu": SearchFood(self.container, self.user_id),
+
+
 
         }
 
@@ -229,7 +231,7 @@ class MainWindow(Toplevel):
     def show_dropdown(self, event=None):
         if not self.dropdown_menu:
             self.dropdown_menu = Frame(self, bg="white", relief="flat", bd=2)
-            self.dropdown_menu.place(x=850, y=50, width=150)
+            self.dropdown_menu.place(x=850, y=70, width=150)
 
             self.account_settings_button = Button(
             self.dropdown_menu,
@@ -273,7 +275,7 @@ class MainWindow(Toplevel):
         # Create a canvas to design the round button
         self.user_firstname=self.user_details[1]
         self.profile = Canvas(self, width=35, height=35, bg="white", highlightthickness=0,)
-        self.profile.place(x=940, y=10)
+        self.profile.place(x=925, y=30)
 
         # Create the round button
         self.round_button = self.profile.create_oval(0, 0, 35, 35, fill="#0078D7", outline="")
@@ -368,7 +370,7 @@ class MainWindow(Toplevel):
         # Lazy-load screens if not already loaded
         if name not in self.windows:
             if name == "dash":
-                self.windows["dash"] = Dashboard(self.container)
+                self.windows["dash"] = Dashboard(self.container,self.user_id)
             elif name == "adi":
                 self.windows["adi"] = AddFoodItem(self.container, self.user_id)
             elif name == "gue":

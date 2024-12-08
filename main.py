@@ -3,7 +3,7 @@ from user_gui.loading_window.gui import loadingwindow
 from utils import executeScriptsFromFile
 
 # Main function to integrate UI and database
-def main():
+def main(): 
     
         # #Execute database scripts
     # executeScriptsFromFile("drop_tables.sql")

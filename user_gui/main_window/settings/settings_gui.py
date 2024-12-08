@@ -42,7 +42,6 @@ class Settings_GUI(Frame):
         self.mainwindow=mainwindow
         self.user_details=self.update_data()
         self.configure(bg="white")  # Debug background for visibility
-        print(self.user_details)
 
 
         # Sidebar in the settings page (if needed)
@@ -878,6 +877,7 @@ class Settings_GUI(Frame):
         self.mainwindow.update_data()
         self.personal_information_ui()
         self.top_info_ui()
+        
 
 
     def address_info_verification(self):

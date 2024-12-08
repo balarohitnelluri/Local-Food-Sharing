@@ -4,6 +4,8 @@ from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from tkinter import Frame, Canvas, Entry, PhotoImage
 import controller as db_controller
+import customtkinter as ctk
+from utils import get_user_info_id
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path("./assets")
@@ -18,29 +20,64 @@ def dashboard():
 
 
 class Dashboard(Frame):
-    def __init__(self, parent, controller=None, *args, **kwargs):
+    def __init__(self, parent,user_id, controller=None, *args, **kwargs):
         Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
-        self.configure(bg="white")
-        self.place(x=75,y=0)
-        
-      
+        self.user_id=user_id
+        self.user_details=self.update_db()
+        self.fullname=f"{self.user_details[1]} {self.user_details[2]}"
+
+        self.configure(bg="#FFFFFF")
+
+        # Sidebar title
+        welcome_label = ctk.CTkLabel(
+            self,
+            text="Welcome!",
+            font=("Montserrat Bold", 32,"bold"),
+            text_color="#B3B3B3",
+        )
+        welcome_label.place(x=290, y=15)
+
+        name_label = ctk.CTkLabel(
+            self,
+            text=f"{self.fullname}",
+            font=("Montserrat Bold", 26,"bold"),
+            text_color="#5E95FF",
+        )
+        name_label.place(x=450, y=20)
+
+        heading_label = ctk.CTkLabel(
+            self,
+            text="Community",
+            font=("Montserrat Bold", 22,"bold"),
+            text_color="#5E95FF",
+        )
+        heading_label.place(x=320, y=80)
+
+        # Sidebar title
+        subheading_label = ctk.CTkLabel(
+            self,
+            text="Dashboard",
+            font=("Montserrat Bold", 22,"bold"),
+            text_color="#B3B3B3",
+        )
+        subheading_label.place(x=445, y=80)
+
         canvas = Canvas(
             self,
             bg="#FFFFFF",
-            height=432,
-            width=797,
+            height=391,
+            width=937,
             bd=0,
             highlightthickness=0,
             relief="ridge",
         )
 
-        canvas.place(x=0,y=0)
-
+        canvas.place(x=80, y=115)
         canvas.entry_image_1 = PhotoImage(file=relative_to_assets("entry_1.png"))
         entry_bg_1 = canvas.create_image(115.0, 81.0, image=canvas.entry_image_1)
         entry_1 = Entry(
-            self,
+            canvas,
             bd=0,
             bg="#EFEFEF",
             highlightthickness=0,
@@ -49,7 +86,7 @@ class Dashboard(Frame):
         entry_1.place(x=55.0, y=30.0 + 2, width=120.0, height=0)
 
         canvas.create_text(
-            56.0,
+            60.0,
             45.0,
             anchor="nw",
             text="Available Food",
@@ -59,7 +96,7 @@ class Dashboard(Frame):
 
         # Available Food Text
         canvas.create_text(
-            164.0,
+            140.0,
             63.0,
             anchor="ne",
             text=db_controller.available_food_count(),
@@ -71,7 +108,7 @@ class Dashboard(Frame):
         canvas.entry_image_2 = PhotoImage(file=relative_to_assets("entry_2.png"))
         entry_bg_2 = canvas.create_image(299.0, 81.0, image=canvas.entry_image_2)
         entry_2 = Entry(
-            self,
+            canvas,
             bd=0,
             bg="#EFEFEF",
             highlightthickness=0,
@@ -80,7 +117,7 @@ class Dashboard(Frame):
         entry_2.place(x=239.0, y=30.0 + 2, width=120.0, height=0)
 
         canvas.create_text(
-            240.0,
+            250.0,
             45.0,
             anchor="nw",
             text="Donated Food",
@@ -89,7 +126,7 @@ class Dashboard(Frame):
         )
 
         canvas.create_text(
-            346.0,
+            330.0,
             63.0,
             anchor="ne",
             text=db_controller.donated_food_count(),
@@ -99,9 +136,9 @@ class Dashboard(Frame):
         )
 
         canvas.entry_image_3 = PhotoImage(file=relative_to_assets("entry_3.png"))
-        entry_bg_3 = canvas.create_image(177.0, 286.0, image=canvas.entry_image_3)
+        entry_bg_3 = canvas.create_image(177.0, 276.0, image=canvas.entry_image_3)
         entry_3 = Entry(
-            self,
+            canvas,
             bd=0,
             bg="#EFEFEF",
             highlightthickness=0,
@@ -110,20 +147,20 @@ class Dashboard(Frame):
         entry_3.place(x=55.0, y=175.0 + 2, width=244.0, height=0)
 
         canvas.entry_image_4 = PhotoImage(file=relative_to_assets("entry_4.png"))
-        entry_bg_4 = canvas.create_image(481.0, 286.0, image=canvas.entry_image_4)
-        entry_4 = Entry(
-            self,
-            bd=0,
-            bg="#EFEFEF",
-            highlightthickness=0,
-            font=("Montserrat Bold", 150),
-        )
-        entry_4.place(x=358.0, y=175.0 + 2, width=246.0, height=0)
+        entry_bg_4 = canvas.create_image(540.0, 276.0, image=canvas.entry_image_4)
+        # entry_4 = Entry(
+        #     canvas,
+        #     bd=0,
+        #     bg="#EFEFEF",
+        #     highlightthickness=0,
+        #     font=("Montserrat Bold", 150),
+        # )
+        # entry_4.place(x=358.0, y=175.0 + 2, width=246.0, height=0)
 
         canvas.entry_image_5 = PhotoImage(file=relative_to_assets("entry_5.png"))
         entry_bg_5 = canvas.create_image(221.0, 207.5, image=canvas.entry_image_5)
         entry_5 = Entry(
-            self,
+            canvas,
             bd=0,
             bg="#5E95FF",
             highlightthickness=0,
@@ -134,7 +171,7 @@ class Dashboard(Frame):
         canvas.entry_image_6 = PhotoImage(file=relative_to_assets("entry_6.png"))
         entry_bg_6 = canvas.create_image(221.0, 230.5, image=canvas.entry_image_6)
         entry_6 = Entry(
-            self,
+            canvas,
             bd=0,
             bg="#777777",
             highlightthickness=0,
@@ -144,7 +181,7 @@ class Dashboard(Frame):
 
         canvas.create_text(
             235.0,
-            200.0,
+            220.0,
             anchor="nw",
             text="Donated",
             fill="#5E95FF",
@@ -163,7 +200,7 @@ class Dashboard(Frame):
         canvas.entry_image_7 = PhotoImage(file=relative_to_assets("entry_7.png"))
         entry_bg_7 = canvas.create_image(483.0, 81.0, image=canvas.entry_image_7)
         entry_7 = Entry(
-            self,
+            canvas,
             bd=0,
             bg="#EFEFEF",
             highlightthickness=0,
@@ -181,7 +218,7 @@ class Dashboard(Frame):
         )
 
         canvas.create_text(
-            540.0,
+            520.0,
             63.0,
             anchor="ne",
             text=db_controller.get_total_donation_value(),
@@ -192,7 +229,7 @@ class Dashboard(Frame):
         canvas.entry_image_8 = PhotoImage(file=relative_to_assets("entry_8.png"))
         entry_bg_8 = canvas.create_image(667.0, 81.0, image=canvas.entry_image_8)
         entry_8 = Entry(
-            self,
+            canvas,
             bd=0,
             bg="#EFEFEF",
             highlightthickness=0,
@@ -210,7 +247,7 @@ class Dashboard(Frame):
         )
 
         canvas.create_text(
-            712.0,
+            700.0,
             63.0,
             anchor="ne",
             text=db_controller.meals_distributed(),
@@ -220,18 +257,18 @@ class Dashboard(Frame):
 
         canvas.entry_image_9 = PhotoImage(file=relative_to_assets("entry_9.png"))
         entry_bg_9 = canvas.create_image(391.0, 150.0, image=canvas.entry_image_9)
-        entry_9 = Entry(
-            self,
-            bd=0,
-            bg="#EFEFEF",
-            highlightthickness=0,
-            font=("Montserrat Bold", 150),
-        )
-        entry_9.place(x=41.0, y=149.0 + 2, width=700.0, height=0)
+        # entry_9 = Entry(
+        #     canvas,
+        #     bd=0,
+        #     bg="#EFEFEF",
+        #     highlightthickness=0,
+        #     font=("Montserrat Bold", 150),
+        # )
+        # entry_9.place(x=41.0, y=149.0 + 2, width=700.0, height=0)
 
         canvas.create_text(
             56.0,
-            191.0,
+            181.0,
             anchor="nw",
             text="Food Items",
             fill="#5E95FF",
@@ -240,7 +277,7 @@ class Dashboard(Frame):
 
         canvas.create_text(
             56.0,
-            223.0,
+            213.0,
             anchor="nw",
             text="Status",
             fill="#5E95FF",
@@ -248,8 +285,8 @@ class Dashboard(Frame):
         )
 
         canvas.create_text(
-            359.0,
-            223.0,
+            390.0,
+            213.0,
             anchor="nw",
             text="By Type",
             fill="#5E95FF",
@@ -257,8 +294,8 @@ class Dashboard(Frame):
         )
 
         canvas.create_text(
-            359.0,
-            191.0,
+            390.0,
+            181.0,
             anchor="nw",
             text="Donations",
             fill="#5E95FF",
@@ -266,41 +303,41 @@ class Dashboard(Frame):
         )
 
         canvas.entry_image_10 = PhotoImage(file=relative_to_assets("entry_10.png"))
-        entry_bg_10 = canvas.create_image(251.0, 218.5, image=canvas.entry_image_10)
+        entry_bg_10 = canvas.create_image(251.0, 208.5, image=canvas.entry_image_10)
         entry_10 = Entry(
-            self,
+            canvas,
             bd=0,
             bg="#FFFFFF",
             highlightthickness=0,
             font=("Montserrat Bold", 150),
         )
-        entry_10.place(x=219.0, y=186.0 + 2, width=64.0, height=0)
+        entry_10.place(x=219.0, y=176.0 + 2, width=64.0, height=0)
 
         canvas.entry_image_11 = PhotoImage(file=relative_to_assets("entry_11.png"))
-        entry_bg_11 = canvas.create_image(221.0, 207.5, image=canvas.entry_image_11)
+        entry_bg_11 = canvas.create_image(221.0, 197.5, image=canvas.entry_image_11)
         entry_11 = Entry(
-            self,
+            canvas,
             bd=0,
             bg="#5E95FF",
             highlightthickness=0,
             font=("Montserrat Bold", 150),
         )
-        entry_11.place(x=219.5, y=202.0 + 2, width=3.0, height=0)
+        entry_11.place(x=219.5, y=192.0 + 2, width=3.0, height=0)
 
         canvas.entry_image_12 = PhotoImage(file=relative_to_assets("entry_12.png"))
-        entry_bg_12 = canvas.create_image(221.0, 230.5, image=canvas.entry_image_12)
+        entry_bg_12 = canvas.create_image(221.0, 220.5, image=canvas.entry_image_12)
         entry_12 = Entry(
-            self,
+            canvas,
             bd=0,
             bg="#777777",
             highlightthickness=0,
             font=("Montserrat Bold", 150),
         )
-        entry_12.place(x=219.5, y=225.0 + 2, width=3.0, height=0)
+        entry_12.place(x=219.5, y=215.0 + 2, width=3.0, height=0)
 
         canvas.create_text(
             235.0,
-            200.0,
+            190.0,
             anchor="nw",
             text="Available",
             fill="#5E95FF",
@@ -309,7 +346,7 @@ class Dashboard(Frame):
 
         canvas.create_text(
             235.0,
-            222.0,
+            212.0,
             anchor="nw",
             text="Donated",
             fill="#5E95FF",
@@ -318,46 +355,22 @@ class Dashboard(Frame):
 
         canvas.entry_image_13 = PhotoImage(file=relative_to_assets("entry_13.png"))
         entry_bg_13 = canvas.create_image(
-            555.693603515625, 218.5, image=canvas.entry_image_13
-        )
-        entry_13 = Entry(
-            self,
-            bd=0,
-            bg="#FFFFFF",
-            highlightthickness=0,
-            font=("Montserrat Bold", 150),
-        )
-        entry_13.place(x=523.693603515625, y=186.0 + 2, width=64.0, height=0)
+             630.693603515625, 208.5, image=canvas.entry_image_13
+         )
 
         canvas.entry_image_14 = PhotoImage(file=relative_to_assets("entry_14.png"))
         entry_bg_14 = canvas.create_image(
-            525.693603515625, 207.5, image=canvas.entry_image_14
+            580.693603515625, 197.5, image=canvas.entry_image_14
         )
-        entry_14 = Entry(
-            self,
-            bd=0,
-            bg="#5E95FF",
-            highlightthickness=0,
-            font=("Montserrat Bold", 150),
-        )
-        entry_14.place(x=524.193603515625, y=202.0 + 2, width=3.0, height=0)
 
         canvas.entry_image_15 = PhotoImage(file=relative_to_assets("entry_15.png"))
         entry_bg_15 = canvas.create_image(
-            525.693603515625, 230.5, image=canvas.entry_image_15
+            580.693603515625, 220.5, image=canvas.entry_image_15
         )
-        entry_15 = Entry(
-            self,
-            bd=0,
-            bg="#777777",
-            highlightthickness=0,
-            font=("Montserrat Bold", 150),
-        )
-        entry_15.place(x=524.193603515625, y=225.0 + 2, width=3.0, height=0)
 
         canvas.create_text(
-            539.693603515625,
-            200.0,
+            600.693603515625,
+            190.0,
             anchor="nw",
             text="Perishable",
             fill="#5E95FF",
@@ -365,20 +378,21 @@ class Dashboard(Frame):
         )
 
         canvas.create_text(
-            539.693603515625,
-            222.0,
+            600.693603515625,
+            212.0,
             anchor="nw",
             text="Non-Perishable",
             fill="#5E95FF",
             font=("Montserrat Bold", 13 * -1),
         )
 
-        canvas.image_image_1 = PhotoImage(file=relative_to_assets("image_1.png"))
-        image_1 = canvas.create_image(726.0, 298.0, image=canvas.image_image_1)
+        #canvas.image_image_1 = PhotoImage(file=relative_to_assets("image_1.png"))
+        #image_1 = canvas.create_image(726.0, 298.0, image=canvas.image_image_1)
 
         # Plot for Available vs Donated Food
         fig = Figure(figsize=(2.2, 1.30), dpi=100)
         fig.patch.set_facecolor("#eeefee")
+        #fig.patch.set_facecolor("#eeefee")
 
         plot1 = fig.add_subplot(111)
         plot1.pie(
@@ -388,17 +402,23 @@ class Dashboard(Frame):
             colors=("#6495ED", "#8A8A8A"),
         )
 
-        canvas1 = FigureCanvasTkAgg(fig, self)
+        canvas1 = FigureCanvasTkAgg(fig, canvas)
         canvas1.draw()
-        canvas1.get_tk_widget().place(x=57, y=253)
+        canvas1.get_tk_widget().place(x=57, y=243)
 
         # Plot for Food Types (Perishable vs Non-Perishable)
         fig1 = Figure(figsize=(2.2, 1.30), dpi=100)
         fig1.patch.set_facecolor("#eeefee")
 
         plot2 = fig1.add_subplot(111)
-        plot2.pie([5, 3], [0.1, 0.1], startangle=-30, colors=("#6495ED", "#8A8A8A"))
+        plot2.pie([5, 3], [0.1, 0.1], startangle=-50, colors=("#6495ED", "#8A8A8A"))
 
-        canvas2 = FigureCanvasTkAgg(fig1, self)
+        canvas2 = FigureCanvasTkAgg(fig1, canvas)
         canvas2.draw()
-        canvas2.get_tk_widget().place(x=359, y=253)
+        canvas2.get_tk_widget().place(x=400, y=243)
+
+    def update_db(self):
+        user_details=get_user_info_id(self.user_id)
+        
+        return user_details
+

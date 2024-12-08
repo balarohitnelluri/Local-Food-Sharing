@@ -1,9 +1,10 @@
 from pathlib import Path
+
 from tkinter import Frame, Canvas, Entry, Text, Button, PhotoImage, messagebox
 from controller import *
 import controller as db_controller
 
-from .add_reservations.gui import SchedulePickup
+from .add_pickup.gui import SchedulePickup
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path("./assets")
@@ -23,7 +24,7 @@ class Pickup_schedule(Frame):
         self.parent = parent
         self.selected_rid = None
         self.reservation_data = db_controller.get_listing_details(user_id = user_id)
-        
+
         self.configure(bg="#FFFFFF")
 
         # Loop through windows and place them

@@ -383,7 +383,7 @@ def validation(**kwargs):
         phone=kwargs.get('phone', None)
         date_input=kwargs.get('date',None)
         gender=kwargs.get('gender',None)
-        address1=kwargs.get('address1',None)
+        address=kwargs.get('address1',None)
         city=kwargs.get('city',None)
         state=kwargs.get('state',None)
         zipcode=kwargs.get('zipcode',None)
@@ -461,8 +461,8 @@ def validation(**kwargs):
             return gender_notselected
         
     #Address1 Validation
-    if address1 is not None:
-        if not address1 or len(address1) < 3:
+    if address is not None:
+        if not address or len(address) < 3:
             return "Invalid Address #1. Must be at least 3 characters."
     
     #city Validation
