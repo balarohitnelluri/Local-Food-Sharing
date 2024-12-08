@@ -5,7 +5,7 @@ from utils import executeScriptsFromFile
 # Main function to integrate UI and database
 def main(): 
     
-        # #Execute database scripts
+        # #Execute database scripts 
     # executeScriptsFromFile("drop_tables.sql")
     # executeScriptsFromFile("create_tables.sql")  # Initialize the database tables
     # executeScriptsFromFile("insert_sample_data.sql")

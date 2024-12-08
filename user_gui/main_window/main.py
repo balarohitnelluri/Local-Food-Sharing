@@ -10,7 +10,8 @@ from tkinter import (
 )
 from controller import *
 from user_gui.main_window.dashboard.gui import Dashboard
-from user_gui.main_window.pickup_schedule.main import Pickup_schedule
+from user_gui.main_window.pickup_schedule.add_pickup.gui import SchedulePickup
+
 from user_gui.main_window.notifications.main import Notification
 from user_gui.main_window.add_listing.main import AddFoodItem
 from user_gui.main_window.view_listing.main import SearchFood
@@ -153,6 +154,7 @@ class MainWindow(Toplevel):
             self.canvas,
             image=self.community_icon_extended,
             borderwidth=0,
+            command=self.community,
             highlightthickness=0,
             relief="flat",
         )
@@ -181,7 +183,7 @@ class MainWindow(Toplevel):
         self.windows = {
             "dash": Dashboard(self.container,self.user_id),
             "adi": AddFoodItem(self.container, self.user_id),
-            "gue": Pickup_schedule(self.container, self.user_id),
+            "gue": SchedulePickup(self.container, self.user_id),
             "not": Notification(self.container, self.user_id),
             "spu": SearchFood(self.container, self.user_id),
 
@@ -374,13 +376,13 @@ class MainWindow(Toplevel):
             elif name == "adi":
                 self.windows["adi"] = AddFoodItem(self.container, self.user_id)
             elif name == "gue":
-                self.windows["gue"] = Pickup_schedule(self.container, self.user_id)
+                self.windows["gue"] = SchedulePickup(self.container, self.user_id)
             elif name == "not":
                 self.windows["not"] = Notification(self.container, self.user_id)
             elif name == "spu":
                 self.windows["spu"] = SearchFood(self.container, self.user_id)
             elif name == "set":
-                self.windows["set"] = Settings_GUI(self.container, self.user_id,self)
+                self.windows["set"] = Settings_GUI(self.container, self.user_id,self,self.windows.get("dash"))
                 self.sidebar_indicator.place_forget()
             elif name == "sup":
                 self.windows['sup'] = Support_Gui(self.container,self.user_id,self)
@@ -409,6 +411,38 @@ class MainWindow(Toplevel):
     def support(self):
         
         self.hide_dropdown()
+
+    def community(self):
+        self.profile_completion_window=ctk.CTkToplevel(self, width=600, height=100, fg_color= 'white'
+        )
+        self.profile_completion_window.title("Profile Completion")
+        self.profile_completion_window.geometry("600X100")
+        center_window(self.profile_completion_window, 600, 100)
+
+        completion_label = ctk.CTkLabel(
+            self.profile_completion_window,
+            text="Hold On! we know you're in hurry to explore, we will get this feature soon!",
+            font=("Montserrat Bold", 12,"bold"),
+            text_color="#848484",
+        )
+        completion_label.place(x=70, y=25)
+        
+        lets_go_button = ctk.CTkButton(
+        self.profile_completion_window,
+        text="Let’s do it!",
+        width=70,
+        height=30,
+        corner_radius=5,
+        fg_color="#6C9FFF",
+        text_color="white",
+        hover_color="#5E95FF",
+        border_color="#6C9FFF",
+        border_width=1,
+        command=self.profile_completion_window.destroy,
+        font=("Montserrat Bold", 11,"bold"),
+        )
+        lets_go_button.place(x=250, y=60)
+        return
 
     def expand_sidebar(self, event):
         for button in [self.dashboard_btn, self.add_listing_btn, self.schedule_pickup_btn, self.notifications_btn, self.community_btn,]:

@@ -28,6 +28,7 @@ class Dashboard(Frame):
         self.fullname=f"{self.user_details[1]} {self.user_details[2]}"
 
         self.configure(bg="#FFFFFF")
+        print("Entered Dashboard")
 
         # Sidebar title
         welcome_label = ctk.CTkLabel(
@@ -38,13 +39,13 @@ class Dashboard(Frame):
         )
         welcome_label.place(x=290, y=15)
 
-        name_label = ctk.CTkLabel(
+        self.name_label = ctk.CTkLabel(
             self,
             text=f"{self.fullname}",
             font=("Montserrat Bold", 26,"bold"),
             text_color="#5E95FF",
         )
-        name_label.place(x=450, y=20)
+        self.name_label.place(x=450, y=20)
 
         heading_label = ctk.CTkLabel(
             self,
@@ -421,4 +422,10 @@ class Dashboard(Frame):
         user_details=get_user_info_id(self.user_id)
         
         return user_details
+    
+    def refresh_username(self):
+        # Fetch updated user details
+        self.user_details = self.update_db()
+        self.fullname = f"{self.user_details[1]} {self.user_details[2]}"
+        self.name_label.configure(text=f"{self.fullname}")
 

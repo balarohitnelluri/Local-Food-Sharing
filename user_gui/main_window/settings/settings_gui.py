@@ -24,6 +24,7 @@ import random
 
 
 
+
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path("./assets")
 
@@ -35,13 +36,15 @@ def start_gui():
     Settings_GUI()
 
 class Settings_GUI(Frame):
-    def __init__(self, parent, user_id,mainwindow, *args, **kwargs):
+    def __init__(self, parent, user_id,mainwindow,dashboard_instance, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)  # Attach to parent
         self.user_id = user_id
         self.parent=parent
         self.mainwindow=mainwindow
+        self.dashboard=dashboard_instance
         self.user_details=self.update_data()
         self.configure(bg="white")  # Debug background for visibility
+        print("Entered settings")
 
 
         # Sidebar in the settings page (if needed)
@@ -874,6 +877,7 @@ class Settings_GUI(Frame):
 
         update_users_table(query,values)
         self.update_data()
+        self.dashboard.refresh_username()
         self.mainwindow.update_data()
         self.personal_information_ui()
         self.top_info_ui()
@@ -1492,6 +1496,7 @@ class Settings_GUI(Frame):
         else:
             entry.configure(show="*")  # Hide the password
             eye_icon.configure(image=self.eye_closed_image)  # Update icon to "eye closed"
+            
 
 
 

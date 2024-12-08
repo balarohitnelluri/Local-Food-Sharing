@@ -21,38 +21,29 @@ class ViewRequests(Frame):
         self.user_id = user_id  # Current user ID
         self.configure(bg="#FFFFFF")
 
+        notifications_label = ctk.CTkLabel(
+            self,
+            text="Notifications",
+            font=("Montserrat Bold", 36,"bold"),
+            text_color="#B3B3B3",
+        )
+        notifications_label.place(x=25 , y=39)
+
+
         # Outer Frame
         outer_frame = ctk.CTkFrame(
             self,
             width=700,
             height=400,
             corner_radius=15,
-            fg_color="#F4F4F4",
+            fg_color="#FFFFFF",
         )
-        outer_frame.place(relx=0.4, rely=0.42, anchor="center")
-        outer_frame.grid_propagate(False)
+        outer_frame.place(x=112,y=0)
+        outer_frame.lower()
 
         # Tabs for Requests Raised and Received
         tab_frame = ctk.CTkFrame(outer_frame, fg_color="#FFFFFF", corner_radius=10)
         tab_frame.grid(row=0, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
-
-        self.raised_button = ctk.CTkButton(
-            tab_frame,
-            text="Requests Raised",
-            command=self.view_raised_requests,
-            fg_color="#5E95FF",
-            corner_radius=10,
-        )
-        self.raised_button.grid(row=0, column=0, padx=10, pady=10)
-
-        self.received_button = ctk.CTkButton(
-            tab_frame,
-            text="Requests Received",
-            command=self.view_received_requests,
-            fg_color="#5E95FF",
-            corner_radius=10,
-        )
-        self.received_button.grid(row=0, column=1, padx=10, pady=10)
 
         # Table to Display Requests
         self.tree_frame = ctk.CTkFrame(outer_frame, fg_color="#FFFFFF", corner_radius=10, width=700, height=300)

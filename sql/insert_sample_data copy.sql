@@ -6,10 +6,70 @@ VALUES
 ('Bob', 'Brown', 'bob.brown@example.com', 'male', 40, '6677889900', '101 Circle', 'Suite 2A', 'Houston', 'USA', '77001', 'hashed_password4', TRUE),
 ('Charlie', 'Davis', 'nbrohit@gmail.com', 'other', 28, '4433221100', '202 Square', NULL, 'San Francisco', 'USA', '94101', 'hashed_password5', FALSE);
 
- INSERT INTO food_listings (food_type, quantity, expiration_date, location, pincode, user_id)
-                VALUES 
-                ('Apples', 10, '2024-12-31', '123 Main Street', '10001', 1),
-                ('Bananas', 20, '2024-12-25', '456 Market Street', '10002', 2);
+INSERT INTO food_listings (food_type, quantity, expiration_date, location, pincode, user_id)
+VALUES 
+    -- Duplicate records across multiple ZIP codes
+    ('Apples', 10, '2024-12-31', '123 Main Street', '10001', 1),
+    ('Apples', 10, '2024-12-31', '123 Main Street', '10002', 1),
+    ('Apples', 10, '2024-12-31', '123 Main Street', '10003', 1),
+
+    ('Bananas', 20, '2024-12-25', '456 Market Street', '10001', 2),
+    ('Bananas', 20, '2024-12-25', '456 Market Street', '10002', 2),
+    ('Bananas', 20, '2024-12-25', '456 Market Street', '10004', 2),
+
+    ('Oranges', 15, '2024-12-29', '789 Orchard Lane', '10003', 3),
+    ('Oranges', 15, '2024-12-29', '789 Orchard Lane', '10005', 3),
+
+    ('Carrots', 12, '2024-12-28', '234 Vegetable Road', '10004', 4),
+    ('Carrots', 12, '2024-12-28', '234 Vegetable Road', '10006', 4),
+
+    ('Tomatoes', 25, '2024-12-27', '567 Garden Way', '10001', 5),
+    ('Tomatoes', 25, '2024-12-27', '567 Garden Way', '10002', 5),
+
+    ('Lettuce', 18, '2024-12-26', '678 Green Street', '10003', 6),
+    ('Lettuce', 18, '2024-12-26', '678 Green Street', '10004', 6),
+
+    ('Broccoli', 22, '2024-12-24', '789 Fresh Lane', '10005', 7),
+    ('Broccoli', 22, '2024-12-24', '789 Fresh Lane', '10006', 7),
+
+    ('Peppers', 16, '2024-12-31', '890 Spicy Blvd', '10001', 8),
+    ('Peppers', 16, '2024-12-31', '890 Spicy Blvd', '10002', 8),
+
+    ('Mangoes', 10, '2024-12-31', '101 Mango Avenue', '10003', 9),
+    ('Mangoes', 10, '2024-12-31', '101 Mango Avenue', '10004', 9),
+
+    ('Strawberries', 12, '2024-12-25', '202 Berry Drive', '10001', 10),
+    ('Strawberries', 12, '2024-12-25', '202 Berry Drive', '10005', 10),
+
+    ('Blueberries', 8, '2024-12-27', '303 Blue Street', '10006', 11),
+    ('Blueberries', 8, '2024-12-27', '303 Blue Street', '10002', 11),
+
+    ('Peaches', 14, '2024-12-26', '404 Peach Road', '10003', 12),
+    ('Peaches', 14, '2024-12-26', '404 Peach Road', '10001', 12),
+
+    ('Plums', 10, '2024-12-28', '505 Plum Alley', '10004', 13),
+    ('Plums', 10, '2024-12-28', '505 Plum Alley', '10002', 13),
+
+    ('Cherries', 20, '2024-12-24', '606 Cherry Blvd', '10003', 14),
+    ('Cherries', 20, '2024-12-24', '606 Cherry Blvd', '10005', 14),
+
+    ('Kale', 18, '2024-12-29', '707 Kale Street', '10006', 15),
+    ('Kale', 18, '2024-12-29', '707 Kale Street', '10004', 15),
+
+    ('Spinach', 22, '2024-12-31', '808 Spinach Road', '10002', 16),
+    ('Spinach', 22, '2024-12-31', '808 Spinach Road', '10001', 16),
+
+    ('Milk', 30, '2024-12-27', '909 Dairy Lane', '10001', 17),
+    ('Milk', 30, '2024-12-27', '909 Dairy Lane', '10005', 17),
+
+    ('Eggs', 40, '2024-12-26', '123 Egg Blvd', '10003', 18),
+    ('Eggs', 40, '2024-12-26', '123 Egg Blvd', '10004', 18),
+
+    ('Cheese', 25, '2024-12-28', '234 Cheese Way', '10002', 19),
+    ('Cheese', 25, '2024-12-28', '234 Cheese Way', '10003', 19),
+
+    ('Chicken', 10, '2024-12-31', '456 Poultry Lane', '10001', 20),
+    ('Chicken', 10, '2024-12-31', '456 Poultry Lane', '10002', 20);
 
 INSERT INTO food_listings_2 (user_id, food_name, category, quantity, serving_size, prepared_date, expiration_date, pincode, description, special_notes) 
 VALUES 

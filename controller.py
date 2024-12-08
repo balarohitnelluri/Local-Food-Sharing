@@ -442,6 +442,57 @@ def fetch_listings_query(user_id):
         if 'connection' in locals() and connection:
             connection.close()
 
+def search_listings_query(zipcode,expiration_date,current_user_id):
+    try:
+
+            # SQL Query
+        query = """
+        SELECT fl.listing_id, fl.food_type, fl.quantity, fl.expiration_date, fl.location, fl.pincode, fl.user_id
+FROM food_listings fl
+LEFT JOIN pickups p ON fl.listing_id = p.listing_id AND p.user_id = %s AND p.status = 'pending'
+WHERE fl.pincode = %s
+  AND ((fl.expiration_date BETWEEN CURDATE() AND %s) OR fl.expiration_date IS NULL)
+  AND fl.user_id != %s
+        """
+        values = (current_user_id,zipcode, expiration_date, current_user_id)
+        # Execute the query
+        cursor.execute(query, values)
+
+        # Fetch the results
+        results = cursor.fetchall()
+        return results
+    except Error as e:
+        print(f"Error fetching listings: {e}")
+        raise
+    finally:
+        # Close cursor and connection if initialized
+        if 'cursor' in locals() and cursor:
+            cursor.close()
+        if 'connection' in locals() and connection:
+            connection.close()
+
+def search_execute_query(query,values):
+    try:
+
+            # SQL Query
+      
+        # Execute the query
+        cursor.execute(query, values)
+
+        # Fetch the results
+        results = cursor.fetchall()
+        return results
+    except Error as e:
+        print(f"Error fetching listings: {e}")
+        raise
+    finally:
+        # Close cursor and connection if initialized
+        if 'cursor' in locals() and cursor:
+            cursor.close()
+        if 'connection' in locals() and connection:
+            connection.close()
+
+
 def execute_queries(query,values):
         try:
 
@@ -456,6 +507,8 @@ def execute_queries(query,values):
             if connection:
                 connection.rollback()
             raise
+
+
 
 
 

@@ -1,32 +1,34 @@
-import customtkinter as ctk
+import tkinter as tk
+from tkinter import ttk
 
-class App(ctk.CTk):
-    def __init__(self):
-        super().__init__()
+def get_text():
+    print("Entry Text:", entry.get())
+    print("Label Text:", label.cget("text"))
+    print("OptionMenu Value:", option_var.get())
+    print("Combobox Value:", combobox.get())
 
-        self.geometry("400x300")
+root = tk.Tk()
 
-        # Create multiple buttons
-        self.button1 = ctk.CTkButton(
-            self, text="Button 1", command=lambda: self.widget_callback(self.button1)
-        )
-        self.button1.pack(pady=20)
+# Entry
+entry = tk.Entry(root)
+entry.pack()
+entry.insert(0, "Hello Entry!")
 
-        self.button2 = ctk.CTkButton(
-            self, text="Button 2", command=lambda: self.widget_callback(self.button2)
-        )
-        self.button2.pack(pady=20)
+# Label
+label = tk.Label(root, text="Hello Label!")
+label.pack()
 
-        self.button3 = ctk.CTkButton(
-            self, text="Button 3", command=lambda: self.widget_callback(self.button3)
-        )
-        self.button3.pack(pady=20)
+# OptionMenu
+option_var = tk.StringVar(value="Option 1")
+option_menu = tk.OptionMenu(root, option_var, "Option 1", "Option 2", "Option 3")
+option_menu.pack()
 
-    def widget_callback(self, widget):
-        print(f"Function called from: {widget}")
-        print(f"Widget text: {widget.cget('text')}")  # Get text of the button
+# Combobox
+combobox = ttk.Combobox(root, values=["Combo 1", "Combo 2", "Combo 3"])
+combobox.pack()
 
+# Button
+button = tk.Button(root, text="Get Text", command=get_text)
+button.pack()
 
-if __name__ == "__main__":
-    app = App()
-    app.mainloop()
+root.mainloop()

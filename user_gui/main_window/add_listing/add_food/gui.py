@@ -31,7 +31,7 @@ class AddFoodForm(Frame):
     def __init__(self, parent, user_id, *args, **kwargs):
         Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
-        self.user_id = user_id  # Store user_id for user-specific operations
+        self.user_id = user_id  
         self.data = {
             "food_type": StringVar(),
             "quantity": StringVar(),
@@ -42,7 +42,6 @@ class AddFoodForm(Frame):
 
         self.configure(bg="white")
 
-            # Sidebar in the settings page (if needed)
         self.side_frame = ctk.CTkFrame(
             self,
             width=169,
@@ -98,11 +97,11 @@ class AddFoodForm(Frame):
         self.requests_btn = ctk.CTkButton(
             self.side_frame,
             text="Pick Up Requests",
-            #command=self.account_ui,
+            command=self.pickup_requests,
             width=169,
             height=50,
             corner_radius=0,
-            fg_color="#D2D2D2",
+            fg_color="#FFFFFF",
             text_color="#B3B3B3",
             border_color="#D2D2D2",
             border_width=1,
@@ -120,17 +119,15 @@ class AddFoodForm(Frame):
         )
         self.error_label.place(x=350, y=79)
     
-        # Call the function to populate the UI
         self.donate_ui()
 
-        # Update the scrollregion whenever widgets are added
         self.scrollable_frame.update_idletasks()
 
     def donate_ui(self):
 
         self.donate_btn.configure(fg_color="#F2F2F2",state="disabled")
-        self.my_listings_btn.configure(fg_color="#FFFFFF")
-        self.requests_btn.configure(fg_color="#FFFFFF")
+        self.my_listings_btn.configure(fg_color="#FFFFFF",state="enable")
+        self.requests_btn.configure(fg_color="#FFFFFF",state="enable")
 
 
         self.scrollable_frame = ctk.CTkScrollableFrame(
@@ -143,11 +140,10 @@ class AddFoodForm(Frame):
         )
         self.scrollable_frame.place(x=169, y=113)
 
-        # Configure columns for the scrollable frame
-        self.scrollable_frame.grid_columnconfigure(0, weight=1)  # Left spacer
-        self.scrollable_frame.grid_columnconfigure(1, weight=0)  # Labels
-        self.scrollable_frame.grid_columnconfigure(2, weight=1)  # Entries
-        self.scrollable_frame.grid_columnconfigure(3, weight=1)  # Right spacer
+        self.scrollable_frame.grid_columnconfigure(0, weight=1) 
+        self.scrollable_frame.grid_columnconfigure(1, weight=0)  
+        self.scrollable_frame.grid_columnconfigure(2, weight=1)  
+        self.scrollable_frame.grid_columnconfigure(3, weight=1)  
 
         # Title Label
         title_label = ctk.CTkLabel(
@@ -156,11 +152,10 @@ class AddFoodForm(Frame):
             font=("Montserrat Bold", 20, "bold"),
             text_color="#848484",
         )
-        title_label.grid(row=0, column=0, columnspan=4, pady=15, sticky="ew")  # Span across all columns
+        title_label.grid(row=0, column=0, columnspan=4, pady=15, sticky="ew")  
 
 
-        # Similarly update other fields (e.g., Category, Quantity)
-        # Example for Category:
+
         category_label = ctk.CTkLabel(
             self.scrollable_frame,
             text="Food Type:*",
@@ -421,18 +416,16 @@ class AddFoodForm(Frame):
         self.error_label.configure(text=f"Sucessfully added!",text_color="green")
         
     def load_data(self):
-# Create the INSERT query
         query = """
         INSERT INTO food_listings (food_type, quantity, expiration_date, location, pincode, user_id)
         VALUES (%s, %s, %s, %s, %s, %s)
         """
-        # Ensure the instance variables are correctly mapped
-        values = (self.category,  # food_type
-                self.quantity,  # quantity
-                self.expiration_date,  # expiration_date
-                self.location,  # location
-                self.pincode,  # pincode
-                self.user_id)  # user_id
+        values = (self.category,  
+                self.quantity,  
+                self.expiration_date,  
+                self.location,  
+                self.pincode,  
+                self.user_id)  
 
         try:
             execute_queries(query,values)
@@ -465,10 +458,10 @@ class AddFoodForm(Frame):
             corner_radius=5,
             fg_color="#6C9FFF",
             text_color="white",
-            hover_color="#5E95FF",
+            hover_color="#7FE186",
             border_color="#6C9FFF",
             border_width=1,
-            command=self.clear_of_entries,
+            command=self.destroy_window,
             font=("Montserrat Bold", 11,"bold"),
             )
             lets_go_button.place(x=115, y=60)
@@ -494,7 +487,9 @@ class AddFoodForm(Frame):
     def load_my_listings(self):
         self.error_label.configure(text=f"Sucessfully added!",text_color="white")
         self.donate_btn.configure(fg_color="#FFFFFF",state="enable")
-        self.my_listings_btn.configure(fg_color="#F2F2F2")
+        self.my_listings_btn.configure(fg_color="#F2F2F2",state="disabled")
+        self.requests_btn.configure(fg_color="#FFFFFF",state="enable")
+
 
         self.listings_scrollable_frame = ctk.CTkScrollableFrame(
             self,
@@ -512,7 +507,6 @@ class AddFoodForm(Frame):
 
         # Fetch listings
         listings = fetch_listings_query(self.user_id)
-        print(listings)
         
 
         if not listings:
@@ -565,7 +559,7 @@ class AddFoodForm(Frame):
                 command=lambda: self.edit_listing(listing_id, food_type, quantity, expiration_date, location, pincode),
                 font=("Montserrat Bold", 12),
                 fg_color="green",
-                hover_color="#FF7777",
+                hover_color="#7FE186",
                 width=80,
                 height=30,
                 corner_radius=5,
@@ -588,20 +582,17 @@ class AddFoodForm(Frame):
 
     def edit_listing(self, listing_id, food_type, quantity, expiration_date, location, pincode):
         """Load the listing into the donation form for editing."""
-        # Switch to the donation UI
         self.donate_ui()
 
-        # Populate fields with the existing data
-        self.category_entry.set(food_type)  # Set the food type
-        self.quantity_entry.set(quantity)  # Set the quantity
+        self.category_entry.set(food_type)  
+        self.quantity_entry.set(quantity)  
         self.expiration_selected_date = expiration_date
-        self.expiration_date_picker.configure(text=expiration_date)  # Set the expiration date
+        self.expiration_date_picker.configure(text=expiration_date)  
         self.location_entry.delete(0, "end")
-        self.location_entry.insert(0, location)  # Set the location
+        self.location_entry.insert(0, location)  
         self.pincode_entry.delete(0, "end")
-        self.pincode_entry.insert(0, pincode)  # Set the pincode
+        self.pincode_entry.insert(0, pincode) 
 
-        # Change the submit button to an update button
         update_button = ctk.CTkButton(
             self.scrollable_frame,
             text="Update Listing",
@@ -614,7 +605,7 @@ class AddFoodForm(Frame):
             height=39,
             corner_radius=10,
         )
-        update_button.grid(row=6, column=1, pady=15, padx=10, sticky="")  # Replace the existing button
+        update_button.grid(row=6, column=1, pady=15, padx=10, sticky="") 
 
 
     def update_listing(self, listing_id):
@@ -625,11 +616,6 @@ class AddFoodForm(Frame):
         expiration_date = self.expiration_selected_date
         location = self.location_entry.get().strip()
         pincode = self.pincode_entry.get().strip()
-
-        # Validate the fields (reuse existing validation logic)
-        # ...
-
-        # Create the update query
         query = """
         UPDATE food_listings
         SET food_type = %s, quantity = %s, expiration_date = %s, location = %s, pincode = %s
@@ -646,3 +632,134 @@ class AddFoodForm(Frame):
         except Exception as e:
             print(f"Error updating listing: {e}")
             self.error_label.configure(text=f"Error: {e}", text_color="red")
+
+    def pickup_requests(self):
+        self.requests_btn.configure(fg_color="#F2F2F2",state="disabled")
+        self.my_listings_btn.configure(fg_color="#FFFFFF",state="enable")
+        self.my_listings_btn.configure(fg_color="#FFFFFF",state="enable")
+
+
+        self.scrollable_frame.destroy()  
+        self.scrollable_frame = ctk.CTkScrollableFrame(
+            self,
+            width=733,
+            height=370,
+            fg_color="white",
+            border_color="#D2D2D2",
+            border_width=1,
+        )
+        self.scrollable_frame.place(x=169, y=113)
+
+        query = """
+        SELECT 
+            p.pickup_id,
+            fl.food_type,
+            fl.quantity,
+            p.pickup_time,
+            u.first_name,
+            u.last_name,
+            p.status,
+            p.date_scheduled
+        FROM 
+            pickups p
+        JOIN 
+            food_listings fl ON p.listing_id = fl.listing_id
+        JOIN 
+            users u ON p.user_id = u.user_id
+        WHERE 
+            fl.user_id = %s
+        ORDER BY 
+            p.date_scheduled DESC;
+        """
+        values = (self.user_id,)  
+        requests = search_execute_query(query, values)
+
+        if not requests:
+            ctk.CTkLabel(
+                self.scrollable_frame,
+                text="No Pickup Requests Found!",
+                font=("Montserrat Bold", 16),
+                text_color="#B3B3B3",
+            ).grid(row=0, column=0, pady=10)
+            return
+
+        # Display requests
+   # Display requests
+        for idx, request in enumerate(requests):
+            pickup_id, food_type, quantity, pickup_time, first_name, last_name, status, _ = request
+
+            # Request details
+            ctk.CTkLabel(
+                self.scrollable_frame,
+                text=f"Food: {food_type}, Quantity: {quantity}, Pickup Time: {pickup_time}",
+                font=("Montserrat", 12),
+                text_color="black",
+            ).grid(row=idx * 2, column=0, columnspan=4, padx=10, pady=5, sticky="w")
+
+            ctk.CTkLabel(
+                self.scrollable_frame,
+                text=f"Requested by: {first_name} {last_name}",
+                font=("Montserrat", 12),
+                text_color="#848484",
+            ).grid(row=idx * 2 + 1, column=0, columnspan=4, padx=10, pady=5, sticky="w")
+
+            # Status display
+            status_button = ctk.CTkButton(
+                self.scrollable_frame,
+                text=status.capitalize(),
+                font=("Montserrat Bold", 12),
+                fg_color={
+                    "pending": "orange",
+                    "approved": "green",
+                    "rejected": "red",
+                }.get(status, "gray"),
+                width=100,
+                height=30,
+                corner_radius=5,
+                state="disabled",  # Disabled as it's for display only
+            )
+            status_button.grid(row=idx * 2 + 1, column=4, columnspan=2, padx=5, pady=5)
+
+            if status == "pending":  # Show buttons only for pending requests
+                # Approve button
+                approve_button = ctk.CTkButton(
+                    self.scrollable_frame,
+                    text="Approve",
+                    font=("Montserrat Bold", 12),
+                    fg_color="green",
+                    hover_color="#7FE186",
+                    width=100,
+                    height=30,
+                    corner_radius=5,
+                    command=lambda pid=pickup_id: self.update_pickup_status(pid, "approved"),
+                )
+                approve_button.grid(row=idx * 2, column=4, padx=5, pady=5)
+
+                # Reject button
+                reject_button = ctk.CTkButton(
+                    self.scrollable_frame,
+                    text="Reject",
+                    font=("Montserrat Bold", 12),
+                    fg_color="red",
+                    hover_color="#FF7777",
+                    width=100,
+                    height=30,
+                    corner_radius=5,
+                    command=lambda pid=pickup_id: self.update_pickup_status(pid, "rejected"),
+                )
+                reject_button.grid(row=idx * 2, column=5, padx=5, pady=5)
+    def update_pickup_status(self, pickup_id, new_status):
+        """Update the status of a pickup request."""
+        query = """
+        UPDATE pickups
+        SET status = %s
+        WHERE pickup_id = %s
+        """
+        values = (new_status, pickup_id)
+
+        try:
+            execute_queries(query, values)
+            print(f"Pickup request {pickup_id} updated to {new_status}.")
+            self.pickup_requests()  #
+        except Exception as e:
+            print(f"Error updating pickup status: {e}")
