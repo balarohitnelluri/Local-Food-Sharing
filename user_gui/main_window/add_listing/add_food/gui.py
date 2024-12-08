@@ -545,8 +545,8 @@ class AddFoodForm(Frame):
                 text="Delete",
                 command=lambda l=listing: self.delete_listing(listing_id),
                 font=("Montserrat Bold", 12),
-                fg_color="#FF5555",
-                hover_color="#FF7777",
+                fg_color="#C51518",
+                hover_color="#A41417", 
                 width=80,
                 height=30,
                 corner_radius=5,
@@ -558,8 +558,8 @@ class AddFoodForm(Frame):
                 text="Edit",
                 command=lambda: self.edit_listing(listing_id, food_type, quantity, expiration_date, location, pincode),
                 font=("Montserrat Bold", 12),
-                fg_color="green",
-                hover_color="#7FE186",
+                fg_color="#2E8A34",
+                hover_color="#36A63D",
                 width=80,
                 height=30,
                 corner_radius=5,
@@ -567,7 +567,7 @@ class AddFoodForm(Frame):
             edit_button.grid(row=idx * 2, column=4, padx=10, pady=5, sticky="e")
     
     def delete_listing(self, listing_id):
-        """Delete a listing by its ID."""
+
         query = "DELETE FROM food_listings WHERE listing_id = %s"
         value = (listing_id,)
         
@@ -581,7 +581,6 @@ class AddFoodForm(Frame):
 
 
     def edit_listing(self, listing_id, food_type, quantity, expiration_date, location, pincode):
-        """Load the listing into the donation form for editing."""
         self.donate_ui()
 
         self.category_entry.set(food_type)  
@@ -598,9 +597,9 @@ class AddFoodForm(Frame):
             text="Update Listing",
             command=lambda: self.update_listing(listing_id),
             font=("Montserrat Bold", 16, "bold"),
-            fg_color="#2CD437",
+            fg_color="#2E8A34",
             text_color="white",
-            hover_color="#7FE186",
+            hover_color="#36A63D",
             width=150,
             height=39,
             corner_radius=10,
@@ -609,7 +608,6 @@ class AddFoodForm(Frame):
 
 
     def update_listing(self, listing_id):
-        """Update an existing listing in the database."""
         # Extract updated data from entries
         food_type = self.category_entry.get()
         quantity = self.quantity_entry.get()
@@ -634,9 +632,10 @@ class AddFoodForm(Frame):
             self.error_label.configure(text=f"Error: {e}", text_color="red")
 
     def pickup_requests(self):
+
         self.requests_btn.configure(fg_color="#F2F2F2",state="disabled")
         self.my_listings_btn.configure(fg_color="#FFFFFF",state="enable")
-        self.my_listings_btn.configure(fg_color="#FFFFFF",state="enable")
+        self.donate_btn.configure(fg_color="#FFFFFF",state="enable")
 
 
         self.scrollable_frame.destroy()  
@@ -709,13 +708,15 @@ class AddFoodForm(Frame):
                 text=status.capitalize(),
                 font=("Montserrat Bold", 12),
                 fg_color={
-                    "pending": "orange",
-                    "approved": "green",
-                    "rejected": "red",
+                    "pending": "#E7A603",
+                    "approved": "#2E8A34",
+                    "rejected": "#C51518",
                 }.get(status, "gray"),
+                text_color="white",
                 width=100,
                 height=30,
                 corner_radius=5,
+                text_color_disabled="white",
                 state="disabled",  # Disabled as it's for display only
             )
             status_button.grid(row=idx * 2 + 1, column=4, columnspan=2, padx=5, pady=5)
@@ -726,8 +727,10 @@ class AddFoodForm(Frame):
                     self.scrollable_frame,
                     text="Approve",
                     font=("Montserrat Bold", 12),
-                    fg_color="green",
-                    hover_color="#7FE186",
+                    fg_color="#2E8A34",
+                    hover_color="#36A63D",
+                    text_color="white",
+                    text_color_disabled="white",
                     width=100,
                     height=30,
                     corner_radius=5,
@@ -740,8 +743,10 @@ class AddFoodForm(Frame):
                     self.scrollable_frame,
                     text="Reject",
                     font=("Montserrat Bold", 12),
-                    fg_color="red",
-                    hover_color="#FF7777",
+                    fg_color="#C51518",
+                    hover_color="#A41417",
+                    text_color="white",
+                    text_color_disabled="white",
                     width=100,
                     height=30,
                     corner_radius=5,

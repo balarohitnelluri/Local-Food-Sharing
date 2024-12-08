@@ -51,19 +51,3 @@ CREATE TABLE IF NOT EXISTS reports (
         FOREIGN KEY (generated_by) REFERENCES users(user_id)
     );
 
-CREATE TABLE IF NOT EXISTS food_listings_2 (
-    listing_id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    food_name VARCHAR(255) NOT NULL,
-    category VARCHAR(255) NOT NULL,
-    quantity VARCHAR(255) NOT NULL,
-    serving_size VARCHAR(255),
-    prepared_date DATE,
-    expiration_date DATE NOT NULL,
-    zipcode VARCHAR(10) NOT NULL, 
-    description TEXT NOT NULL,
-    special_notes TEXT,
-    is_available BOOLEAN DEFAULT TRUE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(user_id) 
-    );

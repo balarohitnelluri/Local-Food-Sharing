@@ -44,7 +44,6 @@ class Settings_GUI(Frame):
         self.dashboard=dashboard_instance
         self.user_details=self.update_data()
         self.configure(bg="white")  # Debug background for visibility
-        print("Entered settings")
 
 
         # Sidebar in the settings page (if needed)
@@ -154,23 +153,23 @@ class Settings_GUI(Frame):
         self.profile = Canvas(self.first_profile_frame, width=35, height=35, bg="white", highlightthickness=0,)
         self.profile.place(x=20, y=18)
         self.user_firstname=self.user_details[1]
-
+        self.first_letter=self.user_firstname[0]
         # Create the round button
         self.round_button = self.profile.create_oval(0, 0, 35, 35, fill="#0078D7", outline="")
-        self.profile.create_text(17.5, 17.5, text=f"{self.user_firstname[0]}", fill="white", font=("Arial", 12, "bold"))
+        self.profile.create_text(17.5, 17.5, text=f"{self.first_letter.upper()}", fill="white", font=("Arial", 12, "bold"))
 
         self.full_name_data=f"{self.user_details[1]} {self.user_details[2]}"
         #Required Data File
         name_label = ctk.CTkLabel(
             self.first_profile_frame,
-            text=self.full_name_data,
+            text=self.full_name_data.title(),
             font=("Montserrat Bold", 16, "bold"),
             text_color="#5E95FF",
    
         )
         name_label.place(x=71, y=14)
 
-        self.location_data=f"{self.user_details[9]}, {self.user_details[10]}, {self.user_details[11]}"
+        self.location_data=f"{self.user_details[9].upper()}, {self.user_details[10].upper()}, {self.user_details[11].upper()}"
         #Required Data File
         location_label = ctk.CTkLabel(
             self.first_profile_frame,
@@ -404,7 +403,7 @@ class Settings_GUI(Frame):
             text_color="black",
             button_color="#6C9FFF"
         )
-        self.gender_dropdown.set(self.gender_data)  # Default value
+        self.gender_dropdown.set(self.gender_data.title())  # Default value
         self.gender_dropdown.place(x=20, y=115)
 
         self.dob_data=self.user_details[5]
@@ -506,7 +505,7 @@ class Settings_GUI(Frame):
         )
         self.street_one_label.place(x=20, y=33)
 
-        self.address_1_data=self.user_details[7]
+        self.address_1_data=self.user_details[7].upper()
         #street #1 data
         self.street_one_data = ctk.CTkLabel(
             self.third_profile_frame,
@@ -518,7 +517,7 @@ class Settings_GUI(Frame):
         self.street_one_data.place(x=20, y=56)
 
         if self.user_details[8]:
-            self.address_2_data=self.user_details[8]
+            self.address_2_data=self.user_details[8].upper()
         else:
             self.address_2_data="N/A"
 
@@ -535,7 +534,7 @@ class Settings_GUI(Frame):
         #street #2 data
         self.street_two_data = ctk.CTkLabel(
             self.third_profile_frame,
-            text=self.address_2_data,
+            text=self.address_2_data.upper(),
             font=("Montserrat Bold", 14, "bold"),
             text_color="#B3B3B3",
    
@@ -554,7 +553,7 @@ class Settings_GUI(Frame):
         self.city_label.place(x=20, y=82)
 
        #city_Data
-        self.city_data=self.user_details[9]
+        self.city_data=self.user_details[9].upper()
         self.city_data = ctk.CTkLabel(
             self.third_profile_frame,
             text=self.city_data,
@@ -576,7 +575,7 @@ class Settings_GUI(Frame):
         self.country_label.place(x=198, y=82)
 
        #Country_Data
-        self.country_data=self.user_details[11]
+        self.country_data=self.user_details[11].upper()
         self.country_data = ctk.CTkLabel(
             self.third_profile_frame,
             text=self.country_data,
@@ -596,7 +595,7 @@ class Settings_GUI(Frame):
         )
         self.state_label.place(x=370, y=82)
 
-        self.state_data=self.user_details[10]
+        self.state_data=self.user_details[10].upper()
         self.state= ctk.CTkLabel(
             self.third_profile_frame,
             text=self.state_data,

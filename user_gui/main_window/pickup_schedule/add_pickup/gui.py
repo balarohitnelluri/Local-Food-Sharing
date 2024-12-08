@@ -157,7 +157,6 @@ class SchedulePickup(Frame):
             conn.close()
 
     def create_requested_items_table(self, parent):
-        """Create a table to display all user-requested pickups."""
         table_frame = ctk.CTkFrame(parent, fg_color="#FFFFFF", corner_radius=10)
         table_frame.grid(row=5, column=0, columnspan=3, padx=10, pady=10, sticky="nsew")
 
@@ -216,7 +215,6 @@ class SchedulePickup(Frame):
             conn.close()
 
     def schedule_pickup(self):
-        """Schedule a pickup."""
         pincode = self.pincode_var.get()
         food_type = self.food_type_var.get()
         pickup_date = self.date_picker.get()

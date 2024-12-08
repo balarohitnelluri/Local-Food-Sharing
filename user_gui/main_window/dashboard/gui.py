@@ -25,10 +25,10 @@ class Dashboard(Frame):
         self.parent = parent
         self.user_id=user_id
         self.user_details=self.update_db()
-        self.fullname=f"{self.user_details[1]} {self.user_details[2]}"
+        self.fullname = f"{self.user_details[1]} {self.user_details[2]}"
+       
 
         self.configure(bg="#FFFFFF")
-        print("Entered Dashboard")
 
         # Sidebar title
         welcome_label = ctk.CTkLabel(
@@ -41,7 +41,7 @@ class Dashboard(Frame):
 
         self.name_label = ctk.CTkLabel(
             self,
-            text=f"{self.fullname}",
+            text=f"{self.fullname.title()}",
             font=("Montserrat Bold", 26,"bold"),
             text_color="#5E95FF",
         )
@@ -97,7 +97,7 @@ class Dashboard(Frame):
 
         # Available Food Text
         canvas.create_text(
-            140.0,
+            164.0,
             63.0,
             anchor="ne",
             text=db_controller.available_food_count(),
@@ -127,7 +127,7 @@ class Dashboard(Frame):
         )
 
         canvas.create_text(
-            330.0,
+            346.0,
             63.0,
             anchor="ne",
             text=db_controller.donated_food_count(),
@@ -219,7 +219,7 @@ class Dashboard(Frame):
         )
 
         canvas.create_text(
-            520.0,
+            540.0,
             63.0,
             anchor="ne",
             text=db_controller.get_total_donation_value(),
@@ -248,7 +248,7 @@ class Dashboard(Frame):
         )
 
         canvas.create_text(
-            700.0,
+            710.0,
             63.0,
             anchor="ne",
             text=db_controller.meals_distributed(),
@@ -427,5 +427,5 @@ class Dashboard(Frame):
         # Fetch updated user details
         self.user_details = self.update_db()
         self.fullname = f"{self.user_details[1]} {self.user_details[2]}"
-        self.name_label.configure(text=f"{self.fullname}")
+        self.name_label.configure(text=f"{self.fullname.capitalize()}")
 

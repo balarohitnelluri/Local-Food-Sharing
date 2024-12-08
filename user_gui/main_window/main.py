@@ -281,7 +281,7 @@ class MainWindow(Toplevel):
 
         # Create the round button
         self.round_button = self.profile.create_oval(0, 0, 35, 35, fill="#0078D7", outline="")
-        self.profile.create_text(17.5, 17.5, text=f"{self.user_firstname[0]}", fill="white", font=("Arial", 12, "bold"))
+        self.profile.create_text(17.5, 17.5, text=f"{self.user_firstname[0].upper()}", fill="white", font=("Arial", 12, "bold"))
 
          # Bind hover events
         self.profile.bind("<Enter>", self.show_dropdown)

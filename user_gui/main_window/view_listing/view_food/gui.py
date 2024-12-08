@@ -765,20 +765,22 @@ class FindFood(Frame):
                 font=("Montserrat Bold", 12),
                 fg_color=status_color,
                 hover_color="#D3D3D3",
+                text_color_disabled="white",
                 width=100,
                 height=30,
                 corner_radius=5,
+                state="disabled",
             )
             status_button.grid(row=idx * 2, column=3, pady=5, padx=10, sticky="e")
                 
     def get_status_button_properties(self, status):
 
         if status == "pending":
-            return "#FFA500", "Pending"  
+            return "#E7A603", "Pending"  
         elif status == "approved":
-            return "#32CD32", "Approved"  
+            return "#2E8A34", "Approved"  
         elif status == "rejected":
-            return "#FF5555", "Rejected"  
+            return "#C51518", "Rejected"  
         return "#B3B3B3", "Unknown"  
 
 

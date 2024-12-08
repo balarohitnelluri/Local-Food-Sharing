@@ -34,20 +34,17 @@ class ViewRequests(Frame):
         outer_frame = ctk.CTkFrame(
             self,
             width=700,
-            height=400,
+            height=300,
             corner_radius=15,
-            fg_color="#FFFFFF",
+            fg_color="white",
         )
         outer_frame.place(x=112,y=0)
         outer_frame.lower()
 
-        # Tabs for Requests Raised and Received
-        tab_frame = ctk.CTkFrame(outer_frame, fg_color="#FFFFFF", corner_radius=10)
-        tab_frame.grid(row=0, column=0, columnspan=2, padx=10, pady=10, sticky="ew")
 
         # Table to Display Requests
         self.tree_frame = ctk.CTkFrame(outer_frame, fg_color="#FFFFFF", corner_radius=10, width=700, height=300)
-        self.tree_frame.grid(row=1, column=0, columnspan=2, padx=10, pady=10, sticky="nsew")
+        self.tree_frame.place(x=0,y=70)
 
         self.tree = ttk.Treeview(
             self.tree_frame,
@@ -67,34 +64,8 @@ class ViewRequests(Frame):
         self.tree.column("Status", anchor="center", width=120)
         self.tree.column("Address", anchor="center", width=200)
 
-        self.tree.pack(fill="both", expand=True)
+        self.tree.place(x=0,y=90)
 
-        # Action Buttons
-        self.action_frame = ctk.CTkFrame(outer_frame, fg_color="#F4F4F4", corner_radius=10)
-        self.action_frame.grid(row=2, column=0, columnspan=2, pady=(10, 20))
-        self.action_frame.grid_remove()  # Hidden by default
-
-        self.accept_button = ctk.CTkButton(
-            self.action_frame,
-            text="Accept Request",
-            fg_color="#4CAF50",
-            command=lambda: self.update_selected_request_status("approved"),
-            corner_radius=10,
-            width=150,
-            height=40,
-        )
-        self.accept_button.grid(row=0, column=0, padx=10, pady=10)
-
-        self.decline_button = ctk.CTkButton(
-            self.action_frame,
-            text="Decline Request",
-            fg_color="#F44336",
-            command=lambda: self.update_selected_request_status("rejected"),
-            corner_radius=10,
-            width=150,
-            height=40,
-        )
-        self.decline_button.grid(row=0, column=1, padx=10, pady=10)
 
         # Generate Report Button
         self.generate_report_button = ctk.CTkButton(
@@ -103,19 +74,16 @@ class ViewRequests(Frame):
             fg_color="#5E95FF",
             command=self.generate_report,
             corner_radius=10,
-            width=200,
-            height=40,
+            width=150,
+            height=30,
         )
-        self.generate_report_button.grid(row=3, column=0, columnspan=2, pady=(10, 20))
+        self.generate_report_button.place(x=530,y=105)
 
         # Load raised requests by default
         self.view_raised_requests()
 
     def view_raised_requests(self):
-        """
-        Fetch and display requests raised by this user to others.
-        """
-        self.action_frame.grid_remove()  # Hide action buttons
+
         self.clear_table()
         conn = connect_to_database()
         cursor = conn.cursor()
@@ -197,10 +165,7 @@ class ViewRequests(Frame):
 
 
     def view_received_requests(self):
-        """
-        Fetch and display requests raised by others to this user.
-        """
-        self.action_frame.grid()  # Show action buttons
+
         self.clear_table()
         conn = connect_to_database()
         cursor = conn.cursor()
