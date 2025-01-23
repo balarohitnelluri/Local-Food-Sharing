@@ -1,4 +1,11 @@
-mysql-connector-python
-numpy
-matplotlib==3.2.0
-python_dotenv
+customtkinter==5.2.2
+PILLOW==11.0.0
+mysql.connector==2.2.9
+matplotlib
+pandas==2.2.3
+python_dotenv==1.0.1
+tkcalendar
+ctkmessagebox==2.7
+cryptography==44.0.0
+requests
+openpyxl

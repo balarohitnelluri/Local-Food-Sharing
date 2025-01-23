@@ -1,6 +1,7 @@
 import mysql.connector
 import os
 import matplotlib.pyplot as pt
+from PIL import Image 
 
 # Configurations
 from config import config
@@ -23,6 +24,13 @@ connection = mysql.connector.connect(
 cursor = connection.cursor(buffered=True)
 
 # SQL functions
+
+def updateemail(old_username , new_username):
+    cursor = connection.cursor()
+    cmd = "UPDATE users SET email = %s WHERE email = %s LIMIT 1;"
+    cursor.execute(cmd, (new_username, old_username))
+    connection.commit()
+    return 
 
 
 def checkUser(username, password=None):
@@ -128,6 +136,47 @@ def request_pickup(user_id, listing_id, pickup_date, pickup_time):
         print(f"Error saving pickup request: {e}")
         return False
 
+import mysql.connector
+
+def add_food_items_bulk(food_items, user_id):
+    """
+    Adds multiple food items to the database in a single transaction.
+
+    Args:
+        food_items (list): List of dictionaries containing food item details.
+        user_id (int): The ID of the user adding the items.
+
+    Returns:
+        bool: True if items were added successfully, False otherwise.
+    """
+    try:
+
+        # SQL query to insert food items
+        query = """
+            INSERT INTO food_listings (food_type, quantity, expiration_date, location, pincode, user_id)
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """
+
+        # Prepare the values for bulk insertion
+        values = [
+            (
+                item["food_type"],  # Food Type
+                item["quantity"],  # Quantity
+                item["expiry_date"],  # Expiry Date
+                item["location"],  # Location
+                item["zipcode"],  # Zipcode
+                user_id,  # User ID
+            )
+            for item in food_items
+        ]
+
+        # Execute the query in bulk
+        cursor.executemany(query, values)
+
+        return True  # Items added successfully
+    except mysql.connector.Error as err:
+        print(f"Database Error: {err}")
+        return False
 
 def get_listing_details(user_id):
     """
@@ -152,6 +201,7 @@ def get_listing_details(user_id):
         # Populate the dictionary with food type as key and (listing_id, location) as value
         listings = {row[0]: (row[1], row[2]) for row in results}
         return listings
+    
     except Exception as e:
         print(f"Error fetching listing details: {e}")
 
@@ -320,227 +370,157 @@ def human_format(num):
     return "%.1f%s" % (num, ["", "K", "M", "G", "T", "P"][magnitude])
 
 
-def updatePassword(username, sec_ans, sec_que, password):
-    cmd = f"update login set password='{password}' where username='{username}' and sec_ans='{sec_ans}' and sec_que='{sec_que}' limit 1;"
+def updatePassword(email, password):
+    cmd = f"update users set password='{password}' where email='{email}' limit 1;"
     cursor.execute(cmd)
-    cmd = f"select count(username) from login where username='{username}' and password='{password}' and sec_ans='{sec_ans}' and sec_que='{sec_que}';"
+    cmd = f"select count(email) from users where email='{email}' and password='{password}';"
     cursor.execute(cmd)
     return cursor.fetchone()[0] >= 1
 
 
 def updateUsername(oldusername, password, newusername):
-    cmd = f"update login set username='{newusername}' where username='{oldusername}' and password='{password}' limit 1;"
+    cmd = f"update login set email='{newusername}' where username='{oldusername}' and password='{password}' limit 1;"
     cursor.execute(cmd)
     cmd = f"select count(username) from login where username='{newusername}' and password='{password}''"
     cursor.execute(cmd)
     return cursor.fetchone()[0] >= 1
 
 
-
-def find_g_id(name):
-    cmd = f"select g_id from guests where name = '{name}'"
-    cursor.execute(cmd)
-    out = cursor.fetchone()[0]
-    return out
+def insert_food_listing(values):
 
 
-def checkin(g_id):
-    cmd = f"select * from reservations where g_id = '{g_id}';"
-    cursor.execute(cmd)
-    reservation = cursor.fetchall()
-    if reservation != []:
-        subcmd = f"update reservations set check_in = curdate() where g_id = '{g_id}' "
-        cursor.execute(subcmd)
-        return "successful"
-    else:
-        return "No reservations for the given Guest"
-
-
-
-def checkout(id):
-    cmd = f"update reservations set check_out=current_timestamp where id={id} limit 1;"
-    cursor.execute(cmd)
-    if cursor.rowcount == 0:
-        return False
-    return True
-
-
-# ============Python Functions==========
-
-
-def acceptable(*args, acceptables):
+    # Prepare the query
+    query = """
+    INSERT INTO food_listings_2 
+        (user_id,food_name, category, quantity, serving_size, prepared_date ,  expiration_date,   zipcode, description,  special_notes) 
+    VALUES 
+        (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
     """
-    If the characters in StringVars passed as arguments are in acceptables return True, else returns False
-    """
-    for arg in args:
-        for char in arg:
-            if char.lower() not in acceptables:
-                return False
-    return True
+
+    try:
+
+        # Execute the query
+        cursor.execute(query, values)
+        connection.commit()
+        print("Food listing inserted successfully!")
+    except mysql.connector.Error as e:
+        print(f"Error inserting food listing: {e}")
+        if connection:
+            connection.rollback()
+ 
+
+from mysql.connector import Error
+
+def fetch_listings_query(user_id):
+    try:
+
+        # SQL Query
+        query = """
+        SELECT 
+            listing_id, food_type, quantity, expiration_date, 
+            location, pincode
+        FROM 
+            food_listings
+        WHERE 
+            user_id = %s
+        """
+        values = (user_id,)  # Correctly formatted tuple
+
+        # Execute the query
+        cursor.execute(query, values)
+
+        # Fetch the results
+        results = cursor.fetchall()
+        return results
+    except Error as e:
+        print(f"Error fetching listings: {e}")
+        raise
+    finally:
+        # Close cursor and connection if initialized
+        if 'cursor' in locals() and cursor:
+            cursor.close()
+        if 'connection' in locals() and connection:
+            connection.close()
+
+def search_listings_query(zipcode,expiration_date,current_user_id):
+    try:
+
+            # SQL Query
+        query = """
+        SELECT fl.listing_id, fl.food_type, fl.quantity, fl.expiration_date, fl.location, fl.pincode, fl.user_id
+FROM food_listings fl
+LEFT JOIN pickups p ON fl.listing_id = p.listing_id AND p.user_id = %s AND p.status = 'pending'
+WHERE fl.pincode = %s
+  AND ((fl.expiration_date BETWEEN CURDATE() AND %s) OR fl.expiration_date IS NULL)
+  AND fl.user_id != %s
+        """
+        values = (current_user_id,zipcode, expiration_date, current_user_id)
+        # Execute the query
+        cursor.execute(query, values)
+
+        # Fetch the results
+        results = cursor.fetchall()
+        return results
+    except Error as e:
+        print(f"Error fetching listings: {e}")
+        raise
+    finally:
+        # Close cursor and connection if initialized
+        if 'cursor' in locals() and cursor:
+            cursor.close()
+        if 'connection' in locals() and connection:
+            connection.close()
+
+def search_execute_query(query,values):
+    try:
+
+            # SQL Query
+      
+        # Execute the query
+        cursor.execute(query, values)
+
+        # Fetch the results
+        results = cursor.fetchall()
+        return results
+    except Error as e:
+        print(f"Error fetching listings: {e}")
+        raise
+    finally:
+        # Close cursor and connection if initialized
+        if 'cursor' in locals() and cursor:
+            cursor.close()
+        if 'connection' in locals() and connection:
+            connection.close()
+
+
+def execute_queries(query,values):
+        try:
+
+            # Execute the query
+            cursor.execute(query, values)
+
+            # Commit for non-SELECT queries
+            connection.commit()
+
+        except mysql.connector.Error as e:
+            print(f"Error executing query: {e}")
+            if connection:
+                connection.rollback()
+            raise
 
 
 
-# Get all guests
-def get_guests():
-    cmd = "select id, name, address, email_id, phone, created_at from guests;"
-    cursor.execute(cmd)
-    if cursor.rowcount == 0:
-        return False
-    return cursor.fetchall()
 
 
-# Add a guest
-def add_guest(name, address, email_id, phone):
-    cmd = f"insert into guests(name,address,email_id,phone) values('{name}','{address}','{email_id}',{phone});"
-    cursor.execute(cmd)
-    if cursor.rowcount == 0:
-        return False
-    return True
 
 
-# add a room
-def add_room(room_no, price, room_type):
-    cmd = f"insert into rooms(room_no,price,room_type) values('{room_no}',{price},'{room_type}');"
-    cursor.execute(cmd)
-    if cursor.rowcount == 0:
-        return False
-    return True
 
 
-# Get All rooms
-def get_rooms():
-    cmd = "select id, room_no, room_type, price, created_at from rooms;"
-    cursor.execute(cmd)
-    if cursor.rowcount == 0:
-        return False
-    return cursor.fetchall()
 
 
-# Get all reservations
-def get_reservations():
-    cmd = "select id, g_id, r_id, check_in, check_out, meal from reservations;"
-    cursor.execute(cmd)
-    if cursor.rowcount == 0:
-        return False
-    return cursor.fetchall()
 
 
-# Add a reservation
-def add_reservation(g_id, meal, r_id, check_in="now"):
-    cmd = f"insert into reservations(g_id,check_in,r_id, meal) values('{g_id}',{f'{chr(39) + check_in + chr(39)}' if check_in != 'now' else 'current_timestamp'},'{meal}','{r_id}');"
-    cursor.execute(cmd)
-    if cursor.rowcount == 0:
-        return False
-    return True
 
 
-# Get all room count
-def get_total_rooms():
-    cmd = "select count(room_no) from rooms;"
-    cursor.execute(cmd)
-    if cursor.rowcount == 0:
-        return False
-    return cursor.fetchone()[0]
 
 
-# Check if a room is vacant
-def booked():
-    cmd = f"select count(ros.id) from reservations rs, rooms ros where rs.r_id = ros.id and rs.check_out is Null;"
-    cursor.execute(cmd)
-
-    return cursor.fetchone()[0]
-
-
-def vacant():
-    return get_total_rooms() - booked()
-
-
-def bookings():
-    cmd = f"select count(rs.id) from reservations rs , rooms ros where rs.r_id = ros.id and ros.room_type = 'D';"
-    cursor.execute(cmd)
-    deluxe = cursor.fetchone()[0]
-
-    cmd1 = f"select count(rs.id) from reservations rs , rooms ros where rs.r_id = ros.id and ros.room_type = 'N';"
-    cursor.execute(cmd1)
-    Normal = cursor.fetchone()[0]
-
-    return [deluxe, Normal]
-
-
-# Get total hotel value
-def get_total_hotel_value():
-    cmd = "select sum(price) from rooms;"
-    cursor.execute(cmd)
-    if cursor.rowcount == 0:
-        return False
-    value = cursor.fetchone()[0]
-
-    return human_format(value)
-
-
-def delete_reservation(id):
-    cmd = f"delete from reservations where id='{id}';"
-    cursor.execute(cmd)
-    if cursor.rowcount == 0:
-        return False
-    return True
-
-
-def delete_room(id):
-    cmd = f"delete from rooms where id='{id}';"
-    cursor.execute(cmd)
-    if cursor.rowcount == 0:
-        return False
-    return True
-
-
-def delete_guest(id):
-    cmd = f"delete from guests where id='{id}';"
-    cursor.execute(cmd)
-    if cursor.rowcount == 0:
-        return False
-    return True
-
-
-def update_rooms(id, room_no, room_type, price):
-    cmd = f"update rooms set room_type = '{room_type}',price= {price}, room_no = {room_no} where id = {id};"
-    cursor.execute(cmd)
-    if cursor.rowcount == 0:
-        return False
-    return True
-
-
-def update_guests(name, address, id, phone):
-
-    cmd = f"update guests set address = '{address}',phone = {phone} , name = '{name}' where id = {id};"
-    cursor.execute(cmd)
-    if cursor.rowcount == 0:
-        return False
-    return True
-
-
-def update_reservations(
-    g_id, check_in, room_id, reservation_date, check_out, meal, type, id
-):
-    cmd = f"update reservations set check_in = '{check_in}',check_out = '{check_out}',g_id = {g_id}, \
-        r_date = '{reservation_date}',meal = {meal},r_type='{type}', r_id = {room_id} where id= {id};"
-    cursor.execute(cmd)
-    if cursor.rowcount == 0:
-        return False
-    return True
-
-
-def meals():
-    cmd = f"select sum(meal) from reservations;"
-    cursor.execute(cmd)
-    meals = cursor.fetchone()[0]
-
-    return human_format(meals)
-
-
-def update_reservation(id, g_id, check_in, room_id, check_out, meal):
-    cmd = f"update reservations set check_in = '{check_in}', check_out = '{check_out}', g_id = {g_id}, meal = '{meal}', r_id = '{room_id}' where id= '{id}';"
-    cursor.execute(cmd)
-    if cursor.rowcount == 0:
-        return False
-    return True

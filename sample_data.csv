@@ -1,0 +1,500 @@
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Kimberly', 'Allen', 'joshua71@example.net', 'female', '1968-12-18', 
+        '+1-506-262-5287x4743', '67889 Melissa Park', NULL, 
+        'Mccallstad', 'Kansas', 'Norway', 51629, 'vVd1Saco!5DH', FALSE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Chris', 'Anderson', 'gwendolynlee@example.com', 'male', '1984-08-29', 
+        '001-297-809-1316x968', '76384 Mclaughlin Inlet', 'East Melissa, FM 21952', 
+        'Diazville', 'Alaska', 'Tanzania', 59808, ')G_QyywF6#7a', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Jacqueline', 'Moore', 'bmoore@example.net', 'unknown', '1966-06-15', 
+        '(636)519-3581', '4414 Lewis Green Suite 047', NULL, 
+        'East Gregorymouth', 'Tennessee', 'Burundi', 35736, 'k&YIWlxj@6O_', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Erin', 'Gibson', 'bwalters@example.org', 'male', '1996-06-06', 
+        '614-682-5266x860', '81350 Connie Vista', NULL, 
+        'Williamsfurt', 'New York', 'Jersey', 99887, 'S%b11RcjUi9w', FALSE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Linda', 'Stewart', 'taylordeborah@example.com', 'female', '1966-12-04', 
+        '933-233-5761x43148', '8694 Kimberly Square', NULL, 
+        'East April', 'North Dakota', 'Panama', 23010, 'm1N4vygq%_Sb', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Johnathan', 'Thomas', 'jeffreypalmer@example.com', 'unknown', '1982-01-08', 
+        '930.869.1519', '367 Wright Green Apt. 529', NULL, 
+        'Macdonaldhaven', 'Arizona', 'South Africa', 84466, 'L(MN))NwpWs1', FALSE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Blake', 'Brennan', 'gregoryjacobs@example.com', 'unknown', '1956-09-23', 
+        '330.831.6316x67106', '7067 Shawn Harbors', NULL, 
+        'Carterhaven', 'South Carolina', 'Honduras', 80071, '$KC3IDFe&%hR', FALSE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Rebecca', 'Morris', 'patriciaevans@example.com', 'unknown', '1981-08-30', 
+        '285.673.5555x3564', 'USNV Sullivan', NULL, 
+        'North Josemouth', 'Michigan', 'Brazil', 84391, 'm4uWOGHS#1uN', FALSE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'William', 'Carter', 'erinbarnes@example.net', 'unknown', '1950-12-29', 
+        '5923242266', '216 Amanda Summit', 'Joshuafort, MP 86462', 
+        'East Anita', 'Rhode Island', 'Moldova', 84383, '%DGVdODC@7ql', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Isaac', 'Skinner', 'brittneyjones@example.org', 'female', '2003-02-17', 
+        '829.430.0153', 'Unit 8195 Box 4953', NULL, 
+        'Amandatown', 'Nebraska', 'Kiribati', 56668, '_FHq@8Sm1LT5', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'John', 'Hernandez', 'katherine93@example.net', 'unknown', '1960-09-29', 
+        '384-834-3586x414', '2601 Taylor Crescent Suite 820', 'Port Nathanport, VT 61908', 
+        'Fordshire', 'Nevada', 'United Kingdom', 14977, 'oa*iC5VqP5BF', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Kimberly', 'Ramirez', 'hwarner@example.org', 'male', '1968-03-20', 
+        '001-867-294-2194x081', '983 Kimberly Trail Apt. 802', NULL, 
+        'East Cherylview', 'Virginia', 'Gabon', 55761, 'YoQl+4Tz#Dw@', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Mallory', 'Brown', 'nrice@example.com', 'male', '1951-11-03', 
+        '(533)336-5763x967', '263 Nicholson Glen Suite 904', NULL, 
+        'East Brian', 'Nevada', 'Zambia', 15920, ')3RWl3fw@LdM', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Phillip', 'Gonzalez', 'christinathompson@example.com', 'unknown', '1986-01-16', 
+        '298.772.7387x9331', '47119 Smith Field Apt. 897', NULL, 
+        'Lake Amyview', 'Alabama', 'Saudi Arabia', 72442, '&0kE%95q(dJE', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'David', 'Steele', 'leonardvictoria@example.org', 'male', '2003-12-09', 
+        '367.726.7869', '37660 Corey Highway Apt. 804', NULL, 
+        'East Parker', 'Montana', 'Oman', 29452, 'xVU5oIMx*2yZ', FALSE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Edwin', 'Salas', 'kevinhall@example.net', 'unknown', '1974-08-22', 
+        '001-994-905-0774x370', '839 Joshua Lake', NULL, 
+        'Myersshire', 'Arkansas', 'Sudan', 10233, 'o52QTKUjN#WN', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Ashley', 'Avila', 'garciafred@example.net', 'male', '1974-06-12', 
+        '608-671-5243x8689', 'PSC 3467, Box 2091', NULL, 
+        'Christopherland', 'Utah', 'Cuba', 30277, 'Bla#wGzn*F(3', FALSE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Alexandra', 'Bowen', 'rhondahobbs@example.com', 'male', '2004-11-24', 
+        '8972905673', '1302 David Stravenue', 'New Katelynchester, ID 82321', 
+        'West Jennifer', 'Mississippi', 'Morocco', 61468, 'BY6kFq6y(ozL', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Jennifer', 'Lynn', 'wbaker@example.net', 'unknown', '1989-09-18', 
+        '5729844034', '38555 Robinson Falls', 'New Vincenttown, CT 54675', 
+        'Phillipville', 'Rhode Island', 'Malawi', 80794, 'BS8HDvG*o))O', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Dawn', 'Taylor', 'mia42@example.net', 'unknown', '2002-09-03', 
+        '778.742.1146x43044', '332 Hill Tunnel Apt. 139', 'Katrinastad, VI 39188', 
+        'East Casey', 'Illinois', 'Wallis and Futuna', 73003, 'bxI)J&*or27c', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Amanda', 'Moody', 'nholland@example.org', 'female', '1954-01-25', 
+        '001-837-933-5805x962', '526 Jim Summit', NULL, 
+        'North Amy', 'New Jersey', 'American Samoa', 81593, 'c_CcA7+p@7(F', FALSE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Christine', 'Hill', 'xrollins@example.net', 'unknown', '1980-05-18', 
+        '001-566-978-3762', '15085 Smith Spur Apt. 583', 'Kristinside, NJ 14911', 
+        'Melissaland', 'Massachusetts', 'Netherlands Antilles', 85410, 'h+3%ZvsIGr4$', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Kristie', 'Martin', 'danielsmith@example.com', 'female', '1952-01-22', 
+        '+1-452-242-5786x585', '0865 Mejia Road', 'West Michael, RI 56080', 
+        'West Mark', 'North Dakota', 'Kyrgyz Republic', 89796, 'soXszN^F%N7t', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Bryan', 'Kramer', 'boydjames@example.net', 'unknown', '1954-07-04', 
+        '(674)300-7850', '69733 Salazar Station Suite 239', NULL, 
+        'Amyville', 'South Dakota', 'Turks and Caicos Islands', 11002, '+nZKwto4+6xX', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Dave', 'Graves', 'steven88@example.net', 'female', '1998-11-26', 
+        '(216)255-2251', '75052 Anne Valley', 'West Sarahton, AR 03024', 
+        'North Tina', 'Alabama', 'Brazil', 55254, '&ydhju_55RZI', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Jennifer', 'Stephens', 'lgrant@example.com', 'unknown', '1959-12-14', 
+        '(990)777-0001x3344', '2777 Jamie Mountains', 'Marshchester, NV 36004', 
+        'Port Brittanytown', 'New Jersey', 'United States Virgin Islands', 62710, 'QgR@tK#wr@1C', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Tonya', 'Bailey', 'belljamie@example.com', 'male', '1968-11-05', 
+        '001-689-598-2545', '6475 Bryan Junctions', 'North Alicia, RI 52402', 
+        'South Jackson', 'New Hampshire', 'Bahamas', 51265, 'EVM!8NRs(IE7', FALSE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Christy', 'Gonzalez', 'tphillips@example.org', 'male', '1978-03-26', 
+        '(401)207-3716', '628 Brown Manors Suite 096', 'APO AP 13629', 
+        'Lindseyhaven', 'North Dakota', 'Falkland Islands (Malvinas)', 87794, '!676QUddQRbz', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Cheyenne', 'Bray', 'julie46@example.net', 'unknown', '1961-04-20', 
+        '530-603-9387', '81224 Ortiz Lodge', NULL, 
+        'West Gloriastad', 'Massachusetts', 'Antarctica (the territory South of 60 deg S)', 40277, 'yE3jQv)Aj9%X', FALSE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Julie', 'Kelley', 'uhill@example.com', 'female', '1973-11-07', 
+        '776.624.2236x0996', '254 Reed Viaduct', NULL, 
+        'Matthewchester', 'Hawaii', 'Saint Pierre and Miquelon', 26265, 'e)1ukKra0$*2', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Marissa', 'Rosario', 'alexandramorris@example.org', 'female', '1962-02-26', 
+        '6457026374', '580 Gina Forge', 'North Wendyfort, WI 31002', 
+        'Heathfurt', 'South Carolina', 'Saint Barthelemy', 66031, '#EQ^WgmZ3$RT', FALSE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Adam', 'Barrett', 'williebaker@example.org', 'unknown', '1960-09-28', 
+        '001-959-703-2169', '81807 Jose Drive', NULL, 
+        'East Elizabeth', 'Connecticut', 'Niger', 70916, ')2NTmexzA66_', FALSE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Mark', 'Garcia', 'freemannicole@example.org', 'unknown', '1946-03-05', 
+        '602.516.9089', '600 Lewis Groves Suite 732', NULL, 
+        'Matthewfort', 'Maine', 'New Zealand', 85364, '+%H2tGgZ8$+9', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Aaron', 'Castaneda', 'diana11@example.net', 'unknown', '1948-05-09', 
+        '001-645-484-9346x027', '42204 Sally Cliff Suite 288', 'Rodriguezport, MN 11083', 
+        'Emilyberg', 'Indiana', 'Turkey', 86839, '_)0VWF*ofH@s', FALSE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Michael', 'Peterson', 'martinlisa@example.net', 'unknown', '1993-01-30', 
+        '3596973239', '83096 Shane Forge Apt. 311', NULL, 
+        'New David', 'Georgia', 'Slovakia (Slovak Republic)', 86461, '*JzI_LjB$4Z(', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Deborah', 'Evans', 'catherinerussell@example.net', 'female', '1965-02-20', 
+        '(756)437-9970', 'USCGC Hernandez', 'Lake Stephanie, WV 81964', 
+        'Tonymouth', 'North Carolina', 'Guernsey', 95329, '^QGDsYDT32%8', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Autumn', 'Smith', 'emartinez@example.org', 'male', '1962-01-28', 
+        '(498)819-3032x256', '5125 Pamela Wells', NULL, 
+        'East Kathleen', 'Nebraska', 'Iran', 43422, ')F1)Rwkq$4Xl', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Maria', 'Trevino', 'birdjose@example.com', 'male', '1962-11-14', 
+        '296-312-9383', '801 Susan Tunnel Suite 849', 'Rebeccaview, NY 29435', 
+        'East Katrina', 'Louisiana', 'Seychelles', 82546, 'HS1q3Wwtu+y!', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Stephen', 'Nelson', 'velezmarco@example.net', 'female', '1945-01-30', 
+        '(834)678-3448x470', 'PSC 3693, Box 0417', NULL, 
+        'West Douglasport', 'Missouri', 'Djibouti', 60649, ')sNSe*Zod73Z', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Janice', 'Phillips', 'xsosa@example.net', 'female', '1989-05-23', 
+        '+1-592-227-0556x3521', '55612 Terry Well Suite 643', NULL, 
+        'West Kristen', 'Washington', 'Syrian Arab Republic', 44458, 'pQ9HVaq!7W!c', FALSE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Cindy', 'Tucker', 'phillipsfrank@example.net', 'male', '1978-10-02', 
+        '(680)917-2580x52700', '279 Smith Ridges Apt. 299', 'West Roger, WY 27450', 
+        'Sandersport', 'Louisiana', 'Mayotte', 24277, '%Y9p6k#TS9Om', FALSE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Edward', 'Fisher', 'alopez@example.com', 'female', '1979-06-19', 
+        '(960)984-7211x424', '722 Glover Heights Suite 039', NULL, 
+        'East Russell', 'Oregon', 'Niue', 19567, '273e5*Qx&E*Q', FALSE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Karen', 'Barton', 'rnicholson@example.com', 'unknown', '1975-04-12', 
+        '+1-932-415-3701x590', '7107 French Center', 'New Kimberlyview, RI 10137', 
+        'East Jody', 'New York', 'Italy', 47454, 'sm%1KiZ+1#yM', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Kelly', 'Roberts', 'williamsrenee@example.net', 'male', '1986-07-05', 
+        '001-705-731-6324x055', '978 Pamela Highway Suite 238', NULL, 
+        'Port Gregory', 'Georgia', 'Somalia', 27685, 'DSwcSXnF(%50', FALSE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Crystal', 'Smith', 'whughes@example.net', 'unknown', '2006-10-30', 
+        '772.409.4749', '9463 Davis Burg', 'Toddview, PA 29631', 
+        'Tamarachester', 'Pennsylvania', 'Slovenia', 78223, 'cG2LdLiv##cj', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Cheryl', 'Stark', 'lewischristina@example.org', 'unknown', '1956-12-10', 
+        '526.728.3855', 'PSC 8797, Box 6730', 'Angelahaven, RI 39989', 
+        'Greenefort', 'Arizona', 'Jersey', 36694, '5%9NDjo^H(D*', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Mark', 'Williams', 'fjones@example.com', 'unknown', '1965-01-10', 
+        '(476)916-5352x5494', '2188 Walter Viaduct', NULL, 
+        'South Debraton', 'New Mexico', 'Suriname', 60565, '%aJ^+6MmcKJ0', FALSE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Jennifer', 'Perkins', 'thompsondenise@example.net', 'female', '1976-05-12', 
+        '001-341-651-0589x734', '961 Morrow Crossroad Suite 124', NULL, 
+        'Butlerside', 'Oklahoma', 'Saint Kitts and Nevis', 89904, 'dT1)ZPcQn9*S', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Dennis', 'Burns', 'dana38@example.com', 'female', '1987-07-10', 
+        '001-381-249-4613x049', 'Unit 5572 Box 2387', NULL, 
+        'Coffeytown', 'New Jersey', 'Greenland', 33229, 'R!9ot8+y4MfL', TRUE
+    );
+    
+
+    INSERT INTO users (
+        first_name, last_name, email, gender, dob, phone, address_1, address_2, 
+        city, state, country, pincode, password, profile_completion
+    ) VALUES (
+        'Kristina', 'White', 'frances49@example.com', 'female', '1959-12-15', 
+        '337.678.3659x239', 'Unit 1423 Box 3635', NULL, 
+        'Waltonburgh', 'California', 'Falkland Islands (Malvinas)', 18715, 'KnTG^TM_^1^^', TRUE
+    );
+    
