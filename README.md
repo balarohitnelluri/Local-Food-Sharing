@@ -14,8 +14,6 @@ The Local Food Sharing Application is a Python-based platform designed to promot
 	•	Reporting: Export detailed user activity and system data in Excel format.
 	•	User-Friendly Interface: Built with Tkinter and CustomTkinter for an engaging and intuitive experience.
 
- <img width="753" alt="image" src="https://github.com/user-attachments/assets/9fac4da7-d928-4b18-9fb4-2323554f85dc" />
-
 
 ## Technologies Used
 	•	Programming Language: Python
@@ -62,22 +60,54 @@ local-food-sharing-app/
 
 1. User Registration & Login
 	•	New users can sign up by providing their name, email, and password.
+
+        <img width="432" alt="image" src="https://github.com/user-attachments/assets/206f0495-7324-4fa3-98b8-091295579dee" />
+
 	•	Existing users can log in securely using their registered credentials.
 
-2. Adding Food Listings
+        <img width="434" alt="image" src="https://github.com/user-attachments/assets/19fb0540-464a-49cb-865c-987b4723003d" />
+
+    •	If the customer forgot the password will able to reset the password.
+
+        <img width="432" alt="image" src="https://github.com/user-attachments/assets/404bdbe3-18a2-45e3-a6af-7abda8bb5895" />
+
+       - You'll get a One Time Password to your email
+
+        <img width="432" alt="image" src="https://github.com/user-attachments/assets/ee846b17-6c9c-4253-9e10-3f5ceb9dcbf5" />
+
+       - Once after you login you'll go to main window
+
+        <img width="432" alt="image" src="https://github.com/user-attachments/assets/ccabbda0-9d58-4879-bb1c-43dc22697562" />
+
+3. Adding Food Listings
 	•	Navigate to the Add Listings screen.
 	•	Provide details such as food type, quantity, expiration date, and location.
+    
+    <img width="432" alt="image" src="https://github.com/user-attachments/assets/a2108f44-88c2-461b-9012-9481900792fa" />
 
-3. Scheduling Pickups
+
+5. Scheduling Pickups
 	•	Browse available food listings and request a pickup.
 	•	Schedule a convenient date and time, with notifications for confirmation.
 
-4. Managing Notifications
+    <img width="432" alt="image" src="https://github.com/user-attachments/assets/aace646c-f1ea-40d7-978c-41d7596d1f52" />
+
+    <img width="432" alt="image" src="https://github.com/user-attachments/assets/cd687314-cd96-4586-bd4c-4d00987f7934" />
+
+
+
+7. Managing Notifications
 	•	View requests received for your listings and approve or decline them.
 	•	Stay updated with alerts for listing updates and scheduled pickups.
 
-5. Generating Reports
+    <img width="432" alt="image" src="https://github.com/user-attachments/assets/c0b2a346-f8b2-4ccf-9086-9143dbcc25cc" />
+
+
+9. Generating Reports
 	•	Access the reporting section to export data on user activity and system performance in Excel format.
+
+    <img width="432" alt="image" src="https://github.com/user-attachments/assets/d184ed7a-46b5-41c0-bdcd-d2678a2682c3" />
+
 
 ## Future Enhancements
 	•	Multilingual support for a wider user base.
