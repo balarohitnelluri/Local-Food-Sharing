@@ -14,6 +14,9 @@ The Local Food Sharing Application is a Python-based platform designed to promot
 	•	Reporting: Export detailed user activity and system data in Excel format.
 	•	User-Friendly Interface: Built with Tkinter and CustomTkinter for an engaging and intuitive experience.
 
+ <img width="753" alt="image" src="https://github.com/user-attachments/assets/9fac4da7-d928-4b18-9fb4-2323554f85dc" />
+
+
 ## Technologies Used
 	•	Programming Language: Python
 	•	Frontend: Tkinter, CustomTkinter
