@@ -61,23 +61,23 @@ local-food-sharing-app/
 1. User Registration & Login
 	•	New users can sign up by providing their name, email, and password.
 
-        <img width="432" alt="image" src="https://github.com/user-attachments/assets/206f0495-7324-4fa3-98b8-091295579dee" />
+   <img width="432" alt="image" src="https://github.com/user-attachments/assets/206f0495-7324-4fa3-98b8-091295579dee" />
 
 	•	Existing users can log in securely using their registered credentials.
 
-        <img width="434" alt="image" src="https://github.com/user-attachments/assets/19fb0540-464a-49cb-865c-987b4723003d" />
+   <img width="434" alt="image" src="https://github.com/user-attachments/assets/19fb0540-464a-49cb-865c-987b4723003d" />
 
     •	If the customer forgot the password will able to reset the password.
 
-        <img width="432" alt="image" src="https://github.com/user-attachments/assets/404bdbe3-18a2-45e3-a6af-7abda8bb5895" />
+   <img width="432" alt="image" src="https://github.com/user-attachments/assets/404bdbe3-18a2-45e3-a6af-7abda8bb5895" />
 
        - You'll get a One Time Password to your email
 
-        <img width="432" alt="image" src="https://github.com/user-attachments/assets/ee846b17-6c9c-4253-9e10-3f5ceb9dcbf5" />
+   <img width="432" alt="image" src="https://github.com/user-attachments/assets/ee846b17-6c9c-4253-9e10-3f5ceb9dcbf5" />
 
        - Once after you login you'll go to main window
 
-        <img width="432" alt="image" src="https://github.com/user-attachments/assets/ccabbda0-9d58-4879-bb1c-43dc22697562" />
+   <img width="432" alt="image" src="https://github.com/user-attachments/assets/ccabbda0-9d58-4879-bb1c-43dc22697562" />
 
 3. Adding Food Listings
 	•	Navigate to the Add Listings screen.
