@@ -92,9 +92,6 @@ local-food-sharing-app/
 
     <img width="432" alt="image" src="https://github.com/user-attachments/assets/aace646c-f1ea-40d7-978c-41d7596d1f52" />
 
-    <img width="432" alt="image" src="https://github.com/user-attachments/assets/cd687314-cd96-4586-bd4c-4d00987f7934" />
-
-
 
 7. Managing Notifications
 	•	View requests received for your listings and approve or decline them.
