@@ -1,8 +1,8 @@
 config = {
-    "DB_PORT": "3306",
-    "DB_NAME": "BIS698M_26",
+    "DB_PORT": "",
+    "DB_NAME": "",
     "DB_AUTOCOMMIT": True,
-    "DB_HOST": "141.209.241.57",
-    "DB_USER": 'nellu1b',
-    'DB_PASSWORD': 'mypass'
+    "DB_HOST": "",
+    "DB_USER": '',
+    'DB_PASSWORD': ''
 }
