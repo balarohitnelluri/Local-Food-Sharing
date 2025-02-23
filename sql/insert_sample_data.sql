@@ -1,6 +1,6 @@
 INSERT INTO users (first_name, last_name, email, gender, dob, phone, address_1, address_2, city, state, country, pincode, password, profile_completion)
 VALUES
-('John', 'Doe', 'nbrohit@gmail.com', 'male', '1990-01-15', '1234567890', '123 Elm Street', NULL, 'Springfield', 'IL', 'USA', 62701, '23dcfc909798dff692a92380c9d4a0036431968d570aca858374268c7872b0b0', TRUE),
+('John', 'Doe', 'nb.smithit@gmail.com', 'male', '1990-01-15', '1234567890', '123 Elm Street', NULL, 'Springfield', 'IL', 'USA', 62701, '23dcfc909798dff692a92380c9d4a0036431968d570aca858374268c7872b0b0', TRUE),
 ('Jane', 'Smith', 'jane.smith1@example.com', 'female', '1985-07-30', '9876543210', '456 Oak Avenue', NULL, 'Austin', 'TX', 'USA', 73301, 'password2', TRUE),
 ('Bob', 'Johnson', 'bob.johnson1@example.com', 'male', '1992-09-10', '5556667777', '789 Pine Lane', NULL, 'Seattle', 'WA', 'USA', 98101, 'password3', FALSE),
 ('Alice', 'Williams', 'alice.williams1@example.com', 'female', '1988-04-22', '4445556666', '321 Maple Drive', NULL, 'Denver', 'CO', 'USA', 80201, 'password4', TRUE),
